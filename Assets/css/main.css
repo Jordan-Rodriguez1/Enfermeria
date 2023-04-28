@@ -1,0 +1,112 @@
+/*Login Form styling */
+
+:root {
+  --blue: #15c2e9;
+  --graylight: #e2e2e2;
+  --lavanda: #c2258e;
+  --black: #000;
+  --white: #fff;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
+  margin: 0px;
+}
+
+.container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+
+form {
+  height: 420px;
+  padding: 3em;
+  border-radius: 20px;
+  background: var(--white);
+  backdrop-filter: blur(10px);
+  box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  height: 80px;
+  margin: 0;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+input {
+  background: var(--graylight);
+  width: 250px;
+  font-size: 1.3em;
+  color: var(--black);
+  padding: 1em;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 50px;
+}
+
+input::placeholder {
+  color: var(--black);
+}
+input[type="submit"] {
+  margin-top: 10px;
+  width: 180px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--white);
+  background-color: var(--lavanda);
+}
+
+.alert {
+  color: red;
+  font-size: 1em;
+}
+
+a {
+    font-size: 1em;
+  }
+
+@media (max-width: 600px) {
+  form {
+    height: 380px;
+    padding: 1.5em;
+  }
+
+  img {
+    height: 65px;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  input {
+    width: 200px;
+    font-size: 1em;
+    margin-bottom: 1.5em;
+  }
+
+  input[type="submit"] {
+    margin-top: 5px;
+    width: 140px;
+    font-size: 1rem;
+  }
+
+  .alert {
+    font-size: 0.8em;
+    padding-bottom: 10px;
+  }
+
+  a {
+    font-size: 0.8em;
+  }
+}
