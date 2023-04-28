@@ -17,5 +17,15 @@
         {
             $this->views->getView($this, "loginprof");
         }
+
+        public function recuperar()
+        {
+            $this->views->getView($this, "recuperar");
+        }
+
+        public function recuperarprof()
+        {
+            $this->views->getView($this, "recuperarprof");
+        }
 }
 ?>

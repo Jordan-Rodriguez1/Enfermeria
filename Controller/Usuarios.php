@@ -136,7 +136,7 @@ class Usuarios extends Controllers
                     header('location: '.base_url(). 'Dashboard/Listar');
             } else {
                 $error = 0;
-                header("location: ".base_url()."?msg=$error");
+                header("location: ".base_url(). 'Login/loginprof'."?msg=$error");
             }
         }
     }

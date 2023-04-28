@@ -90,7 +90,7 @@ class AlumnosModel extends Mysql{
     {
         $this->usuario = $usuario;
         $this->clave = $clave;
-        $sql = "SELECT * FROM alumnos WHERE usuario = '{$this->usuario}' AND clave = '{$this->clave}' AND estado=1";
+        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->usuario}' AND clave = '{$this->clave}' AND estado=1";
         $res = $this->select($sql);
         return $res;
     }

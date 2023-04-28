@@ -21,8 +21,19 @@ body {
   left: 50%;
 }
 
-form {
-  height: 420px;
+#user{
+  height: 440px;
+  padding: 3em;
+  border-radius: 20px;
+  background: var(--white);
+  backdrop-filter: blur(10px);
+  box-shadow: 10px 10px 0px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.4);
+  text-align: center;
+}
+
+#rec{
+  height: 200px;
   padding: 3em;
   border-radius: 20px;
   background: var(--white);
@@ -34,6 +45,7 @@ form {
 
 p {
   margin: 0;
+  width: 290px;
 }
 
 img {
@@ -87,6 +99,11 @@ a {
     height: 65px;
     margin-top: 0;
     margin-bottom: 15px;
+  }
+
+  p {
+  margin: 0;
+  width: 235px;
   }
 
   input {
