@@ -14,6 +14,14 @@ class AlumnosModel extends Mysql{
         return $res;
     }
 
+    //Selecciona configuraciones para faltas
+    public function configuracion()
+    {
+        $sql = "SELECT * FROM configuracion";
+        $res = $this->select($sql);
+        return $res;
+    }
+
     //selecciona Alumnos inactivos
     public function selectInactivos()
     {
@@ -23,18 +31,20 @@ class AlumnosModel extends Mysql{
     }
 
     //Registra un nuevo Alumno
-    public function insertarAlumnos(string $nombre, string $usuario, string $clave, string $correo)
+    public function insertarAlumnos(string $nombre, string $usuario, string $clave, string $correo, string $grado, string $grupo)
     {
         $return = "";
         $this->nombre = $nombre;
         $this->usuario = $usuario;
         $this->clave = $clave;
         $this->correo = $correo;
-        $sql = "SELECT * FROM alumnos WHERE usuario = '{$this->usuario}'";
+        $this->grado = $grado;
+        $this->grupo = $grupo;
+        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->usuario}'";
         $result = $this->selecT($sql);
         if (empty($result)) {
-            $query = "INSERT INTO alumnos(nombre, usuario, clave, correo) VALUES (?,?,?,?)";
-            $data = array($this->nombre, $this->usuario, $this->clave, $this->correo);
+            $query = "INSERT INTO alumnos(nombre, usuario, clave, correo, grado, grupo) VALUES (?,?,?,?,?,?)";
+            $data = array($this->nombre, $this->usuario, $this->clave, $this->correo, $this->grado, $this->grupo);
             $resul = $this->insert($query, $data);
             $return = $resul;
         }else {
@@ -56,7 +66,7 @@ class AlumnosModel extends Mysql{
     }
 
     //Edita los datos de un usuario
-    public function actualizarAlumnos(string $nombre, string $usuario, string $asistencias, string $faltas, int $id, string $correo)
+    public function actualizarAlumnos(string $nombre, string $usuario, string $asistencias, string $faltas, int $id, string $correo, int $grado, string $grupo)
     {
         $return = "";
         $this->nombre = $nombre;
@@ -65,15 +75,17 @@ class AlumnosModel extends Mysql{
         $this->faltas = $faltas;
         $this->id = $id;
         $this->correo = $correo;
-        $query = "UPDATE alumnos SET nombre=?, usuario=?, asistencias=?, faltas=?, correo=? WHERE id=?";
-        $data = array($this->nombre, $this->usuario, $this->asistencias, $this->faltas, $this->correo, $this->id);
+        $this->grado = $grado;
+        $this->grupo = $grupo;
+        $query = "UPDATE alumnos SET nombre=?, usuario=?, asistencias=?, faltas=?, correo=?, grado=?, grupo=? WHERE id=?";
+        $data = array($this->nombre, $this->usuario, $this->asistencias, $this->faltas, $this->correo, $this->grado, $this->grupo, $this->id);
         $resul = $this->update($query, $data);
         $return = $resul;
         return $return;
     }
 
     //cambia de estado un usuario
-    public function eliminarAlumnos(int $id, int $estado)
+    public function estadoAlumnos(int $id, int $estado)
     {
         $return = "";
         $this->id = $id;
@@ -85,6 +97,34 @@ class AlumnosModel extends Mysql{
         return $return;
     }
 
+    //cambia de grado un usuario
+    public function gradoAlumnos(int $id, int $grado)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->grado = $grado;
+        $query = "UPDATE alumnos SET grado = ? WHERE id=?";
+        $data = array($this->grado, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+    //reinicia horas de los alumnos
+    public function reiniciarhoras(int $id, int $asistencias, $faltas)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->asistencias = $asistencias;
+        $this->faltas = $faltas;
+        $query = "UPDATE alumnos SET asistencias = ?, faltas = ? WHERE id=?";
+        $data = array($this->asistencias, $this->faltas, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+
     //Validad contraseña de usuario
     public function selectAlumno(string $usuario, string $clave)
     {
@@ -93,18 +133,6 @@ class AlumnosModel extends Mysql{
         $sql = "SELECT * FROM alumnos WHERE correo = '{$this->usuario}' AND clave = '{$this->clave}' AND estado=1";
         $res = $this->select($sql);
         return $res;
-    }
-
-    //reingresa un Alumnos
-    public function reingresarAlumnos(int $id)
-    {
-        $return = "";
-        $this->id = $id;
-        $query = "UPDATE alumnos SET estado = 1 WHERE id=?";
-        $data = array($this->id);
-        $resul = $this->update($query, $data);
-        $return = $resul;
-        return $return;
     }
 
     //verifica contraseña actual para cambiarla

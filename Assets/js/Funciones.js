@@ -197,6 +197,60 @@ $(document).ready(function () {
     });
   });
 
+  //Mensaje de alerta al subir grado
+  $(".subir").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de subir de grado a TODOS los alumnos?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al subir grado
+  $(".horas").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de reiniciar las asistencias y faltas a TODOS los alumnos?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al subir grado
+  $(".rest").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de restablecer la contraseña?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
   //Mensaje de reingresar algo
   $(".confirmar").submit(function (e) {
     e.preventDefault();

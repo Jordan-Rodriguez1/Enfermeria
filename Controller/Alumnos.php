@@ -14,7 +14,8 @@ class Alumnos extends Controllers
     public function Listar()
     {
         $data1 = $this->model->selectAlumnos();
-        $this->views->getView($this, "Listar", "", $data1);
+        $data2 = $this->model->configuracion();
+        $this->views->getView($this, "Listar", "", $data1, $data2);
     }
 
     //Añade un nuevo Alumno
@@ -23,20 +24,17 @@ class Alumnos extends Controllers
         $nombre = $_POST['nombre'];
         $usuario = $_POST['usuario'];
         $correo = $_POST['correo'];
-        $clave = $_POST['clave'];
-        $confirmar = $_POST['confirmar'];
+        $clave = $_POST['usuario']; //Por defecto se pone el no.cuenta
+        $grado = $_POST['grado'];
+        $grupo = $_POST['grupo'];
         $hash = hash("SHA256", $clave);
-        if ($clave != $confirmar) {
-            $alert = 'nocoincide';
+        $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
+        if ($insert == 'existe') {
+            $alert = 'existe';
+        } else if ($insert > 0) {
+            $alert = 'registrado';
         } else {
-            $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo);
-            if ($insert == 'existe') {
-                $alert = 'existe';
-            } else if ($insert > 0) {
-                $alert = 'registrado';
-            } else {
-                $alert = 'error';
-            }
+            $alert = 'error';
         }
         $data1 = $this->model->selectAlumnos(); 
         header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
@@ -64,7 +62,9 @@ class Alumnos extends Controllers
         $asistencias = $_POST['asistencias'];
         $faltas = $_POST['faltas'];
         $correo = $_POST['correo'];
-        $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo);     
+        $grado = $_POST['grado'];
+        $grupo = $_POST['grupo'];
+        $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);     
             if ($actualizar == 1) {
                 $alert = 'modificado';
             } else {
@@ -79,7 +79,7 @@ class Alumnos extends Controllers
     {
         $id = $_GET['id'];
         $estado = 0;
-        $eliminar = $this->model->eliminarAlumnos($id, $estado);
+        $eliminar = $this->model->estadoAlumnos($id, $estado);
         $alert = 'inactivo';
         $data1 = $this->model->selectAlumnos();
         header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
@@ -91,12 +91,65 @@ class Alumnos extends Controllers
     {
         $id = $_GET['id'];
         $estado = 2;
-        $eliminar = $this->model->eliminarAlumnos($id, $estado);
+        $eliminar = $this->model->estadoAlumnos($id, $estado);
         $alert =  'eliminado';
         $data1 = $this->model->selectAlumnos(); 
         header("location: " . base_url() . "Alumnos/eliminados?msg=$alert");
         die();
     }
+
+    //SUBE DE GRADO A TODOS LOS ALUMNOS
+    public function subirgrado()
+    {
+        $data = $this->model->selectAlumnos();
+        $config = $this->model->configuracion(); //EDITAR
+        foreach ($data as $al) {
+            $id = $al['id'];
+            $grado = $al['grado'] + 1;
+            if ($config['semestres'] < $grado) {
+                $estado = 0;
+                $eliminar = $this->model->estadoAlumnos($id, $estado);
+            } else {
+                $subir = $this->model->gradoAlumnos($id, $grado);
+            }
+        }
+        $alert =  'subido';
+        $data1 = $this->model->selectAlumnos(); 
+        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        die();
+    }
+    
+    //Reinicia hora A TODOS LOS ALUMNOS
+    public function reiniciarhoras()
+    {
+        $data = $this->model->selectAlumnos();
+        foreach ($data as $al) {
+            $id = $al['id'];
+            $asistencias = 0;
+            $faltas = 0;
+            $subir = $this->model->reiniciarhoras($id, $asistencias, $faltas);
+        }
+        $alert =  'horas';
+        $data1 = $this->model->selectAlumnos(); 
+        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        die();
+    }
+
+    //elimina un usuario (Solo se cambia de estado para no alterar pdf de reportes) A TODOS LOS ALUMNOS
+    public function eliminatodo()
+    {
+        $data = $this->model->selectInactivos();
+        foreach ($data as $al) {
+            $id = $al['id'];
+            $estado = 2;
+            $eliminar = $this->model->estadoAlumnos($id, $estado);
+        }
+        $alert =  'todo';
+        $data1 = $this->model->selectInactivos(); 
+        header("location: " . base_url() . "Alumnos/eliminados?msg=$alert");
+        die();
+    }
+    
 
     //Consulta los Alumno inactivos
     public function eliminados()
@@ -109,10 +162,45 @@ class Alumnos extends Controllers
     public function reingresar()
     {
         $id = $_GET['id'];
-        $this->model->reingresarAlumnos($id);
+        $estado = 1;
+        $eliminar = $this->model->estadoAlumnos($id, $estado);
         $data1 = $this->model->selectAlumnos(); 
         header('location: ' . base_url() . "Alumnos/eliminados?msg=$alert");
         die();
+    }
+
+    //Carga muchos alumnos
+    public function subirarchivo()
+    {
+        $tipo_archivo = $_FILES["archivo"]["type"];
+        $tamano_archivo = $_FILES["archivo"]["size"];
+        $ruta_temporal = $_FILES["archivo"]["tmp_name"];
+        $lineas = file($ruta_temporal);
+        $i = 0;
+        foreach ($lineas as $linea) {
+            $cantidad_total = count($lineas);
+            $cantidad_agregada = ($cantidad_total - 2);
+            if ($i > 1) {
+                $datos = explode(",", $linea);
+                $nombre = $datos[0];
+                $usuario = $datos[1];
+                $correo = $datos[2];
+                $clave = $datos[1]; //Por defecto se pone el no.cuenta
+                $grado = $datos[3];
+                $grupo = $datos[4];
+                $hash = hash("SHA256", $clave);
+                $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
+                echo '<div>' . "----------------------" .'</div>';
+                echo '<div>' . $nombre . $usuario . $correo . $hash . $grado . $grupo . '</div>';
+
+            }
+            echo '<div>' . $i. ")." .$linea .'</div>';
+            $i++;
+        }
+        $alert = "cargado";
+        $data1 = $this->model->selectAlumnos(); 
+        //header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        die();  
     }
 
     //Iniciar sesión
@@ -145,7 +233,6 @@ class Alumnos extends Controllers
     //Cambiar contraseña
     public function cambiar()
     {
-
         $hash = hash("SHA256", $_POST['actual']);
         $nuevahash = hash("SHA256", $_POST['nueva']);
         $nueva = $_POST['nueva'];
@@ -162,6 +249,17 @@ class Alumnos extends Controllers
             $alert =  'noigual';
         }
         header('location: ' . base_url() . "Dashboard/Alumnos?msg=$alert");  
+    }
+
+    //restablecer contraseña
+    public function restablecer()
+    {
+        $id = $_GET['id'];
+        $data = $this->model->editarAlumnos($id);
+        $hash = hash("SHA256", $data['usuario']);
+        $cambio =$this->model->cambiarContra($hash, $id);
+        $alert =  'rest';
+        header('location: ' . base_url() . "Alumnos/Listar?msg=$alert");  
     }
 
     //Cambiar Imagen Perfil

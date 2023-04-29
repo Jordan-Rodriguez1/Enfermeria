@@ -30,15 +30,22 @@
                         <div class="col-lg-12 mt-2">
                             <div class="row">
                                 <div class="col-lg-8 mb-2">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
-                                    <a href="<?php echo base_url(); ?>Alumnos/eliminados" class="btn btn-dark"><i class="fas fa-users-slash"></i> Inactivos</a>
+                                    <button class="btn btn-primary mb-2" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
+                                    <a href="<?php echo base_url(); ?>Alumnos/eliminados" class="btn btn-dark mb-2"><i class="fas fa-users-slash"></i> Inactivos</a>
+                                    <button class="btn btn-secondary mb-2" type="button" data-toggle="modal" data-target="#alumnos"><i class="fas fa-upload"></i> Cargar Alumnos</button>
+                                    <form action="<?php echo base_url() ?>Alumnos/subirgrado" method="post" class="d-inline subir">
+                                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-level-up-alt"></i> Subir Grado</button>
+                                    </form> 
+                                    <form action="<?php echo base_url() ?>Alumnos/reiniciarhoras" method="post" class="d-inline horas">
+                                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-redo"></i> Reiniciar Asistencias / Faltas</button>
+                                    </form> 
                                 </div>
                                 <div class="col-lg-4">
                                     <?php if (isset($_GET['msg'])) {
                                         $alert = $_GET['msg'];
                                         if ($alert == "existe") { ?>
                                             <div class="alert alert-warning" role="alert">
-                                                <strong>El usuario ya existe.</strong>
+                                                <strong>El alumno ya existe.</strong>
                                             </div>
                                         <?php } else if ($alert == "error") { ?>
                                             <div class="alert alert-danger" role="alert">
@@ -46,19 +53,27 @@
                                             </div>
                                         <?php } else if ($alert == "registrado") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>Usuario registrado.</strong>
+                                                <strong>Alumno registrado.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "rest") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>La contraseña del alumno se restableció.</strong>
                                             </div>
                                         <?php } else if ($alert == "modificado") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>Usuario modificado.</strong>
+                                                <strong>Alumno modificado.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "subido") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>Grado aumentado a todos los alumnos.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "cargado") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>Alumnos cargados.</strong>
                                             </div>
                                         <?php } else if ($alert == "inactivo") { ?>
                                             <div class="alert alert-success" role="alert">
                                                 <strong>El usuario fue inactivado.</strong>
-                                            </div>
-                                        <?php } else { ?>
-                                            <div class="alert alert-danger" role="alert">
-                                                <strong>Las contraseñas no coinciden.</strong>
                                             </div>
                                         <?php }
                                     } ?>
@@ -85,25 +100,28 @@
                                                 <td><?php echo $us['usuario']; ?></td>
                                                 <td><?php echo $us['correo']; ?></td>
                                                 <td><?php echo $us['grado'], 'º', $us['grupo'];?></td>
-                                                <?php if($us['asistencias'] <= 2){ ?> 
+                                                <?php if($us['asistencias'] <= ($data2['aminimas'])/2 ){ ?> 
                                                 <td class="table-danger"><?php echo $us['asistencias']; ?></td>
-                                                <?php }  else {if($us['asistencias'] <= 5){ ?>
+                                                <?php }  elseif ($us['asistencias'] < $data2['aminimas']){ ?>
                                                 <td class="table-warning"><?php echo $us['asistencias']; ?></td>    
                                                 <?php }  else { ?>
                                                 <td class="table-success"><?php echo $us['asistencias']; ?></td>
-                                                <?php } }?>
-                                                <?php if($us['faltas'] <= 2){ ?> 
+                                                <?php } ?>
+                                                <?php if($us['faltas'] <= ($data2['aminimas'])/2){ ?> 
                                                 <td class="table-danger"><?php echo $us['faltas']; ?></td>
-                                                <?php }  else {if($us['faltas'] <= 5){ ?>
+                                                <?php }  else {if($us['faltas'] < $data2['aminimas']){ ?>
                                                 <td class="table-warning"><?php echo $us['faltas']; ?></td>    
                                                 <?php }  else { ?>
                                                 <td class="table-success"><?php echo $us['faltas']; ?></td>
                                                 <?php } }?>
                                                 <td>
-                                                    <a href="<?php echo base_url() ?>Alumnos/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                    <a title="Editar" href="<?php echo base_url() ?>Alumnos/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
                                                     <form action="<?php echo base_url() ?>Alumnos/eliminar?id=<?php echo $us['id']; ?>" method="post" class="d-inline elim">
-                                                        <button type="submit" class="btn btn-dark"><i class="fas fa-user-slash"></i></button>
-                                                    </form>              
+                                                        <button title="Inactivar" type="submit" class="btn btn-dark mb-2"><i class="fas fa-user-slash"></i></button>
+                                                    </form> 
+                                                    <form action="<?php echo base_url() ?>Alumnos/restablecer?id=<?php echo $us['id']; ?>" method="post" class="d-inline rest">
+                                                        <button title="Restablecer contraseña" type="submit" class="btn btn-info mb-2"><i class="fas fa-redo-alt"></i></button>
+                                                    </form>      
                                                 </td>
                                             </tr>
                                         <?php } }?>
@@ -145,14 +163,14 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="clave">Contraseña</label>
-                                <input id="clave" class="form-control" type="password" name="clave" placeholder="Contraseña" required>
+                                <label for="grado">Grado</label>
+                                <input id="grado" class="form-control" type="number" name="grado" placeholder="Grado" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="confirmar">Confirma Contraseña</label>
-                                <input id="confirmar" class="form-control" type="password" name="confirmar" placeholder="Confirmar Contraseña" required>
+                                <label for="grupo">Grupo</label>
+                                <input id="grupo" class="form-control" type="text" name="grupo" placeholder="Grupo" required>
                             </div>
                         </div>
                     </div>
@@ -165,6 +183,35 @@
         </div>
     </div>
 </div>
+<div id="alumnos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title"><i class="fas fa-upload"></i> Cargar Alumnos</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo base_url(); ?>Alumnos/subirarchivo" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="img">Selecciona Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="archivo">
+                            <label class="custom-file-label" for="customFile"></label>
+                            <label><br><strong>Nota:</strong> Favor de solo subir el formato que se proporciona editado con los alumnos.</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-success mb-2" type="submit" id="subirarchivo"><i class="fas fa-save"></i> Registrar</button>
+                    <a href="<?php echo base_url() ?>/Assets/archivos/formatos/alumnos.xlsx" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
+                    <button class="btn btn-dark mb-2" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php } ?>
+
 
 <?php pie() ?>
