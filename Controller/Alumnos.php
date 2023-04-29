@@ -30,7 +30,23 @@ class Alumnos extends Controllers
         $hash = hash("SHA256", $clave);
         $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
         if ($insert == 'existe') {
-            $alert = 'existe';
+            $data1 = $this->model->editarAlumnoC($correo);
+            if ($data1['estado'] == 2) {
+                $asistencias = 0;
+                $faltas = 0;
+                $estado = 1;
+                $id = $data1['id'];
+                $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);
+                $cambio =$this->model->cambiarContra($hash, $id);
+                $eliminar = $this->model->estadoAlumnos($id, $estado);
+                    if ($actualizar == 1) {
+                        $alert = 'registrado';
+                    } else {
+                        $alert =  'error';
+                    }
+            } else {
+                $alert = 'existe';
+            }
         } else if ($insert > 0) {
             $alert = 'registrado';
         } else {
@@ -177,7 +193,10 @@ class Alumnos extends Controllers
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $lineas = file($ruta_temporal);
         $i = 0;
-        foreach ($lineas as $linea) {
+        $a = 0; //Agregados
+        $e = 0; //Error
+        $x = 0; //Ya existen
+        foreach (($lineas) as $linea) {
             $cantidad_total = count($lineas);
             $cantidad_agregada = ($cantidad_total - 2);
             if ($i > 1) {
@@ -188,18 +207,47 @@ class Alumnos extends Controllers
                 $clave = $datos[1]; //Por defecto se pone el no.cuenta
                 $grado = $datos[3];
                 $grupo = $datos[4];
+                if (empty($grupo)) {
+                    $grupo = "X";
+                }
+                if (empty($grado)) {
+                    $grado = 0;
+                }
                 $hash = hash("SHA256", $clave);
-                $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
-                echo '<div>' . "----------------------" .'</div>';
-                echo '<div>' . $nombre . $usuario . $correo . $hash . $grado . $grupo . '</div>';
-
+                if ($nombre != "" && $usuario != "" && $correo != ""){
+                    $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
+                    if ($insert == 'existe') {
+                        $data1 = $this->model->editarAlumnoC($correo);
+                        if ($data1['estado'] == 2) {
+                            $asistencias = 0;
+                            $faltas = 0;
+                            $estado = 1;
+                            $id = $data1['id'];
+                            $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);
+                            $cambio =$this->model->cambiarContra($hash, $id);
+                            $eliminar = $this->model->estadoAlumnos($id, $estado);
+                                if ($actualizar == 1) {
+                                    $a++;
+                                } else {
+                                    $e++;
+                                }
+                        } else {
+                            $x++; 
+                        }
+                    } else if ($insert > 0) {
+                        $a++;
+                    } else {
+                        $e++;
+                    }
+                } else{
+                    $e++;
+                }
             }
-            echo '<div>' . $i. ")." .$linea .'</div>';
             $i++;
         }
         $alert = "cargado";
         $data1 = $this->model->selectAlumnos(); 
-        //header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        header("location: " . base_url() . "Alumnos/Listar?msg=$alert&a=$a&e=$e&x=$x");
         die();  
     }
 

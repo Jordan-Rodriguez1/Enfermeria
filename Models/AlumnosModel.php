@@ -40,7 +40,7 @@ class AlumnosModel extends Mysql{
         $this->correo = $correo;
         $this->grado = $grado;
         $this->grupo = $grupo;
-        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->usuario}'";
+        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->correo}'";
         $result = $this->selecT($sql);
         if (empty($result)) {
             $query = "INSERT INTO alumnos(nombre, usuario, clave, correo, grado, grupo) VALUES (?,?,?,?,?,?)";
@@ -65,8 +65,20 @@ class AlumnosModel extends Mysql{
         return $res;
     }
 
+    //Seleciona los datos de un usuario mediante correo
+    public function editarAlumnoC(string $correo)
+    {
+        $this->correo = $correo;
+        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->correo}'";
+        $res = $this->select($sql);
+        if (empty($res)) {
+            $res = 0;
+        }
+        return $res;
+    }
+
     //Edita los datos de un usuario
-    public function actualizarAlumnos(string $nombre, string $usuario, string $asistencias, string $faltas, int $id, string $correo, int $grado, string $grupo)
+    public function actualizarAlumnos(string $nombre, string $usuario, string $asistencias, string $faltas, int $id, string $correo, string $grado, string $grupo)
     {
         $return = "";
         $this->nombre = $nombre;
@@ -131,6 +143,7 @@ class AlumnosModel extends Mysql{
         $this->usuario = $usuario;
         $this->clave = $clave;
         $sql = "SELECT * FROM alumnos WHERE correo = '{$this->usuario}' AND clave = '{$this->clave}' AND estado=1";
+        $prepare = $this->prepare($sql);
         $res = $this->select($sql);
         return $res;
     }

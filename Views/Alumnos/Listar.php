@@ -69,7 +69,13 @@
                                             </div>
                                         <?php } else if ($alert == "cargado") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>Alumnos cargados.</strong>
+                                                <strong><?php echo $_GET['a'];?> alumnos cargados.</strong> <br>
+                                            </div>
+                                            <div class="alert alert-danger" role="alert">
+                                                <strong><?php echo $_GET['e'];?> errores.</strong> <br>
+                                            </div>
+                                            <div class="alert alert-warning" role="alert">
+                                                <strong><?php echo $_GET['x'];?> alumnos ya existen.</strong> <br>
                                             </div>
                                         <?php } else if ($alert == "inactivo") { ?>
                                             <div class="alert alert-success" role="alert">
@@ -199,11 +205,11 @@
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="archivo">
                             <label class="custom-file-label" for="customFile"></label>
-                            <label><br><strong>Nota:</strong> Favor de solo subir el formato que se proporciona editado con los alumnos.</label>
+                            <label><br><strong>Nota:</strong> Favor de solo subir el formato que se proporciona editado con los alumnos, si no sabe como usar el formato dirigase al módulo Ayuda->Alumnos.</label>
                         </div>
                     </div>
                     <button class="btn btn-success mb-2" type="submit" id="subirarchivo"><i class="fas fa-save"></i> Registrar</button>
-                    <a href="<?php echo base_url() ?>/Assets/archivos/formatos/alumnos.xlsx" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
+                    <a href="<?php echo base_url() ?>/Assets/archivos/plantillas/PlantillaAlumnos.csv" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
                     <button class="btn btn-dark mb-2" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
                 </form>
             </div>
