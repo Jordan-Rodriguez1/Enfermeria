@@ -16,6 +16,7 @@ class Alumnos extends Controllers
         $data1 = $this->model->selectAlumnos();
         $data2 = $this->model->configuracion();
         $this->views->getView($this, "Listar", "", $data1, $data2);
+        die();  
     }
 
     //Añade un nuevo Alumno
@@ -67,6 +68,7 @@ class Alumnos extends Controllers
         } else {
             $this->views->getView($this, "Editar","", $data1);
         }
+        die();  
     }
 
     //Actualiza los datos de un Alumno
@@ -118,7 +120,7 @@ class Alumnos extends Controllers
     public function subirgrado()
     {
         $data = $this->model->selectAlumnos();
-        $config = $this->model->configuracion(); //EDITAR
+        $config = $this->model->configuracion();
         foreach ($data as $al) {
             $id = $al['id'];
             $grado = $al['grado'] + 1;
@@ -151,8 +153,8 @@ class Alumnos extends Controllers
         die();
     }
 
-    //elimina un usuario (Solo se cambia de estado para no alterar pdf de reportes) A TODOS LOS ALUMNOS
-    public function eliminatodo()
+    //elimina (Solo se cambia de estado para no alterar pdf de reportes) A TODOS LOS ALUMNOS
+    public function Etodo()
     {
         $data = $this->model->selectInactivos();
         foreach ($data as $al) {
@@ -160,7 +162,22 @@ class Alumnos extends Controllers
             $estado = 2;
             $eliminar = $this->model->estadoAlumnos($id, $estado);
         }
-        $alert =  'todo';
+        $alert =  'Etodo';
+        $data1 = $this->model->selectInactivos(); 
+        header("location: " . base_url() . "Alumnos/eliminados?msg=$alert");
+        die();
+    }
+
+    //reingresar (Solo se cambia de estado para no alterar pdf de reportes) A TODOS LOS ALUMNOS
+    public function Rtodo()
+    {
+        $data = $this->model->selectInactivos();
+        foreach ($data as $al) {
+            $id = $al['id'];
+            $estado = 1;
+            $eliminar = $this->model->estadoAlumnos($id, $estado);
+        }
+        $alert =  'Rtodo';
         $data1 = $this->model->selectInactivos(); 
         header("location: " . base_url() . "Alumnos/eliminados?msg=$alert");
         die();
@@ -171,7 +188,8 @@ class Alumnos extends Controllers
     public function eliminados()
     {
         $data1 = $this->model->selectInactivos();
-        $this->views->getView($this, "Eliminados", "", $data1);      
+        $this->views->getView($this, "Eliminados", "", $data1);   
+        die();     
     }
 
     //Reactiva los datos de un Usuario
@@ -188,66 +206,74 @@ class Alumnos extends Controllers
     //Carga muchos alumnos
     public function subirarchivo()
     {
+        $name = pathinfo($_FILES["archivo"]["name"]);
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
-        $lineas = file($ruta_temporal);
-        $i = 0;
-        $a = 0; //Agregados
-        $e = 0; //Error
-        $x = 0; //Ya existen
-        foreach (($lineas) as $linea) {
-            $cantidad_total = count($lineas);
-            $cantidad_agregada = ($cantidad_total - 2);
-            if ($i > 1) {
-                $datos = explode(",", $linea);
-                $nombre = $datos[0];
-                $usuario = $datos[1];
-                $correo = $datos[2];
-                $clave = $datos[1]; //Por defecto se pone el no.cuenta
-                $grado = $datos[3];
-                $grupo = $datos[4];
-                if (empty($grupo)) {
-                    $grupo = "X";
-                }
-                if (empty($grado)) {
-                    $grado = 0;
-                }
-                $hash = hash("SHA256", $clave);
-                if ($nombre != "" && $usuario != "" && $correo != ""){
-                    $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
-                    if ($insert == 'existe') {
-                        $data1 = $this->model->editarAlumnoC($correo);
-                        if ($data1['estado'] == 2) {
-                            $asistencias = 0;
-                            $faltas = 0;
-                            $estado = 1;
-                            $id = $data1['id'];
-                            $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);
-                            $cambio =$this->model->cambiarContra($hash, $id);
-                            $eliminar = $this->model->estadoAlumnos($id, $estado);
-                                if ($actualizar == 1) {
-                                    $a++;
-                                } else {
-                                    $e++;
-                                }
+        $tmaximo = 20 * 1024 * 1024;
+        if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "csv")){
+            $lineas = file($ruta_temporal);
+            $i = 0;
+            $a = 0; //Agregados
+            $e = 0; //Error
+            $x = 0; //Ya existen
+            foreach (($lineas) as $linea) {
+                $cantidad_total = count($lineas);
+                $cantidad_agregada = ($cantidad_total - 2);
+                if ($i > 1) {
+                    $datos = explode(",", $linea);
+                    $nombre = $datos[0];
+                    $usuario = $datos[1];
+                    $correo = $datos[2];
+                    $clave = $datos[1]; //Por defecto se pone el no.cuenta
+                    $grado = $datos[3];
+                    $grupo = $datos[4];
+                    if (empty($grupo)) {
+                        $grupo = "X";
+                    }
+                    if (empty($grado)) {
+                        $grado = 0;
+                    }
+                    $hash = hash("SHA256", $clave);
+                    if ($nombre != "" && $usuario != "" && $correo != ""){
+                        $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
+                        if ($insert == 'existe') {
+                            $data1 = $this->model->editarAlumnoC($correo);
+                            if ($data1['estado'] == 2) {
+                                $asistencias = 0;
+                                $faltas = 0;
+                                $estado = 1;
+                                $id = $data1['id'];
+                                $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);
+                                $cambio =$this->model->cambiarContra($hash, $id);
+                                $eliminar = $this->model->estadoAlumnos($id, $estado);
+                                    if ($actualizar == 1) {
+                                        $a++;
+                                    } else {
+                                        $e++;
+                                    }
+                            } else {
+                                $x++; 
+                            }
+                        } else if ($insert > 0) {
+                            $a++;
                         } else {
-                            $x++; 
+                            $e++;
                         }
-                    } else if ($insert > 0) {
-                        $a++;
-                    } else {
+                    } else{
                         $e++;
                     }
-                } else{
-                    $e++;
                 }
+                $i++;
             }
-            $i++;
+            $alert = "cargado";
+            $data1 = $this->model->selectAlumnos(); 
+            header("location: " . base_url() . "Alumnos/Listar?msg=$alert&a=$a&e=$e&x=$x");
+        }else{
+            $alert = "error";
+            $data1 = $this->model->selectAlumnos(); 
+            header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
         }
-        $alert = "cargado";
-        $data1 = $this->model->selectAlumnos(); 
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert&a=$a&e=$e&x=$x");
         die();  
     }
 
@@ -266,6 +292,7 @@ class Alumnos extends Controllers
                     $_SESSION['usuario'] = $data['usuario'];
                     $_SESSION['rol'] = $data['rol'];
                     $_SESSION['grado'] = $data['grado'];
+                    $_SESSION['grupo'] = $data['grupo'];
                     $_SESSION['perfil'] = $data['perfil'];
                     $_SESSION['asistencias'] = $data['asistencias'];
                     $_SESSION['faltas'] = $data['faltas'];
@@ -276,6 +303,7 @@ class Alumnos extends Controllers
                 header("location: ".base_url()."?msg=$error");
             }
         }
+        die();
     }
 
     //Cambiar contraseña
@@ -291,12 +319,13 @@ class Alumnos extends Controllers
                 $this->model->cambiarContra($nuevahash, $_SESSION['id']);
                 $alert =  'cambio';
             }  else{
-                $alert =  'error';
+                $alert =  'errorh';
             }
         } else {
             $alert =  'noigual';
         }
         header('location: ' . base_url() . "Dashboard/Alumnos?msg=$alert");  
+        die();
     }
 
     //restablecer contraseña
@@ -305,32 +334,46 @@ class Alumnos extends Controllers
         $id = $_GET['id'];
         $data = $this->model->editarAlumnos($id);
         $hash = hash("SHA256", $data['usuario']);
-        $cambio =$this->model->cambiarContra($hash, $id);
+        $cambio = $this->model->cambiarContra($hash, $id);
         $alert =  'rest';
-        header('location: ' . base_url() . "Alumnos/Listar?msg=$alert");  
+        header('location: ' . base_url() . "Alumnos/Listar?msg=$alert");
+        die();  
     }
 
     //Cambiar Imagen Perfil
     public function cambiarpic()
     {
+        $usuario = $this->model->editarAlumnos($_SESSION['id']);
+        $imgactual = $usuario['perfil'];
+        $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES["archivo"]["name"];
+        $nombre_nuevo = $_SESSION['id'].".".$name["extension"];
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $error_archivo = $_FILES["archivo"]["error"];
-        if ($error_archivo == UPLOAD_ERR_OK) {
-            $ruta_destino = "Assets/img/perfilesalumnos/".$nombre_archivo;
-            if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-            $id = $_SESSION['id'];
-            $this->model->img($nombre_archivo, $id);
-               $alert =  'imagen';
+        $tmaximo = 5 * 1024 * 1024;
+        if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
+            if ($error_archivo == UPLOAD_ERR_OK) {
+                if($imgactual != "perfil.jpg"){
+                    unlink("Assets/img/perfilesalumnos/".$imgactual);
+                }
+                $ruta_destino = "Assets/img/perfilesalumnos/".$nombre_nuevo;
+                if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
+                    $id = $_SESSION['id'];
+                    $this->model->img($nombre_nuevo, $id);
+                    $alert =  'imagen';
+                } else {
+                    $alert =  'noimagen';
+                }
             } else {
-               $alert =  'noimagen';
+            $alert =  'noimagen';
             }
         } else {
-        $alert =  'noimagen';
+            $alert =  'noimagen';
         }
         header('location: ' . base_url() . "Dashboard/Alumnos?msg=$alert");
+        die();
     }
 
     //Cerrar Sesión
@@ -338,6 +381,7 @@ class Alumnos extends Controllers
     {
         session_destroy();
         header("Location: ".base_url());
+        die();
     }
 }
 ?>

@@ -1,18 +1,16 @@
 <?php encabezado() ?>
 
 <?php if($_SESSION['rol'] <= 1){ ?> 
-<div class="page-content bg-light">
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -30,15 +28,17 @@
                         <div class="col-lg-12 mt-2">
                             <div class="row">
                                 <div class="col-lg-8 mb-2">
-                                    <button class="btn btn-primary mb-2" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
-                                    <a href="<?php echo base_url(); ?>Alumnos/eliminados" class="btn btn-dark mb-2"><i class="fas fa-users-slash"></i> Inactivos</a>
-                                    <button class="btn btn-secondary mb-2" type="button" data-toggle="modal" data-target="#alumnos"><i class="fas fa-upload"></i> Cargar Alumnos</button>
-                                    <form action="<?php echo base_url() ?>Alumnos/subirgrado" method="post" class="d-inline subir">
-                                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-level-up-alt"></i> Subir Grado</button>
-                                    </form> 
-                                    <form action="<?php echo base_url() ?>Alumnos/reiniciarhoras" method="post" class="d-inline horas">
-                                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-redo"></i> Reiniciar Asistencias / Faltas</button>
-                                    </form> 
+                                    <?php if($_SESSION['rol'] >= 4){ ?> 
+                                        <button class="btn btn-success mb-2" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
+                                        <a href="<?php echo base_url(); ?>Alumnos/eliminados" class="btn btn-dark mb-2"><i class="fas fa-users-slash"></i> Inactivos</a>
+                                        <button class="btn btn-secondary mb-2" type="button" data-toggle="modal" data-target="#alumnos"><i class="fas fa-upload"></i> Cargar Alumnos</button>
+                                        <form action="<?php echo base_url() ?>Alumnos/subirgrado" method="post" class="d-inline subir">
+                                            <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-level-up-alt"></i> Subir Grado</button>
+                                        </form> 
+                                        <form action="<?php echo base_url() ?>Alumnos/reiniciarhoras" method="post" class="d-inline horas">
+                                            <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-redo"></i> Reiniciar Asistencias / Faltas</button>
+                                        </form> 
+                                    <?php } ?> 
                                 </div>
                                 <div class="col-lg-4">
                                     <?php if (isset($_GET['msg'])) {
@@ -49,7 +49,7 @@
                                             </div>
                                         <?php } else if ($alert == "error") { ?>
                                             <div class="alert alert-danger" role="alert">
-                                                <strong>Error al registra.</strong>
+                                                <strong>Error al registrar.</strong>
                                             </div>
                                         <?php } else if ($alert == "registrado") { ?>
                                             <div class="alert alert-success" role="alert">
@@ -121,13 +121,17 @@
                                                 <td class="table-success"><?php echo $us['faltas']; ?></td>
                                                 <?php } }?>
                                                 <td>
-                                                    <a title="Editar" href="<?php echo base_url() ?>Alumnos/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
-                                                    <form action="<?php echo base_url() ?>Alumnos/eliminar?id=<?php echo $us['id']; ?>" method="post" class="d-inline elim">
-                                                        <button title="Inactivar" type="submit" class="btn btn-dark mb-2"><i class="fas fa-user-slash"></i></button>
-                                                    </form> 
-                                                    <form action="<?php echo base_url() ?>Alumnos/restablecer?id=<?php echo $us['id']; ?>" method="post" class="d-inline rest">
-                                                        <button title="Restablecer contraseña" type="submit" class="btn btn-info mb-2"><i class="fas fa-redo-alt"></i></button>
-                                                    </form>      
+                                                    <?php if($_SESSION['rol'] >= 4){ ?> 
+                                                        <a title="Editar" href="<?php echo base_url() ?>Alumnos/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
+                                                        <form action="<?php echo base_url() ?>Alumnos/eliminar?id=<?php echo $us['id']; ?>" method="post" class="d-inline elim">
+                                                            <button title="Inactivar" type="submit" class="btn btn-dark mb-2"><i class="fas fa-user-slash"></i></button>
+                                                        </form> 
+                                                        <form action="<?php echo base_url() ?>Alumnos/restablecer?id=<?php echo $us['id']; ?>" method="post" class="d-inline rest">
+                                                            <button title="Restablecer contraseña" type="submit" class="btn btn-secondary mb-2"><i class="fas fa-redo-alt"></i></button>
+                                                        </form>    
+                                                    <?php } else {?>  
+                                                        <p href="">SIN ACCIONES</p>
+                                                    <?php } ?>        
                                                 </td>
                                             </tr>
                                         <?php } }?>
@@ -205,7 +209,7 @@
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="archivo">
                             <label class="custom-file-label" for="customFile"></label>
-                            <label><br><strong>Nota:</strong> Favor de solo subir el formato que se proporciona editado con los alumnos, si no sabe como usar el formato dirigase al módulo Ayuda->Alumnos.</label>
+                            <label><br><strong>Nota:</strong> Favor de solo subir el formato que se proporciona editado con los alumnos, si no sabe como usar el formato dirigase al módulo Ayuda->Alumnos. El tamaño máximo del archivo debe ser menor a 20 MB.</label>
                         </div>
                     </div>
                     <button class="btn btn-success mb-2" type="submit" id="subirarchivo"><i class="fas fa-save"></i> Registrar</button>

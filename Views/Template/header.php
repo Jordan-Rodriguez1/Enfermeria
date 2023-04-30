@@ -53,7 +53,7 @@
                             <div class="alert alert-success" role="alert">
                                 <strong>Contraseña Cambiada.</strong>
                             </div>
-                        <?php } else if ($alert == "error") { ?>
+                        <?php } else if ($alert == "errorh") { ?>
                             <div class="alert alert-danger" role="alert">
                                 <strong>Error. La contraseña actual es incorrecta.</strong>
                             </div>
@@ -64,6 +64,10 @@
                         <?php } else if ($alert == "noimagen") { ?>
                             <div class="alert alert-danger" role="alert">
                                 <strong>Error. No se pudo cambiar la imagen.</strong>
+                            </div>
+                        <?php } else if ($alert == "formato") { ?>
+                            <div class="alert alert-danger" role="alert">
+                                <strong>Error. Formato no valido.</strong>
                             </div>
                         <?php } else if ($alert == "noigual"){ ?>
                             <div class="alert alert-warning" role="alert">
@@ -132,12 +136,6 @@
                     </ul>
                 </li>
 -->
-                <!-- PROCESO-->
-
-
-
-                <li><a href="<?php echo base_url(); ?>Alumnos/Listar"> <i class="fas fa-user"></i> <strong class="text-black"> Alumnos </strong></a></li>
-
 
                 
                  <!-- CORRECTO-->
@@ -175,7 +173,8 @@
                         <li><a href="<?php echo base_url(); ?>Practicas/Plantillas"><i class="fas fa-pen-alt"></i> Plantillas </a></li>
                         <li><a href="<?php echo base_url(); ?>Practicas/Practicas"><i class="fas fa-book"></i> Prácticas </a></li>
                     </ul>
-                </li>   
+                </li>
+                <li><a href="<?php echo base_url(); ?>Alumnos/Listar"> <i class="fas fa-user"></i> <strong class="text-black"> Alumnos </strong></a></li>
                 <?php } ?>
 
 

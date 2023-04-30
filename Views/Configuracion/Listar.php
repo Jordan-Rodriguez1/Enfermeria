@@ -98,7 +98,7 @@
                                         <div class="form-group">
                                             <label for="aminimas">Asistencias Mínimas</label>
                                             <input id="id" type="hidden" name="id" value="<?php echo $data1['id']; ?>">
-                                            <input id="aminimas" class="form-control" type="number" name="aminimas" value="<?php echo $data1['aminimas']; ?>">
+                                            <input id="aminimas" class="form-control" type="number" name="aminimas" value="<?php echo $data1['semestres']; ?>">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

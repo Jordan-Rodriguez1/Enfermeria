@@ -219,7 +219,8 @@ $(document).ready(function () {
   $(".horas").submit(function (e) {
     e.preventDefault();
     Swal.fire({
-      title: "¿Está seguro de reiniciar las asistencias y faltas a TODOS los alumnos?",
+      title:
+        "¿Está seguro de reiniciar las asistencias y faltas a TODOS los alumnos?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#28a745",
@@ -238,6 +239,42 @@ $(document).ready(function () {
     e.preventDefault();
     Swal.fire({
       title: "¿Está seguro de restablecer la contraseña?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al subir grado
+  $(".Etodo").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de eliminar TODOS los alumnos inactivos?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al subir grado
+  $(".Rtodo").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de reingresar a TODOS los alumnos inactivos?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#28a745",
