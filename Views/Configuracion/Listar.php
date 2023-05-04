@@ -94,37 +94,62 @@
                         <div class="col-lg-12 mt-2">
                             <form action="<?php echo base_url(); ?>/Configuracion/actualizarA" method="post">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 mb-2">
                                         <div class="form-group">
-                                            <label for="aminimas">Asistencias Mínimas</label>
+                                            <label for="semestres">Semestres</label>
                                             <input id="id" type="hidden" name="id" value="<?php echo $data1['id']; ?>">
-                                            <input id="aminimas" class="form-control" type="number" name="aminimas" value="<?php echo $data1['semestres']; ?>">
+                                            <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data1['semestres']; ?>">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for="fmaximas">Faltas Máximas</label>
-                                            <input id="fmaximas" class="form-control" type="number" name="fmaximas" value="<?php echo $data1['fmaximas']; ?>">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-8 mb-2">
-                                        <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Actualizar</button>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <?php if (isset($alert['mensaje'])) {
-                                            if ($alert['mensaje'] == "registrado") { ?>
-                                                <div class="alert alert-success" role="alert">
-                                                <strong>Datos modificados.</strong>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="alert alert-danger" role="alert">
-                                                <strong>Error al actualizar.</strong>
-                                                </div>
-                                            <?php }
-                                         } ?>
+                                    <div class="col-lg-6 mb-2">
+                                        <br>
+                                        <button class="btn btn-success" style="margin-top: 8px;" type="submit"><i class="fas fa-save"></i> Actualizar</button>
                                     </div>
                                 </div>
                             </form>
+                            <?php foreach ($data2 as $data) { ?>
+                                <form action="<?php echo base_url(); ?>/Configuracion/ActSemestre" method="post">
+                                    <div class="row">
+                                        <div class="col-lg-3 mb-2">
+                                            <div class="form-group">
+                                                <label for="aminimas">Semestres</label>
+                                                <input id="id" type="hidden" name="id" value="<?php echo $data['id']; ?>">
+                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data['id']; ?>">
+                                            </div>
+                                        <div class="col-lg-3 mb-2">
+                                            <div class="form-group">
+                                                <label for="aminimas">Semestres</label>
+                                                <input id="id" type="hidden" name="id" value="<?php echo $data['id']; ?>">
+                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data['aminimas']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 mb-2">
+                                            <div class="form-group">
+                                                <label for="aminimas">Semestres</label>
+                                                <input id="id" type="hidden" name="id" value="<?php echo $data['id']; ?>">
+                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data['fmaximas']; ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 mb-2">
+                                            <br>
+                                            <button class="btn btn-success" style="margin-top: 8px;" type="submit"><i class="fas fa-save"></i> Actualizar</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            <?php } ?>
+                            <div class="col-lg-4">
+                                <?php if (isset($alert['mensaje'])) {
+                                    if ($alert['mensaje'] == "registrado") { ?>
+                                        <div class="alert alert-success" role="alert">
+                                        <strong>Datos modificados.</strong>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="alert alert-danger" role="alert">
+                                        <strong>Error al actualizar.</strong>
+                                        </div>
+                                    <?php }
+                                 } ?>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -31,16 +31,57 @@ class ConfiguracionModel extends Mysql{
     }
 
     //ACTUALIZA LOS DATOS DE CONFIGURACIÓN FALTAS
-    public function actualizarConfiguracionA(String $aminimas, string $fmaximas, int $id)
+    public function actualizarConfiguracionA(String $semestres, int $id)
+    {
+        $return = "";
+        $this->semestres = $semestres;
+        $this->id = $id;
+        $query = "UPDATE configuracion SET semestres=? WHERE id=?";
+        $data = array($this->semestres, $this->id);
+        $resul = $this->update($query, $data);
+        return $resul;
+    }
+    //elimina todos los semestres
+    public function elsemestres()
+    {
+        $return = "";
+        $query = "DELETE FROM configsemestre";
+        $resul = $this->select($query);
+        return $resul;
+    }
+
+    //Añade nuevos semestres
+    public function addsemestre(int $id)
+    {
+        $return = "";
+        $this->id = $id;
+        $query = "INSERT INTO configsemestre(id) VALUES (?)";
+        $data = array($this->id);
+        $resul = $this->insert($query, $data);
+        return $resul;
+    }
+
+    //ACTUALIZA LOS DATOS DE semestres
+    public function actsemestre(String $aminimas, String $fmaximas, int $id)
     {
         $return = "";
         $this->aminimas = $aminimas;
         $this->fmaximas = $fmaximas;
         $this->id = $id;
-        $query = "UPDATE configuracion SET aminimas=?, fmaximas=? WHERE id=?";
+        $query = "UPDATE configsemestre SET aminimas=?, fmaximas=? WHERE id=?";
         $data = array($this->aminimas, $this->fmaximas, $this->id);
         $resul = $this->update($query, $data);
         return $resul;
     }
+
+    //SELECCIONA TODOS LOS DATOS DE CONFIGURACIÓN Act
+    public function selectConfiguracionA()
+    {
+        $sql = "SELECT * FROM configsemestre";
+        $res = $this->select_all($sql);
+        return $res;
+    }
 }
 ?>
+
+ 

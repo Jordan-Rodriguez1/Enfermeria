@@ -12,8 +12,9 @@ class Configuracion extends Controllers{
     //SELECCIONA LOS DATOSA EXISTENTES
     public function Listar()
     {
-        $data1 = $this->model->selectConfiguracion();         
-        $this->views->getView($this, "Listar", "", $data1);
+        $data1 = $this->model->selectConfiguracion();   
+        $data2 = $this->model->selectConfiguracionA();        
+        $this->views->getView($this, "Listar", "", $data1, $data2);
     }
 
     //ACTUALIZA LOS DATOSA EXISTENTES
@@ -40,9 +41,28 @@ class Configuracion extends Controllers{
     public function actualizarA()
     {
         $id = $_POST['id'];
-        $aminimas = $_POST['aminimas'];
-        $fmaximas = $_POST['fmaximas'];
-        $actualizar = $this->model->actualizarConfiguracionA($aminimas, $fmaximas, $id);
+        $semestres = $_POST['semestres'];
+        $actualizar = $this->model->actualizarConfiguracionA($semestres, $id);
+        if ($actualizar == 1) {
+            $alert = array('mensaje' => 'registrado');
+            $eliminar = $this->model->elsemestres();
+            for ($i = 1; $i <= $semestres; $i++) {
+                $sem = $this->model->addsemestre($i);
+            }
+        }else {
+            $alert = array('mensaje' => 'error');
+        }
+        $data1 = $this->model->selectConfiguracion();
+        $this->views->getView($this, "Listar", $alert, $data1);
+        die();
+    }
+
+    //ACTUALIZA LOS semestres EXISTENTES FALTAS
+    public function ActSemestre()
+    {
+        $id = $_POST['id'];
+        $semestres = $_POST['semestres'];
+        $actualizar = $this->model->actualizarConfiguracionA($semestres, $id);
         if ($actualizar == 1) {
             $alert = array('mensaje' => 'registrado');
         }else {
