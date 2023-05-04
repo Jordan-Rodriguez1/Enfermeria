@@ -63,10 +63,11 @@ class Alumnos extends Controllers
     {
         $id = $_GET['id'];
         $data1 = $this->model->editarAlumnos($id);
+        $data2 = $this->model->configuracion();
         if ($data1 == 0) {
             $this->Listar();
         } else {
-            $this->views->getView($this, "Editar","", $data1);
+            $this->views->getView($this, "Editar","", $data1, $data2);
         }
         die();  
     }

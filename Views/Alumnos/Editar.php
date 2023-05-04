@@ -55,14 +55,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="usuario">No. Trabajador</label>
-                                        <input id="usuario" class="form-control" type="number" name="usuario" placeholder="No. Trabajador" value="<?php echo $data1['usuario']; ?>" required>
+                                        <label for="usuario">No. Cuenta</label>
+                                        <input id="usuario" class="form-control" type="number" name="usuario" placeholder="No. Cuenta" min="10000000" max="99999999" value="<?php echo $data1['usuario']; ?>" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label for="grado">Grado</label>
-                                        <input id="grado" class="form-control" type="number" name="grado" placeholder="Grado" value="<?php echo $data1['grado']; ?>" required>
+                                        <input id="grado" class="form-control" type="number" name="grado" max="<?php echo $data2['semestres']; ?>" placeholder="Grado" value="<?php echo $data1['grado']; ?>" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

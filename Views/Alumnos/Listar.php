@@ -168,19 +168,19 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="usuario">No. Cuenta</label>
-                                <input id="usuario" class="form-control" type="number" name="usuario" placeholder="No. Trabajador" required>
+                                <input id="usuario" class="form-control" type="number" min="10000000" max="99999999" name="usuario" placeholder="No. Cuenta" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="grado">Grado</label>
-                                <input id="grado" class="form-control" type="number" name="grado" placeholder="Grado" required>
+                                <input id="grado" class="form-control" type="number" name="grado" max="<?php echo $data2['semestres']; ?>" placeholder="Grado" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="grupo">Grupo</label>
-                                <input id="grupo" class="form-control" type="text" name="grupo" placeholder="Grupo" required>
+                                <input id="grupo" class="form-control" type="text" name="grupo" maxlength="1" placeholder="Grupo" required>
                             </div>
                         </div>
                     </div>
