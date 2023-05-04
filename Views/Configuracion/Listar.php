@@ -99,7 +99,7 @@
                                         <div class="form-group">
                                             <label for="semestres">Semestres</label>
                                             <input id="id" type="hidden" name="id" value="<?php echo $data1['id']; ?>">
-                                            <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data1['semestres']; ?>">
+                                            <input id="semestres" min="1" class="form-control" type="number" name="semestres" value="<?php echo $data1['semestres']; ?>">
                                         </div>
                                     </div>
                                     <div class="col-lg-4 mb-2">
@@ -130,19 +130,19 @@
                                             <div class="form-group">
                                                 <label for="semestre">Semestre</label>
                                                 <input id="id" type="hidden" name="id" value="<?php echo $da['id']; ?>">
-                                                <input id="semestre" class="form-control" type="number" name="semestre" value="<?php echo $da['id']; ?>">
+                                                <input id="semestre" class="form-control" type="number" name="semestre" value="<?php echo $da['id']; ?>" disabled>
                                             </div>
                                         </div>
                                         <div class="col-lg-3 mb-2">
                                             <div class="form-group">
                                                 <label for="aminimas">Asistencias Mínimas</label>
-                                                <input id="aminimas" class="form-control" type="number" name="aminimas" value="<?php echo $da['aminimas']; ?>">
+                                                <input id="aminimas" min="0" class="form-control" type="number" name="aminimas" value="<?php echo $da['aminimas']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-3 mb-2">
                                             <div class="form-group">
                                                 <label for="fmaximas">Faltas Máximas</label>
-                                                <input id="fmaximas" class="form-control" type="number" name="fmaximas" value="<?php echo $da['fmaximas']; ?>">
+                                                <input id="fmaximas" min="0" class="form-control" type="number" name="fmaximas" value="<?php echo $da['fmaximas']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-3 mb-2">
