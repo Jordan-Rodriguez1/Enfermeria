@@ -14,11 +14,19 @@ class AlumnosModel extends Mysql{
         return $res;
     }
 
-    //Selecciona configuraciones para faltas
+    //Selecciona configuraciones para semestres
     public function configuracion()
     {
         $sql = "SELECT * FROM configuracion";
         $res = $this->select($sql);
+        return $res;
+    }
+
+    //Selecciona configuraciones para faltas
+    public function configuracionA()
+    {
+        $sql = "SELECT * FROM configsemestre";
+        $res = $this->select_all($sql);
         return $res;
     }
 

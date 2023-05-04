@@ -81,6 +81,7 @@
                                             <th>Nombre</th>
                                             <th>No. Cuenta</th>
                                             <th>Correo</th>
+                                            <th>Grado y Grupo</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -91,12 +92,13 @@
                                                 <td><?php echo $us['nombre']; ?></td>
                                                 <td><?php echo $us['usuario']; ?></td>
                                                 <td><?php echo $us['correo']; ?></td>
+                                                <td><?php echo $us['grado'], 'º', $us['grupo'];?></td>
                                                 <td>
                                                     <form action="<?php echo base_url() ?>Alumnos/reingresar?id=<?php echo $us['id']; ?>" method="post" class="d-inline confirmar">
-                                                        <button title="Reingresar" type="submit" class="btn btn-success"><i class="fas fa-user"></i></button>
+                                                        <button title="Reingresar" type="submit" class="btn btn-success mb-2"><i class="fas fa-user"></i></button>
                                                     </form>
                                                     <form action="<?php echo base_url() ?>Alumnos/eliminarper?id=<?php echo $us['id']; ?>" method="post" class="d-inline elimper">
-                                                        <button title="Eliminar" type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                        <button title="Eliminar" type="submit" class="btn btn-danger mb-2"><i class="fas fa-trash-alt"></i></button>
                                                     </form>
                                                 </td>
                                             </tr>

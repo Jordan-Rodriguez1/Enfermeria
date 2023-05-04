@@ -106,19 +106,19 @@
                                                 <td><?php echo $us['usuario']; ?></td>
                                                 <td><?php echo $us['correo']; ?></td>
                                                 <td><?php echo $us['grado'], 'º', $us['grupo'];?></td>
-                                                <?php if($us['asistencias'] <= ($data2['aminimas'])/2 ){ ?> 
+                                                <?php if($us['asistencias'] < ($data3[$us['grado']-1]['aminimas'])/2 ){ ?> 
                                                 <td class="table-danger"><?php echo $us['asistencias']; ?></td>
-                                                <?php }  elseif ($us['asistencias'] < $data2['aminimas']){ ?>
+                                                <?php }  elseif ($us['asistencias'] < ($data3[$us['grado']-1]['aminimas'])){ ?>
                                                 <td class="table-warning"><?php echo $us['asistencias']; ?></td>    
                                                 <?php }  else { ?>
                                                 <td class="table-success"><?php echo $us['asistencias']; ?></td>
                                                 <?php } ?>
-                                                <?php if($us['faltas'] <= ($data2['aminimas'])/2){ ?> 
-                                                <td class="table-danger"><?php echo $us['faltas']; ?></td>
-                                                <?php }  else {if($us['faltas'] < $data2['aminimas']){ ?>
+                                                <?php if($us['faltas'] <= ($data3[$us['grado']-1]['fmaximas'])/2){ ?> 
+                                                <td class="table-success"><?php echo $us['faltas']; ?></td>
+                                                <?php }  else {if($us['faltas'] < $data3[$us['grado']-1]['fmaximas']){ ?>
                                                 <td class="table-warning"><?php echo $us['faltas']; ?></td>    
                                                 <?php }  else { ?>
-                                                <td class="table-success"><?php echo $us['faltas']; ?></td>
+                                                <td class="table-danger"><?php echo $us['faltas']; ?></td>
                                                 <?php } }?>
                                                 <td>
                                                     <?php if($_SESSION['rol'] >= 4){ ?> 
@@ -127,7 +127,7 @@
                                                             <button title="Inactivar" type="submit" class="btn btn-dark mb-2"><i class="fas fa-user-slash"></i></button>
                                                         </form> 
                                                         <form action="<?php echo base_url() ?>Alumnos/restablecer?id=<?php echo $us['id']; ?>" method="post" class="d-inline rest">
-                                                            <button title="Restablecer contraseña" type="submit" class="btn btn-secondary mb-2"><i class="fas fa-redo-alt"></i></button>
+                                                            <button title="Restablecer contraseña" type="submit" class="btn btn-secondary mb-2"><i class="fas fa-unlock-alt"></i></button>
                                                         </form>    
                                                     <?php } else {?>  
                                                         <p href="">SIN ACCIONES</p>

@@ -86,8 +86,8 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Modificar</button>
-                            <a href="<?php echo base_url(); ?>Alumnos/Listar" class="btn btn-danger"><i class="fas fa-window-close"></i> Cancelar</a>
+                            <button class="btn btn-success mb-2" type="submit"><i class="fas fa-save"></i> Modificar</button>
+                            <a href="<?php echo base_url(); ?>Alumnos/Listar" class="btn btn-danger mb-2"><i class="fas fa-window-close"></i> Cancelar</a>
                         </div>
                     </form>
                 </div>

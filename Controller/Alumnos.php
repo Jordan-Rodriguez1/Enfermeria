@@ -15,7 +15,8 @@ class Alumnos extends Controllers
     {
         $data1 = $this->model->selectAlumnos();
         $data2 = $this->model->configuracion();
-        $this->views->getView($this, "Listar", "", $data1, $data2);
+        $data3 = $this->model->configuracionA();
+        $this->views->getView($this, "Listar", "", $data1, $data2, $data3);
         die();  
     }
 

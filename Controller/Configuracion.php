@@ -63,12 +63,13 @@ class Configuracion extends Controllers{
     public function ActSemestre()
     {
         $id = $_POST['id'];
-        $semestres = $_POST['semestres'];
-        $actualizar = $this->model->actualizarConfiguracionA($semestres, $id);
+        $aminimas = $_POST['aminimas'];
+        $fmaximas = $_POST['fmaximas'];
+        $actualizar = $this->model->actsemestre($aminimas, $fmaximas, $id);
         if ($actualizar == 1) {
             $alert = 'registrado';
         }else {
-            $alert = 'error';
+            $alert = 'error2';
         }
         $data1 = $this->model->selectConfiguracion();
         $data2 = $this->model->selectConfiguracionA();  
