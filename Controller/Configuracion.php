@@ -28,12 +28,13 @@ class Configuracion extends Controllers{
         $ciudad = $_POST['ciudad'];
         $actualizar = $this->model->actualizarConfiguracion($facultad, $calle, $colonia, $cp, $ciudad ,$id);
         if ($actualizar == 1) {
-            $alert = array('mensaje' => 'modificado');
+            $alert = 'modificado';
         }else {
-            $alert = array('mensaje' => 'error');
+            $alert = 'error';
         }
         $data1 = $this->model->selectConfiguracion();
-        $this->views->getView($this, "Listar", $alert, $data1);
+        $data2 = $this->model->selectConfiguracionA();  
+        header("location: " . base_url() . "Configuracion/Listar?msg=$alert");
         die();
     }
 
@@ -50,10 +51,11 @@ class Configuracion extends Controllers{
                 $sem = $this->model->addsemestre($i);
             }
         }else {
-            $alert = array('mensaje' => 'error');
+            $alert = 'error';
         }
         $data1 = $this->model->selectConfiguracion();
-        $this->views->getView($this, "Listar", $alert, $data1);
+        $data2 = $this->model->selectConfiguracionA();  
+        header("location: " . base_url() . "Configuracion/Listar?msg=$alert");
         die();
     }
 
@@ -64,12 +66,13 @@ class Configuracion extends Controllers{
         $semestres = $_POST['semestres'];
         $actualizar = $this->model->actualizarConfiguracionA($semestres, $id);
         if ($actualizar == 1) {
-            $alert = array('mensaje' => 'registrado');
+            $alert = 'registrado';
         }else {
-            $alert = array('mensaje' => 'error');
+            $alert = 'error';
         }
         $data1 = $this->model->selectConfiguracion();
-        $this->views->getView($this, "Listar", $alert, $data1);
+        $data2 = $this->model->selectConfiguracionA();  
+        header("location: " . base_url() . "Configuracion/Listar?msg=$alert");
         die();
     }
 }

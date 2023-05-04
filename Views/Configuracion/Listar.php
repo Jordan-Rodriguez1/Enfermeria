@@ -107,27 +107,27 @@
                                     </div>
                                 </div>
                             </form>
-                            <?php foreach ($data2 as $data) { ?>
+                            <?php foreach ($data2 as $da) { ?>
                                 <form action="<?php echo base_url(); ?>/Configuracion/ActSemestre" method="post">
                                     <div class="row">
                                         <div class="col-lg-3 mb-2">
                                             <div class="form-group">
                                                 <label for="aminimas">Semestres</label>
-                                                <input id="id" type="hidden" name="id" value="<?php echo $data['id']; ?>">
-                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data['id']; ?>">
+                                                <input id="id" type="hidden" name="id" value="<?php echo $da['id']; ?>">
+                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $da['id']; ?>">
                                             </div>
                                         <div class="col-lg-3 mb-2">
                                             <div class="form-group">
                                                 <label for="aminimas">Semestres</label>
-                                                <input id="id" type="hidden" name="id" value="<?php echo $data['id']; ?>">
-                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data['aminimas']; ?>">
+                                                <input id="id" type="hidden" name="id" value="<?php echo $da['id']; ?>">
+                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $da['aminimas']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-3 mb-2">
                                             <div class="form-group">
                                                 <label for="aminimas">Semestres</label>
-                                                <input id="id" type="hidden" name="id" value="<?php echo $data['id']; ?>">
-                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $data['fmaximas']; ?>">
+                                                <input id="id" type="hidden" name="id" value="<?php echo $da['id']; ?>">
+                                                <input id="semestres" class="form-control" type="number" name="semestres" value="<?php echo $da['fmaximas']; ?>">
                                             </div>
                                         </div>
                                         <div class="col-lg-3 mb-2">
