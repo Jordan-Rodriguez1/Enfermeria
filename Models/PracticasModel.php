@@ -570,7 +570,36 @@ class PracticasModel extends Mysql{
         return $res;
     }
 
+    //Selecciona la lista de alumnos registrados con los nombres
+    public function asistencia(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT asistencias.id, asistencias.asistencia, u1.nombre as id_alumnos FROM asistencias 
+                JOIN alumnos u1 ON asistencias.id_alumno = u1.id WHERE asistencias.id_practica = '{$this->id}'";
+        $res = $this->select_all($sql);
+        return $res;
+    }
 
+    //Cambia el estado de la asistencia
+    public function editAsistencia(int $id, int $estado)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->estado = $estado;
+        $query = "UPDATE asistencias SET asistencia = ? WHERE id=?";
+        $data = array($this->estado,$this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
 
+    public function selectPractica(int $id)
+    {
+        $return = "";
+        $this->id = $id;
+        $sql = "SELECT * FROM practicas WHERE id = '{$this->id}'";
+        $res = $this->select($sql);
+        return $res;
+    }
 }
 ?>

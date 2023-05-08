@@ -91,7 +91,7 @@
                                                     <form action="<?php echo base_url() ?>Practicas/Peliminar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline elim">
                                                         <button type="submit" class="btn btn-dark"><i class="fas fa-user-slash"></i></button>
                                                     </form>  
-                                                    <a href="<?php echo base_url() ?>Practicas/Pregistrar?id=<?php echo $lista['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                    <a href="<?php echo base_url() ?>Practicas/NombrarLista?id=<?php echo $lista['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                                                 </td>
                                             </tr>
                                         <?php } ?>

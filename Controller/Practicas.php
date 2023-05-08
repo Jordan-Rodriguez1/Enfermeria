@@ -503,5 +503,26 @@ class Practicas extends Controllers{
         header("location: " . base_url() . "Practicas/Practicas?msg=$alert");
         die();
     }
+
+    //Muestra la lista de alumnos registrados.
+    public function NombrarLista()
+    {
+        $id = $_GET['id'];
+        $data1 = $this->model->asistencia($id);
+        $data2 = $this->model->selectPractica($id);
+        $this->views->getView($this, "NombrarLista", "", $data1, $data2);
+        die();
+    }
+
+    //Muestra la lista de alumnos registrados.
+    public function editAsistencia()
+    {
+        $id = $_GET['id'];
+        $estado = $_GET['estado'];
+        $practica = $_GET['practica'];
+        $edit = $this->model->editAsistencia($id, $estado);
+        header("location: " . base_url() . "Practicas/NombrarLista?id=$practica");
+        die();
+    }
 }
 ?>
