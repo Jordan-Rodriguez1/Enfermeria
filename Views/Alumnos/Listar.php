@@ -214,7 +214,7 @@
                     </div>
                     <button class="btn btn-success mb-2" type="submit" id="subirarchivo"><i class="fas fa-save"></i> Registrar</button>
                     <a href="<?php echo base_url() ?>/Assets/archivos/plantillas/PlantillaAlumnos.csv" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
-                    <button class="btn btn-dark mb-2" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
+                    <button class="btn btn-danger mb-2" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
                 </form>
             </div>
             </div>

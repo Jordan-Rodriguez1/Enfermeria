@@ -1,35 +1,34 @@
 <?php encabezado() ?>
 
 <?php if($_SESSION['rol'] <= 1){ ?> 
-<div class="page-content bg-light">
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
 </div>
 <?php }  else { ?>
+
 <!-- Begin Page Content -->
 <div class="page-content">
     <section>
         <div class="card container-fluid2">
-            <h5 class="card-header"><i class="fas fa-clipboard-list"></i> <strong>Prácticas Generadas</strong></h5>
+            <h5 class="card-header"><i class="fas fa-clock"></i> <strong>Prácticas Pendientes y En Proceso</strong></h5>
             <div class="card-body">
                 <div class="container-fluid ">
                     <div class="row">
                         <div class="col-lg-12 mt-2">
                             <div class="row">
                                 <div class="col-lg-8 mb-2">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#nueva_practica"><i class="fas fa-plus-circle"></i> Nueva</button>
+                                    <button class="btn btn-success mb-2" type="button" data-toggle="modal" data-target="#nueva_practica"><i class="fas fa-plus-circle"></i> Nueva</button>
                                 </div>
                                 <div class="col-lg-4">
                                     <?php if (isset($_GET['msg'])) {
@@ -44,15 +43,19 @@
                                             </div>
                                         <?php } else if ($alert == "registrado") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>Plantilla registrada.</strong>
+                                                <strong>Práctica registrada.</strong>
                                             </div>
                                         <?php } else if ($alert == "modificado") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>Plantilla modificado.</strong>
+                                                <strong>Práctica modificada.</strong>
                                             </div>
-                                        <?php } else if ($alert == "inactivo") { ?>
+                                        <?php } else if ($alert == "lista") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>La plantilla fue inactivada.</strong>
+                                                <strong>Lista nombrada correctamente.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "cancelada") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>La práctica fue cancelada.</strong>
                                             </div>
                                         <?php }
                                     } ?>
@@ -64,7 +67,7 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Nombre</th>
-                                            <th>Espacios Restantes</th>
+                                            <th>Alumnos Registrados</th>
                                             <th>Estado</th>
                                             <th>Fecha</th>
                                             <th>Accion</th>
@@ -72,28 +75,83 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($data1 as $lista) { ?>
+                                            <?php if ($lista['estado'] == 1 || $lista['estado'] == 2) { ?>
                                             <tr>
                                                 <td><?php echo $lista['id']; ?></td>
                                                 <td><?php echo $lista['nombre']; ?></td>
-                                                <td><?php echo $lista['capacidad']; ?></td>
+                                                <td><?php echo ($lista['registros']." / ".$lista['capacidad']); ?></td>
+                                                <?php if($lista['estado'] == 1){ ?> 
+                                                    <td class="table-warning">PENDIENTE</td>    
+                                                <?php }  elseif ($lista['estado'] == 2){ ?>
+                                                    <td class="table-secondary">EN PROCESO</td>  
+                                                <?php } ?>
+                                                <td><?php echo $lista['fecha_practica']; ?></td>
+                                                <td>
+                                                <?php if($lista['estado'] == 1){ ?>     
+                                                    <a href="<?php echo base_url() ?>Practicas/Peditar?id=<?php echo $lista['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
+                                                    <form action="<?php echo base_url() ?>Practicas/Peliminar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline Cprac">
+                                                        <button type="submit" class="btn btn-danger mb-2"><i class="fas fa-times"></i></button>
+                                                    </form>  
+                                                    <a href="<?php echo base_url() ?>Practicas/NombrarLista?id=<?php echo $lista['id']; ?>" class="btn btn-secondary mb-2"><i class="fas fa-users"></i></a>
+                                                <?php }  elseif ($lista['estado'] == 2){ ?>
+                                                    <form action="<?php echo base_url() ?>Practicas/agregarMateriales?id=<?php echo $lista['id']; ?>&plantilla=<?php echo $lista['id_plantillam']; ?>" method="post" class="d-inline Mprac">
+                                                        <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-shopping-cart"></i></button>
+                                                    </form>  
+                                                <?php } ?>
+                                                </td>
+                                            </tr>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="card container-fluid2">
+            <h5 class="card-header"><i class="fas fa-clipboard-list"></i> <strong>Historial de Prácticas</strong></h5>
+            <div class="card-body">
+                <div class="container-fluid ">
+                    <div class="row">
+                        <div class="col-lg-12 mt-2">
+                            <div class="table-responsive mt-4">
+                                <table class="table table-hover table-bordered" id="Table2">
+                                    <thead class="thead-personality">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre</th>
+                                            <th>Alumnos Registrados</th>
+                                            <th>Estado</th>
+                                            <th>Fecha</th>
+                                            <th>Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($data1 as $lista) { ?>
+                                            <?php if ($lista['estado'] == 0 || $lista['estado'] == 3) { ?>
+                                            <tr>
+                                                <td><?php echo $lista['id']; ?></td>
+                                                <td><?php echo $lista['nombre']; ?></td>
+                                                <td><?php echo ($lista['registros']." / ".$lista['capacidad']); ?></td>
                                                 <?php if($lista['estado'] == 0){ ?> 
                                                     <td class="table-danger">CANCELADA</td>
-                                                <?php }  elseif ($lista['estado'] == 1){ ?>
-                                                    <td class="table-warning">EN PROCESO</td>    
-                                                <?php }  elseif ($lista['estado'] == 2){ ?>
-                                                    <td class="table-warning">EN PROCESO</td>  
-                                                <?php }  else { ?>
+                                                <?php }  elseif ($lista['estado'] == 3){ ?>
                                                     <td class="table-success">TERMINADA</td>
                                                 <?php } ?>
                                                 <td><?php echo $lista['fecha_practica']; ?></td>
                                                 <td>
-                                                    <a href="<?php echo base_url() ?>Practicas/Peditar?id=<?php echo $lista['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
-                                                    <form action="<?php echo base_url() ?>Practicas/Peliminar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline elim">
-                                                        <button type="submit" class="btn btn-dark"><i class="fas fa-user-slash"></i></button>
-                                                    </form>  
-                                                    <a href="<?php echo base_url() ?>Practicas/NombrarLista?id=<?php echo $lista['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                    <?php if($lista['estado'] == 3){ ?>   
+                                                        <form action="<?php echo base_url() ?>Practicas/agregarMateriales?id=<?php echo $lista['id']; ?>&plantilla=<?php echo $lista['id_plantillam']; ?>" method="post" class="d-inline">
+                                                            <button type="submit" class="btn btn-secondary mb-2"><i class="fas fa-shopping-cart"></i></button>
+                                                        </form>  
+                                                    <?php } ?>
                                                 </td>
                                             </tr>
+                                            <?php } ?>
                                         <?php } ?>
                                     </tbody>
                                 </table>
@@ -118,7 +176,7 @@
             <form method="post" action="<?php echo base_url(); ?>Practicas/agregar" autocomplete="off">
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nombre">Nombre de la Práctica</label>
+                        <label for="nombre">Nombre de la Práctica y Aula</label>
                         <textarea class="form-control" name="nombre" id="nombre" rows="1" required></textarea>
                     </div>
                     <div class="form-group">

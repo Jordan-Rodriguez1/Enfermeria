@@ -215,7 +215,7 @@ $(document).ready(function () {
     });
   });
 
-  //Mensaje de alerta al subir grado
+  //Mensaje de alerta al reiniciar asistencias
   $(".horas").submit(function (e) {
     e.preventDefault();
     Swal.fire({
@@ -234,7 +234,7 @@ $(document).ready(function () {
     });
   });
 
-  //Mensaje de alerta al subir grado
+  //Mensaje de alerta al restablecer contraseña
   $(".rest").submit(function (e) {
     e.preventDefault();
     Swal.fire({
@@ -252,7 +252,7 @@ $(document).ready(function () {
     });
   });
 
-  //Mensaje de alerta al subir grado
+  //Mensaje de alerta al eliminar todos los inactivos
   $(".Etodo").submit(function (e) {
     e.preventDefault();
     Swal.fire({
@@ -270,11 +270,47 @@ $(document).ready(function () {
     });
   });
 
-  //Mensaje de alerta al subir grado
+  //Mensaje de alerta al reingresar todos los inactivos
   $(".Rtodo").submit(function (e) {
     e.preventDefault();
     Swal.fire({
       title: "¿Está seguro de reingresar a TODOS los alumnos inactivos?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al cancelar práctica
+  $(".Cprac").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Está seguro de CANCELAR la práctica?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#dc3545",
+      confirmButtonText: "Si",
+      cancelButtonText: "No",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submit();
+      }
+    });
+  });
+
+  //Mensaje de alerta al cancelar práctica
+  $(".Mprac").submit(function (e) {
+    e.preventDefault();
+    Swal.fire({
+      title: "¿Estás seguro de TERMINAR la práctica y continuar con la salida de materiales?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#28a745",

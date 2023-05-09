@@ -520,9 +520,60 @@ class Practicas extends Controllers{
         $id = $_GET['id'];
         $estado = $_GET['estado'];
         $practica = $_GET['practica'];
-        $edit = $this->model->editAsistencia($id, $estado);
+        $data1 = $this->model->detalleAlumno($id);
+        if ($estado == 1) {
+            $estado = 2;
+            $asistencia = $data1['asistencias'] + 1;
+            $editA = $this->model->editAsistenciaAlum($id, $asistencia);
+            $edit = $this->model->editAsistencia($id, $estado);
+        } elseif ($estado == 0) {
+            $asistencia = $data1['asistencias'] - 1;
+            $falta = $data1['faltas'] + 1;
+            $editA = $this->model->editAsisFaltAlum($id, $asistencia, $falta);
+            $edit = $this->model->editAsistencia($id, $estado);
+        } else {
+            $asistencia = $data1['asistencias'] + 1;
+            $falta = $data1['faltas'] - 1;
+            $editA = $this->model->editAsisFaltAlum($id, $asistencia, $falta);
+            $edit = $this->model->editAsistencia($id, $estado);
+        }
+        
         header("location: " . base_url() . "Practicas/NombrarLista?id=$practica");
         die();
+    }
+
+    //Muestra la lista de alumnos registrados.
+    public function ListaVerificada()
+    {
+        $estado = $_GET['estado'];
+        $practica = $_GET['practica'];
+        $edit = $this->model->estadoPractica($practica, $estado);
+        $data1 = $this->model->selectPlantillas();
+        $alert = "lista";
+        header("location: " . base_url() . "Practicas/Practicas?msg=$alert");
+        die();
+    }
+
+    //Agrega el material a salida
+    public function agregarMateriales()
+    {
+        $id = $_GET['id'];
+        $id_plantilla = $_GET['plantilla'];
+        $data1 = $this->model->cuentaAsistencias($id);
+        $data2 = $this->model->selecPlantilla($id_plantilla);
+        foreach ($data2 as $pl) {
+            $data3 = $this->model->detalleProducto($pl['id_producto']);
+            $nombre	= $data3['nombre'];
+            $cantidad = $data1['asistencias'] * $pl['cantidad'];
+            $precio	= $data3['precio'];
+            $total = $cantidad * $precio;
+            $id_producto = $data3['id'];
+            $id_usuario = $_SESSION['id'];
+            $this->model->agregarTemp($nombre, $cantidad, $precio, $total, $id_producto, $id_usuario);
+        }
+        $edit = $this->model->estadoPractica($id, 3);
+        header("location: " . base_url() . "Salidas/Listar?id=".$id);
+        die();    
     }
 }
 ?>

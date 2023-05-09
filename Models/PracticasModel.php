@@ -6,166 +6,6 @@ class PracticasModel extends Mysql{
         parent::__construct();
     }
 
-    //Selecciona la lista de ventas con los nombres de generadores y responsables
-    public function selectVentas()
-    {
-        $sql = "SELECT ventas.id, ventas.estado, ventas.formato, ventas.total, ventas.fecha, ventas.descripcion, u1.nombre as id_responsable, u2.nombre as id_generador FROM ventas 
-                JOIN usuarios u1 ON ventas.id_responsable = u1.id
-                JOIN usuarios u2 ON ventas.id_generador = u2.id";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-
-    // Muestra la lista de responsables
-    public function responsables(String $id)
-    {
-        $sql = "SELECT nombre, id FROM usuarios WHERE estado = 1 AND id !=$id ORDER BY nombre ASC";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-
-
-
-
-
-    //Actualiza la ruta de la factura
-    public function img (string $perfil, int $id)
-    {
-        $this->perfil = $perfil;
-        $this->id = $id;
-        $query = "UPDATE ventas SET formato = ? WHERE id = ?";
-        $data = array($this->perfil, $this->id);
-        $resul = $this->update($query, $data);
-        return $resul;
-    }
-
-    //Selecciona los productos activos
-    public function selectProductos()
-    {
-        $sql = "SELECT * FROM productos WHERE estado = 1";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-
-    //Selecciona las categorias existentes
-    public function selectCat()
-    {
-        $sql = "SELECT * FROM categorias ORDER BY nombre ASC";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-
-    //Selecciona los proveedores existentes
-    public function selectPro()
-    {
-        $sql = "SELECT * FROM proveedores WHERE estado = 1 ORDER BY nombre ASC";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-    
-
-
-    // AQUI TERMINA LA PARTE DE PRODUCTOS //
-    //
-    // AQÍ EMPIZA LA PARTE DE PROVEEDORES //
-
-    public $telefono, $direccion;
-
-    //Selecciona los proveedores existentes
-    public function selectProveedores()
-    {
-        $sql = "SELECT * FROM proveedores WHERE estado = 1";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-
-
-
-    //Selecciona un proveedor para editar
-    public function editarProveedores(int $id)
-    {
-        $this->id = $id;
-        $sql = "SELECT * FROM proveedores WHERE id = '{$this->id}' AND estado = 1";
-        $res = $this->select($sql);
-        if (empty($res)) {
-            $res = 0;
-        }
-        return $res;
-    }
-
-    //Actualiza los datos de un proveedor
-    public function actualizarProveedores(String $nombre, string $telefono, string $direccion, int $id)
-    {
-        $return = "";
-        $this->nombre = $nombre;
-        $this->telefono = $telefono;
-        $this->direccion = $direccion;
-        $this->id = $id;
-        $query = "UPDATE proveedores SET nombre=?, telefono=?, direccion=? WHERE id=?";
-        $data = array($this->nombre, $this->telefono, $this->direccion, $this->id);
-        $resul = $this->update($query, $data);
-        $return = $resul;
-        return $return;
-    }
-
-    //Elimina un proveedor (Solo se cambia de estado por fines de ver pdf)
-    public function eliminarperProveedores(int $id)
-    {
-        $return = "";
-        $this->id = $id;
-        $query = "UPDATE proveedores SET estado = 0 WHERE id=?";
-        $data = array($this->id);
-        $resul = $this->update($query, $data);
-        $return = $resul;
-        return $return;
-    }
-
-    // AQUI TERMINA LA PARTE DE PROVEEDORES //
-    //
-    // AQÍ EMPIZA LA PARTE DE CATEGORIAS //
-
-    //Selecciona las Categorias existentes
-    public function selectCategorias()
-    {
-        $sql = "SELECT * FROM categorias";
-        $res = $this->select_all($sql);
-        return $res;
-    }
-
-    //Añade una nuevo Categoria
-    public function insertarCategorias(String $nombre)
-    {
-        $return = "";
-        $this->nombre = $nombre;
-        $query = "INSERT INTO categorias(nombre) VALUES (?)";
-        $data = array($this->nombre);
-        $resul = $this->insert($query, $data);
-        $return = $resul;
-        return $return;
-    }
-
-    //Elimina una Categoria
-    public function eliminarperCategorias(int $id)
-    {
-        $return = "";
-        $this->id = $id;
-        $query = "DELETE FROM categorias WHERE id=?";
-        $data = array($this->id);
-        $resul = $this->update($query, $data);
-        $return = $resul;
-        return $return;
-    }
-
-
-
-
-
-
-
-
-
-
-
     //Selecciona la lista de plantillas (texto)
     public function selectPlantillas()
     {
@@ -539,7 +379,7 @@ class PracticasModel extends Mysql{
     //Selecciona la lista de plantillas (texto)
     public function selectPracticas()
     {
-        $sql = "SELECT * FROM practicas WHERE estado = 1";
+        $sql = "SELECT * FROM practicas";
         $res = $this->select_all($sql);
         return $res;
     }
@@ -562,7 +402,7 @@ class PracticasModel extends Mysql{
         return $return;
     }
 
-    //Selecciona la lista de plantillas (texto)
+    //Selecciona la lista de usuarios
     public function selectUsuarios()
     {
         $sql = "SELECT * FROM usuarios WHERE estado = 1";
@@ -593,6 +433,47 @@ class PracticasModel extends Mysql{
         return $return;
     }
 
+    //Cambia el estado de la asistencia en alumnos
+    public function editAsistenciaAlum(int $id, int $asistencias)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->asistencias = $asistencias;
+        $query = "UPDATE alumnos SET asistencias = ? WHERE id=?";
+        $data = array($this->asistencias,$this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+    //Cambia el estado de la asistencia y falta en alumnos
+    public function editAsisFaltAlum(int $id, int $asistencias, int $faltas)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->asistencias = $asistencias;
+        $this->faltas = $faltas;
+        $query = "UPDATE alumnos SET asistencias = ?, faltas = ? WHERE id=?";
+        $data = array($this->asistencias, $this->faltas, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+    //Cambia el estado de la practica
+    public function estadoPractica(int $id, int $estado)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->estado = $estado;
+        $query = "UPDATE practicas SET estado = ? WHERE id=?";
+        $data = array($this->estado,$this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+    //Selecciona los datos de una práctica
     public function selectPractica(int $id)
     {
         $return = "";
@@ -601,5 +482,61 @@ class PracticasModel extends Mysql{
         $res = $this->select($sql);
         return $res;
     }
+
+    //Selecciona los datos de un alumno
+    public function detalleAlumno(int $id)
+    {
+        $return = "";
+        $this->id = $id;
+        $sql = "SELECT * FROM alumnos WHERE id = '{$this->id}'";
+        $res = $this->select($sql);
+        return $res;
+    }
+
+    //cuenta asistencias
+    public function cuentaAsistencias(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT COUNT(*) AS asistencias FROM asistencias WHERE id_practica = '{$this->id}'";
+        $res = $this->select($sql);
+        return $res;
+    }
+
+    //Selecciona plantilla materiales
+    public function selecPlantilla(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT * FROM detalle_coti WHERE id_cotizacion = '{$this->id}'";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    //Selecciona detalle de materiales
+    public function detalleProducto(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT * FROM productos WHERE id = '{$this->id}'";
+        $res = $this->select($sql);
+        return $res;
+    }
+
+    //Agrega detalle materiales
+    public function agregarTemp(string $nombre, float $cantidad, float $precio, float $total, int $id_producto, int $id_usuario)
+    {
+        $return = "";
+        $this->nombre = $nombre;
+        $this->cantidad = $cantidad;
+        $this->precio = $precio;
+        $this->total = $total;
+        $this->id_producto = $id_producto;
+        $this->id_usuario = $id_usuario;
+        $query = "INSERT INTO detalle_temp(nombre, cantidad, precio, total, id_producto, id_usuario) VALUES (?,?,?,?,?,?)";
+        $data = array($this->nombre, $this->cantidad, $this->precio, $this->total, $this->id_producto, $this->id_usuario);
+        $resul = $this->insert($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
 }
 ?>
+
