@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-04-2023 a las 03:56:48
+-- Tiempo de generación: 09-05-2023 a las 04:56:46
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -47,9 +47,9 @@ CREATE TABLE `alumnos` (
 --
 
 INSERT INTO `alumnos` (`id`, `usuario`, `nombre`, `correo`, `grado`, `grupo`, `asistencias`, `faltas`, `rol`, `clave`, `estado`, `perfil`) VALUES
-(1, '666', 'Junita Pérez', 'juntio@ucol.mx', 9, 'E', 0, 0, 1, 'c7e616822f366fb1b5e0756af498cc11d2c0862edcb32ca65882f622ff39de1b', 1, 'perfil.jpg'),
-(2, '20166608', 'Miguel Jordán Rodríguez Reyes', 'mrodriguez@ucol.mx', 7, '', 0, 0, 1, '537172e1d014c070692080f30925bd8757175f77b4fb0e1b377d1f93a7b85e16', 1, 'perfil.jpg'),
-(3, '123', 'Prueba2', 'prueba2@ucol.mx', 9, 'A', 0, 0, 1, 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 1, 'perfil.jpg');
+(1, '666', 'Junita Pérez', 'juntio@ucol.mx', 9, 'B', 0, 1, 1, 'c7e616822f366fb1b5e0756af498cc11d2c0862edcb32ca65882f622ff39de1b', 1, 'perfil.jpg'),
+(2, '20166608', 'Miguel Jordán Rodríguez Reyes', 'mrodriguez@ucol.mx', 6, 'C', 1, 0, 1, '537172e1d014c070692080f30925bd8757175f77b4fb0e1b377d1f93a7b85e16', 1, 'perfil.jpg'),
+(3, '123', 'Prueba2', 'prueba2@ucol.mx', 9, 'A', 6, 2, 1, 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 1, 'perfil.jpg');
 
 -- --------------------------------------------------------
 
@@ -70,7 +70,8 @@ CREATE TABLE `asistencias` (
 --
 
 INSERT INTO `asistencias` (`id`, `id_practica`, `id_alumno`, `asistencia`, `fecha`) VALUES
-(1, 1, 1, 1, '2023-04-26 00:00:00');
+(1, 1, 1, 0, '2023-04-26 00:00:00'),
+(2, 1, 2, 2, '2023-05-07 19:29:40');
 
 -- --------------------------------------------------------
 
@@ -133,6 +134,21 @@ CREATE TABLE `configsemestre` (
   `fmaximas` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
 
+--
+-- Volcado de datos para la tabla `configsemestre`
+--
+
+INSERT INTO `configsemestre` (`id`, `aminimas`, `fmaximas`) VALUES
+(1, 3, 3),
+(2, 3, 3),
+(3, 3, 3),
+(4, 3, 3),
+(5, 3, 3),
+(6, 3, 3),
+(7, 3, 3),
+(8, 3, 3),
+(9, 3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -146,8 +162,6 @@ CREATE TABLE `configuracion` (
   `colonia` varchar(200) NOT NULL,
   `cp` int(11) NOT NULL,
   `ciudad` varchar(200) NOT NULL,
-  `aminimas` int(3) NOT NULL,
-  `fmaximas` int(3) NOT NULL,
   `semestres` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -155,8 +169,8 @@ CREATE TABLE `configuracion` (
 -- Volcado de datos para la tabla `configuracion`
 --
 
-INSERT INTO `configuracion` (`id`, `facultad`, `calle`, `colonia`, `cp`, `ciudad`, `aminimas`, `fmaximas`, `semestres`) VALUES
-(1, 'Facultad de Enfermería', 'Av. Universidad No. 333', 'Las Víboras', 28040, 'Colima, Colima, México.', 6, 6, 7);
+INSERT INTO `configuracion` (`id`, `facultad`, `calle`, `colonia`, `cp`, `ciudad`, `semestres`) VALUES
+(1, 'Facultad de Enfermería', 'Av. Universidad No. 333', 'Las Víboras', 28040, 'Colima, Colima, México.', 9);
 
 -- --------------------------------------------------------
 
@@ -349,6 +363,7 @@ CREATE TABLE `practicas` (
   `fecha_practica` datetime NOT NULL,
   `semestre` int(2) NOT NULL,
   `capacidad` int(2) NOT NULL,
+  `registros` int(10) NOT NULL DEFAULT 0,
   `estado` int(11) NOT NULL DEFAULT 1,
   `fecha` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish2_ci;
@@ -357,8 +372,9 @@ CREATE TABLE `practicas` (
 -- Volcado de datos para la tabla `practicas`
 --
 
-INSERT INTO `practicas` (`id`, `nombre`, `id_plantilla`, `id_plantillam`, `id_responsable`, `fecha_practica`, `semestre`, `capacidad`, `estado`, `fecha`) VALUES
-(1, 'Prueba 1', 1, 47, 26, '2023-04-24 00:00:00', 6, 10, 1, '2023-04-23 00:00:00');
+INSERT INTO `practicas` (`id`, `nombre`, `id_plantilla`, `id_plantillam`, `id_responsable`, `fecha_practica`, `semestre`, `capacidad`, `registros`, `estado`, `fecha`) VALUES
+(1, 'Prueba 1', 1, 47, 26, '2023-04-24 00:00:00', 6, 10, 2, 3, '2023-04-23 00:00:00'),
+(2, 'Prueba 2', 4, 47, 27, '2023-05-09 10:00:00', 6, 1, 0, 1, '2023-05-08 20:33:16');
 
 -- --------------------------------------------------------
 
@@ -603,7 +619,7 @@ ALTER TABLE `alumnos`
 -- AUTO_INCREMENT de la tabla `asistencias`
 --
 ALTER TABLE `asistencias`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -645,7 +661,7 @@ ALTER TABLE `detalle_coti`
 -- AUTO_INCREMENT de la tabla `detalle_temp`
 --
 ALTER TABLE `detalle_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=295;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
@@ -663,7 +679,7 @@ ALTER TABLE `plantillas`
 -- AUTO_INCREMENT de la tabla `practicas`
 --
 ALTER TABLE `practicas`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
