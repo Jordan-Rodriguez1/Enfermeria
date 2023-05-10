@@ -376,7 +376,7 @@ class PracticasModel extends Mysql{
     //
     //COMIENZA PRACTICAS
 
-    //Selecciona la lista de plantillas (texto)
+    //Selecciona la lista de practicas
     public function selectPracticas()
     {
         $sql = "SELECT * FROM practicas";
@@ -397,6 +397,25 @@ class PracticasModel extends Mysql{
         $this->Semestre = $Semestre;
         $query = "INSERT INTO practicas(nombre, id_plantilla, id_plantillam, id_responsable, fecha_practica, capacidad, semestre) VALUES (?,?,?,?,?,?,?)";
         $data = array($this->nombre, $this->id_plantilla, $this->id_plantillam, $this->id_responsable, $this->fecha_practica, $this->capacidad, $this->Semestre);
+        $resul = $this->insert($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+    //Agrega nueva plantilla (texto)
+    public function editarPractica(String $nombre, int $id_plantilla, int $id_plantillam, int $id_responsable, string $fecha_practica, int $capacidad, int $Semestre, int $id)
+    {
+        $return = "";
+        $this->nombre = $nombre;
+        $this->id_plantilla = $id_plantilla;
+        $this->id_plantillam = $id_plantillam;
+        $this->id_responsable = $id_responsable;
+        $this->fecha_practica = $fecha_practica;
+        $this->capacidad = $capacidad;
+        $this->Semestre = $Semestre;
+        $this->id = $id;
+        $query = "UPDATE practicas SET nombre=?, id_plantilla=?, id_plantillam=?, id_responsable=?, fecha_practica=?, capacidad=?, semestre=? WHERE id=?";
+        $data = array($this->nombre, $this->id_plantilla, $this->id_plantillam, $this->id_responsable, $this->fecha_practica, $this->capacidad, $this->Semestre, $this->id);
         $resul = $this->insert($query, $data);
         $return = $resul;
         return $return;

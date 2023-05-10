@@ -11,155 +11,7 @@ class Practicas extends Controllers{
     }
 
 
-
-
-
-  
-    //Sube la factura al servidor
-    public function subirarchivo()
-    {
-        $nombre_archivo = $_FILES["archivo"]["name"];
-        $tipo_archivo = $_FILES["archivo"]["type"];
-        $tamano_archivo = $_FILES["archivo"]["size"];
-        $ruta_temporal = $_FILES["archivo"]["tmp_name"];
-        $error_archivo = $_FILES["archivo"]["error"];
-        if ($error_archivo == UPLOAD_ERR_OK) {
-            $ruta_destino = "Assets/archivos/salidas/".$nombre_archivo;
-            if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-            $id = $_POST['id'];
-            $this->model->img($nombre_archivo, $id);
-               $alert =  'registrado';
-            } else {
-               $alert =  'noformato';
-            }
-        } else {
-        $alert =  'noformato';
-        }
-        header('location: ' . base_url() . "Salidas/lista?msg=$alert");
-    }
-
-    //Muestra la lista de productos, categorias y proveedores
-    public function Listar()
-    {
-        $data1 = $this->model->selectProductos();
-        $data2 = $this->model->selectCat();
-        $data3 = $this->model->selectPro();
-        $this->views->getView($this, "Listar", "",$data1, $data2, $data3);
-    }
-
-
-
-    // AQUI TERMINA LA PARTE DE PRODUCTOS //
-    //
-    // AQÍ EMPIZA LA PARTE DE PROVEEDORES //
-
-    //Selecciona los proveedores existentes
-    public function Proveedores()
-    {
-        $data1 = $this->model->selectProveedores();         
-        $this->views->getView($this, "Proveedores", "", $data1);
-    }
-
-    //Agrega un nuevo proveedor
-    public function Proveedoresinsertar()
-    {
-        $nombre = $_POST['nombre'];
-        $telefono = $_POST['telefono'];
-        $direccion = $_POST['direccion'];
-        $insert = $this->model->insertarProveedores($nombre, $telefono, $direccion);
-        if ($insert > 0) {
-        $alert = 'registrado';
-        }else{
-        $alert =  'error';
-        }
-        $this->model->selectProveedores();
-        header("location: " . base_url() . "Productos/Proveedores?msg=$alert");
-        die();
-    }
-
-    //Selecciona el proveedor a editar
-    public function Proveedoreseditar()
-    {
-        $id = $_GET['id'];
-        $data1 = $this->model->editarProveedores($id);
-        if ($data1 == 0) {
-            $this->Listar();
-        }else{
-            $this->views->getView($this, "Proveedoreseditar", "", $data1);
-        }
-    }
-
-    //Edita los datos del proveedor
-    public function Proveedoresactualizar()
-    {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $telefono = $_POST['telefono'];
-        $direccion = $_POST['direccion'];
-        $actualizar = $this->model->actualizarProveedores($nombre, $telefono, $direccion, $id);
-        if ($actualizar == 1) {
-            $alert = 'modificado';
-        }else {
-            $alert = 'error';
-        }
-        header("location: " . base_url() . "Productos/Proveedores?msg=$alert");
-        die();
-    }
-
-    //Elimina porveedor
-    public function Proveedoreseliminarper()
-    {
-        $id = $_GET['id'];
-        $this->model->eliminarperProveedores($id);
-        $data = $this->model->selectProveedores();
-        $alert = 'eliminado';
-        header("location: " . base_url() . "Productos/Proveedores?msg=$alert");
-        die();
-    }
-
-    // AQUI TERMINA LA PARTE DE PROVEEDORES //
-    //
-    // AQÍ EMPIZA LA PARTE DE CATEGORIAS //
-
-    //Selecciona las categorias existentes
-    public function Categorias()
-    {
-        $data1 = $this->model->selectCategorias();         
-        $this->views->getView($this, "Categorias", "", $data1);
-    }
-
-    //Agrega una nueva ategoria
-    public function Categoriasinsertar()
-    {
-        $nombre = $_POST['nombre'];
-        $insert = $this->model->insertarCategorias($nombre);
-        if ($insert > 0) {
-        $alert = 'registrado';
-        }else{
-        $alert =  'error';
-        }
-        $this->model->selectCategorias();
-        header("location: " . base_url() . "Productos/Categorias?msg=$alert");
-        die();
-    }
-
-    //Elimina porveedor
-    public function Categoriaseliminarper()
-    {
-        $id = $_GET['id'];
-        $this->model->eliminarperCategorias($id);
-        $data = $this->model->selectCategorias();
-        $alert = 'eliminado';
-        header("location: " . base_url() . "Productos/Categorias?msg=$alert");
-        die();
-    }
-
-
-
-
-
-
-
+    //COMIEZA PLANTILLAS
 
     //Muestra la lista de plantillas. (texto y materiales)
     public function Plantillas()
@@ -370,7 +222,6 @@ class Practicas extends Controllers{
         $data2 = $this->model->selectConfiguracion();
         $this->views->getView($this, "VerPlantilla", "", $data1, $data2, $data3);
     }
-//AAAAAAAAAAAAAAAAAAAAAAAAAAA
 
     //Selecciona plantilla a editar (materiales)
     public function Meditar()
@@ -481,7 +332,18 @@ class Practicas extends Controllers{
         $this->views->getView($this, "Practicas", "", $data1, $data2, $data3, $data4);
     }
 
-    //Agrega nueva plantilla (texto)
+    //Selecciona lo requerido para editar una práctica
+    public function Peditar()
+    {
+        $id = $_GET['id'];
+        $data1 = $this->model->selectPractica($id);
+        $data2 = $this->model->selectPlantillas();
+        $data3 = $this->model->selectPlantillasM();
+        $data4 = $this->model->selectUsuarios();
+        $this->views->getView($this, "Peditar", "", $data1, $data2, $data3, $data4);
+    }
+
+    //Agrega nueva practica
     public function agregar()
     {
         $nombre = $_POST['nombre'];
@@ -499,6 +361,24 @@ class Practicas extends Controllers{
         } else {
             $alert = 'error';
         }
+        $data1 = $this->model->selectPlantillas();
+        header("location: " . base_url() . "Practicas/Practicas?msg=$alert");
+        die();
+    }
+
+    //Edita una practica 
+    public function Pactualizar()
+    {
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $id_plantilla = $_POST['id_plantilla'];
+        $id_plantillam = $_POST['id_plantillam'];
+        $id_responsable = $_POST['id_responsable'];
+        $fecha_practica = $_POST['fecha_practica'];
+        $capacidad = $_POST['capacidad'];
+        $Semestre = $_POST['Semestre'];
+        $insert = $this->model->editarPractica($nombre, $id_plantilla, $id_plantillam, $id_responsable, $fecha_practica, $capacidad, $Semestre, $id);
+        $alert = 'modificada';
         $data1 = $this->model->selectPlantillas();
         header("location: " . base_url() . "Practicas/Practicas?msg=$alert");
         die();
@@ -550,6 +430,18 @@ class Practicas extends Controllers{
         $edit = $this->model->estadoPractica($practica, $estado);
         $data1 = $this->model->selectPlantillas();
         $alert = "lista";
+        header("location: " . base_url() . "Practicas/Practicas?msg=$alert");
+        die();
+    }
+
+    //Cancela una práctica
+    public function Peliminar()
+    {
+        $estado = $_GET['estado'];
+        $practica = $_GET['id'];
+        $edit = $this->model->estadoPractica($practica, $estado);
+        $data1 = $this->model->selectPlantillas();
+        $alert = "cancelada";
         header("location: " . base_url() . "Practicas/Practicas?msg=$alert");
         die();
     }

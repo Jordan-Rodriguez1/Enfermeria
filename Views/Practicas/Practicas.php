@@ -45,7 +45,11 @@
                                             <div class="alert alert-success" role="alert">
                                                 <strong>Práctica registrada.</strong>
                                             </div>
-                                        <?php } else if ($alert == "modificado") { ?>
+                                        <?php } else if ($alert == "cancelada") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>Práctica cancelada.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "modificada") { ?>
                                             <div class="alert alert-success" role="alert">
                                                 <strong>Práctica modificada.</strong>
                                             </div>
@@ -89,7 +93,7 @@
                                                 <td>
                                                 <?php if($lista['estado'] == 1){ ?>     
                                                     <a href="<?php echo base_url() ?>Practicas/Peditar?id=<?php echo $lista['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
-                                                    <form action="<?php echo base_url() ?>Practicas/Peliminar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline Cprac">
+                                                    <form action="<?php echo base_url() ?>Practicas/Peliminar?id=<?php echo $lista['id']; ?>&estado=0" method="post" class="d-inline Cprac">
                                                         <button type="submit" class="btn btn-danger mb-2"><i class="fas fa-times"></i></button>
                                                     </form>  
                                                     <a href="<?php echo base_url() ?>Practicas/NombrarLista?id=<?php echo $lista['id']; ?>" class="btn btn-secondary mb-2"><i class="fas fa-users"></i></a>
