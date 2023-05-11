@@ -12,9 +12,11 @@ class Entradas extends Controllers{
 
     //Muestra la lista de proveedores.
     public function Listar()
-    {        
+    {   
+        $this->model->VaciarDetalle($_SESSION['id']);     
         $data1 = $this->model->proveedores();
         $this->views->getView($this, "Listar", "", $data1);
+        die();
     }
 
     //Muestra la lista de entradas
@@ -22,6 +24,7 @@ class Entradas extends Controllers{
     {
         $data1 = $this->model->selectCompras();
         $this->views->getView($this, "ListarCompras", "", $data1);
+        die();
     }
 
     //Ingresa a detalle temporal las entras/salidas generadas
@@ -62,7 +65,8 @@ class Entradas extends Controllers{
             } else{
                 echo "errorcantidad";
             }
-        }    
+        }   
+        die(); 
     }
 
     // Muestra la lista de prodcutos en el carrito
@@ -83,6 +87,7 @@ class Entradas extends Controllers{
         }
         $tot = number_format($this->totalPagar, 2, ".", "");
         echo "<input type='hidden' id='totalPagar' value='".$tot."'/>";
+        die();
     }
 
     // Elimina 1 elemento de la lista de prodcutos en el carrito
@@ -90,12 +95,14 @@ class Entradas extends Controllers{
     {    
         $id = $_POST['id'];
         $this->model->eliminarDetalle($id);
+        die();
     }
 
     //Anula carrito
     public function anular()
     {
         $this->model->vaciarDetalle($_SESSION['id']);
+        die();
     }
 
     //Busca detalles de los productos
@@ -104,6 +111,7 @@ class Entradas extends Controllers{
         $codigo = $_POST['codigo'];
         $data = $this->model->buscarProducto($codigo);
         echo json_encode($data);
+        die();
     }
 
     //registra la compra
@@ -143,29 +151,38 @@ class Entradas extends Controllers{
         $data3 = $this->model->PdfGenerador($nombre_generador);
         $data4 = $this->model->PdfProveedor($nombre_proveedor);
         $this->views->getView($this, "VerCompras", "", $data1, $data2, $data3, $data4, $data5);
+        die();
     }
 
     //Sube la factura al servidor
     public function subirarchivo()
     {
+        $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES["archivo"]["name"];
+        $nombre_nuevo = $_POST['id'].".".$name["extension"];
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $error_archivo = $_FILES["archivo"]["error"];
-        if ($error_archivo == UPLOAD_ERR_OK) {
-            $ruta_destino = "Assets/archivos/entradas/".$nombre_archivo;
-            if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-            $id = $_POST['id'];
-            $this->model->img($nombre_archivo, $id);
-               $alert =  'registrado';
+        $tmaximo = 20 * 1024 * 1024;
+        if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "pdf")){
+            if ($error_archivo == UPLOAD_ERR_OK) {
+                $ruta_destino = "Assets/archivos/entradas/".$nombre_nuevo;
+                if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
+                $id = $_POST['id'];
+                $this->model->img($nombre_nuevo, $id);
+                   $alert =  'registrado';
+                } else {
+                   $alert =  'noformato';
+                }
             } else {
-               $alert =  'noformato';
+            $alert =  'noformato';
             }
         } else {
-        $alert =  'noformato';
-        }
+            $alert =  'noformato';
+        }       
         header('location: ' . base_url() . "Entradas/lista?msg=$alert");
+        die();
     }
 }
 ?>

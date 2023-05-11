@@ -1,18 +1,31 @@
 <?php encabezado() ?>
 
-<?php if($_SESSION['rol'] <= 2){ ?> 
-<div class="page-content bg-light">
+<?php if($_SESSION['rol'] <= 1){ ?> 
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
+            </div>
+        </div>
+    </section>
+</div>
+<?php }  elseif ($_SESSION['rol'] <= 2) { ?>
+<div class="page-content">
+   <section>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Listar" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -94,7 +107,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 mt-1">
+                    <div class="col-lg-6 mt-1">
                         <div class="form-group">
                             <strong style="color: #c2258e;">Descripción</strong>
                             <textarea class="form-control" name="descripcion" id="descripcion" rows="4"></textarea>
@@ -108,13 +121,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 ml-auto">
+                    <div class="col-lg-6 ml-auto">
                         <div class="form-group mt-2">
                             <strong style="color: #c2258e;"></i> Total a pagar $</strong>
                             <input type="hidden" id="total" value="0.00" name="total" class="form-control mb-2">
                             <strong id="totalD"></strong><br>
-                            <button class="btn btn-danger" type="button" id="AnularDetalle"><i class="fas fa-window-close"></i> Anular Compra</button>
-                            <button class="btn btn-success" type="button" id="procesarCompra"><i class="fas fa-money-check-alt"></i> Procesar Compra</button>
+                            <button class="btn btn-danger mb-2" type="button" id="AnularDetalle"><i class="fas fa-window-close"></i> Anular Entrada</button>
+                            <button class="btn btn-success mb-2" type="button" id="procesarCompra"><i class="fas fa-money-check-alt"></i> Procesar Entrada</button>
                         </div>
                     </div>
                 </div>

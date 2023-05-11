@@ -90,12 +90,12 @@
                                                     <td class="table-success">APROBADO</td>
                                                 <?php } }?>
                                                 <td>
-                                                    <a href="<?php echo base_url(); ?>Salidas/ver?id=<?php echo $lista['id']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i></a>
+                                                    <a title="Detalle" href="<?php echo base_url(); ?>Salidas/ver?id=<?php echo $lista['id']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark mb-2"><i class="fa fa-file-pdf"></i></a>
                                                     <?php if(($lista['formato'] == "" && $lista['id_generador'] == $_SESSION['nombre'] && $lista['estado'] == 2) || ($lista['formato'] == "" && $lista['id_responsable'] == $_SESSION['nombre'] && $lista['estado'] == 2)){ ?> 
-                                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#cargar_formato" data-bs-id="<?php echo $lista['id']; ?>" onclick="idModal();"><i class="fas fa-upload"></i></button>
+                                                        <button title="Subir Formato" class="btn btn-primary mb-2" type="button" data-toggle="modal" data-target="#cargar_formato" data-bs-id="<?php echo $lista['id']; ?>" onclick="idModal();"><i class="fas fa-upload"></i></button>
                                                         <?php }  elseif($lista['formato'] == "") { ?>
                                                         <?php }  else { ?>
-                                                        <a href="<?php echo base_url(); ?>/Assets/archivos/salidas/<?php echo $lista['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-image"></i></a>
+                                                        <a title="Formato" href="<?php echo base_url(); ?>/Assets/archivos/salidas/<?php echo $lista['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mb-2"><i class="fa fa-file-image"></i></a>
                                                     <?php }?>
                                                 </td>
                                             </tr>

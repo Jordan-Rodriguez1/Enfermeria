@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 mt-1">
+                    <div class="col-lg-6 mt-1">
                         <div class="form-group">
                             <strong style="color: #c2258e;">Descripción</strong>
                             <?php if ($data2['nombre'] == "") { ?>
@@ -129,13 +129,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4 ml-auto">
+                    <div class="col-lg-6 ml-auto">
                         <div class="form-group mt-2">
                             <strong style="color: #c2258e;">Total a pagar $</strong>
                             <input type="hidden" id="total" value="0.00" name="total" class="form-control  mb-2">
                             <strong id="totalD"></strong> <br>
-                            <button class="btn btn-danger" type="button" id="AnularDetalle"><i class="fas fa-window-close"></i> Anular Salida</button>
-                            <button class="btn btn-success" type="button" id="procesarSalida"><i class="fas fa-money-check-alt"></i> Procesar Salida</button>
+                            <button class="btn btn-danger mb-2" type="button" id="AnularDetalle"><i class="fas fa-window-close"></i> Anular Salida</button>
+                            <button class="btn btn-success mb-2" type="button" id="procesarSalida"><i class="fas fa-money-check-alt"></i> Procesar Salida</button>
                         </div>
                     </div>
                 </div>

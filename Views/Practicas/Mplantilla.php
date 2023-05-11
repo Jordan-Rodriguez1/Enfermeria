@@ -98,14 +98,14 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-4 mt-1">
+                    <div class="col-lg-6 mt-1">
                         <div class="form-group">
                             <strong style="color: #c2258e;">Descripción</strong>
                             <input type="hidden" name="id_plantilla" id="id_plantilla" value="<?php echo $data1['id'];?>">
                             <textarea class="form-control" name="descripcion" id="descripcion" rows="4" required><?php echo $data1['descripcion'];?></textarea>
                         </div>
                     </div>
-                    <div class="col-lg-4 ml-auto">
+                    <div class="col-lg-6 ml-auto">
                         <div class="form-group mt-2">
                             <strong style="color: #c2258e;">Total productos</strong>
                             <input type="hidden" id="total" value="0.00" name="total" class="form-control  mb-2">
