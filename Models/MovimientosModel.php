@@ -6,14 +6,13 @@ class MovimientosModel extends Mysql{
         parent::__construct();
     }
 
-    //Seleccina los movimientos pendientes de aprobar/rechazar según usuario
-    public function selectMovimientos(string $id)
+    //Seleccina los movimientos pendientes de aprobar/rechazar
+    public function selectMovimientos()
     {
-        $this->id = $id;
-        $sql = "SELECT ventas.id, ventas.estado, ventas.total, ventas.fecha, ventas.descripcion, u1.nombre as id_responsable, u2.nombre as id_generador FROM ventas 
+        $sql = "SELECT ventas.id, ventas.estado, ventas.total, ventas.fecha, ventas.descripcion, ventas.id_responsable AS idresp, u1.nombre as id_responsable, u2.nombre as id_generador FROM ventas 
                 JOIN usuarios u1 ON ventas.id_responsable = u1.id
                 JOIN usuarios u2 ON ventas.id_generador = u2.id 
-                WHERE ventas.estado = 1 AND ventas.id_responsable = '{$id}'";
+                WHERE ventas.estado = 1;";
         $res = $this->select_all($sql);
         return $res;
     }

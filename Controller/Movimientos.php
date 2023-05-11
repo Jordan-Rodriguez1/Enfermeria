@@ -12,8 +12,7 @@ class Movimientos extends Controllers{
     //Vista de Movimientos pendientes por aprobar/rechazar
     public function Listar()
     {
-        $id = $_SESSION['id'];
-        $data1 = $this->model->selectMovimientos($id);
+        $data1 = $this->model->selectMovimientos();
         $this->views->getView($this, "Listar", "", $data1);
     }
 

@@ -1,18 +1,16 @@
 <?php encabezado() ?>
 
 <?php if($_SESSION['rol'] <= 1){ ?> 
-<div class="page-content bg-light">
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -64,23 +62,47 @@
                                     </thead>
                                     <tbody>
                                         <?php foreach ($data1 as $lista) { ?>
-                                            
-                                            <tr>
-                                                <td><?php echo $lista['id']; ?></td>
-                                                <td><?php echo $lista['id_generador']; ?></td>
-                                                <td><?php echo $lista['descripcion']; ?></td>
-                                                <td><?php echo $lista['total']; ?></td>
-                                                <td><?php echo $lista['fecha']; ?></td>         
-                                                <td>
-                                                    <form action="<?php echo base_url() ?>Movimientos/aprobar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline aprobado">
-                                                        <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
-                                                    </form>
-                                                    <form action="<?php echo base_url() ?>Movimientos/rechazar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline rechazo">
-                                                        <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i></button>
-                                                    </form>
-                                                    <a href="<?php echo base_url(); ?>Movimientos/ver?id=<?php echo $lista['id']; ?>&responsable=<?php echo $lista['id_responsable']; ?>&generador=<?php echo $lista['id_generador']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i></a>
-                                                </td>
-                                            </tr>
+                                            <?php if ($_SESSION['rol'] >= 4) { ?>
+                                                <tr>
+                                                    <td><?php echo $lista['id']; ?></td>
+                                                    <td><?php echo $lista['id_generador']; ?></td>
+                                                    <td><?php echo $lista['descripcion']; ?></td>
+                                                    <td><?php echo $lista['total']; ?></td>
+                                                    <td><?php echo $lista['fecha']; ?></td>         
+                                                    <td>
+                                                        <?php if ($_SESSION['id'] == $lista['idresp']) { ?>
+                                                            <form action="<?php echo base_url() ?>Movimientos/aprobar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline aprobado">
+                                                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                                            </form>
+                                                            <form action="<?php echo base_url() ?>Movimientos/rechazar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline rechazo">
+                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                                            </form>
+                                                            <a href="<?php echo base_url(); ?>Movimientos/ver?id=<?php echo $lista['id']; ?>&responsable=<?php echo $lista['id_responsable']; ?>&generador=<?php echo $lista['id_generador']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i></a>
+                                                        <?php } else {?>
+                                                            <p>Debe ser validado por <?php echo $lista['id_responsable']; ?></p>
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                            <?php } else {?>
+                                                <?php if ($_SESSION['id'] == $lista['idresp']) { ?>
+                                                    <tr>
+                                                        <td><?php echo $lista['id']; ?></td>
+                                                        <td><?php echo $lista['id_generador']; ?></td>
+                                                        <td><?php echo $lista['descripcion']; ?></td>
+                                                        <td><?php echo $lista['total']; ?></td>
+                                                        <td><?php echo $lista['fecha']; ?></td>         
+                                                        <td>
+                                                            <form action="<?php echo base_url() ?>Movimientos/aprobar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline aprobado">
+                                                                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i></button>
+                                                            </form>
+                                                            <form action="<?php echo base_url() ?>Movimientos/rechazar?id=<?php echo $lista['id']; ?>" method="post" class="d-inline rechazo">
+                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i></button>
+                                                            </form>
+                                                            <a href="<?php echo base_url(); ?>Movimientos/ver?id=<?php echo $lista['id']; ?>&responsable=<?php echo $lista['id_responsable']; ?>&generador=<?php echo $lista['id_generador']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
+                                            <?php } ?>
                                         <?php } ?>
                                     </tbody>
                                 </table>
