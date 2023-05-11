@@ -1,4 +1,3 @@
-
 <?php if($_SESSION['rol'] <= 1){ ?> 
 <?php encabezado() ?>
 <div class="page-content2">

@@ -452,6 +452,7 @@ class Practicas extends Controllers{
         $id_plantilla = $_GET['plantilla'];
         $data1 = $this->model->cuentaAsistencias($id);
         $data2 = $this->model->selecPlantilla($id_plantilla);
+        $this->model->VaciarDetalle($_SESSION['id']);
         foreach ($data2 as $pl) {
             $data3 = $this->model->detalleProducto($pl['id_producto']);
             $nombre	= $data3['nombre'];

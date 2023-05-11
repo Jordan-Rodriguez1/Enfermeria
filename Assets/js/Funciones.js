@@ -560,8 +560,8 @@ function BuscarCodigosC() {
 
 //Ingresa producto a la lista de detalle mediente enter
 function IngresarCantidad(e) {
-  const nombre = document.getElementById("nombre").value;
   const stockD = $("#stockD").val();
+  const nombre = document.getElementById("nombre").value;
   const cantidad = document.getElementById("cantidad").value;
   if (e.which == 13) {
     if (cantidad == "") {
@@ -601,7 +601,7 @@ function IngresarCantidad(e) {
             if (response == "errorcantidad") {
               Swal.fire({
                 icon: "error",
-                title: "Ingrese una cantidad válida", //PENDIENTE
+                title: "Ingrese una cantidad válida", 
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -763,7 +763,7 @@ function IngresarCantidadC(e) {
             if (response == "errorcantidad") {
               Swal.fire({
                 icon: "error",
-                title: "Ingrese una cantidad válida", //PENDIENTE
+                title: "Ingrese una cantidad válida",
                 showConfirmButton: false,
                 timer: 1500,
               });

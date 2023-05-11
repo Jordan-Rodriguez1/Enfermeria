@@ -16,6 +16,24 @@ class SalidasModel extends Mysql{
         return $res;
     }
 
+    //Selecciona plantilla materiales
+    public function selecPlantillaD(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT * FROM practicas WHERE id = '{$this->id}'";
+        $res = $this->select($sql);
+        return $res;
+    }
+
+    //cuenta asistencias
+    public function cuentaAsistencias(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT COUNT(*) AS asistencia FROM asistencias WHERE id_practica = '{$this->id}' AND asistencia = 2";
+        $res = $this->select($sql);
+        return $res;
+    }
+
     // Muestra la lista de responsables
     public function responsables(String $id)
     {
