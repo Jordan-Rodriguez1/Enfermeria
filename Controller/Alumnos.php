@@ -354,7 +354,7 @@ class Alumnos extends Controllers
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $error_archivo = $_FILES["archivo"]["error"];
-        $tmaximo = 5 * 1024 * 1024;
+        $tmaximo = 20 * 1024 * 1024;
         if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
             if ($error_archivo == UPLOAD_ERR_OK) {
                 if($imgactual != "perfil.jpg"){

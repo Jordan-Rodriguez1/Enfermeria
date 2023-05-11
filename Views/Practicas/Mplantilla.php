@@ -1,18 +1,16 @@
 <?php encabezado() ?>
 
 <?php if($_SESSION['rol'] <= 1){ ?> 
-<div class="page-content bg-light">
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -23,7 +21,11 @@
 <div class="page-content">
     <section>
         <div class="card container-fluid2">
-            <h5 class="card-header"><i class="fas fa-shopping-cart"></i> <strong>Nueva Salida</strong></h5>
+            <?php if ($data1['id'] == 0){ ?>
+                <h5 class="card-header"><i class="fas fa-shopping-cart"></i> <strong>Nueva Plantilla</strong></h5>
+            <?php }  else { ?>
+                <h5 class="card-header"><i class="fas fa-edit"></i> <strong>Editar Plantilla</strong></h5>
+            <?php } ?>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6 mb-2">
@@ -99,7 +101,8 @@
                     <div class="col-lg-4 mt-1">
                         <div class="form-group">
                             <strong style="color: #c2258e;">Descripción</strong>
-                            <textarea class="form-control" name="descripcion" id="descripcion" rows="4"></textarea>
+                            <input type="hidden" name="id_plantilla" id="id_plantilla" value="<?php echo $data1['id'];?>">
+                            <textarea class="form-control" name="descripcion" id="descripcion" rows="4" required><?php echo $data1['descripcion'];?></textarea>
                         </div>
                     </div>
                     <div class="col-lg-4 ml-auto">
@@ -107,8 +110,8 @@
                             <strong style="color: #c2258e;">Total productos</strong>
                             <input type="hidden" id="total" value="0.00" name="total" class="form-control  mb-2">
                             <strong id="totalD"></strong> <br>
-                            <button class="btn btn-danger" type="button" id="AnularDetalle"><i class="fas fa-window-close"></i> Anular Salida</button>
-                            <button class="btn btn-success" type="button" id="procesarCotizacion"><i class="fas fa-money-check-alt"></i> Procesar Salida</button>
+                            <button class="btn btn-danger" type="button" id="AnularDetalle"><i class="fas fa-window-close"></i> Anular Plantilla</button>
+                            <button class="btn btn-success" type="button" id="procesarCotizacion"><i class="fas fa-money-check-alt"></i> Procesar Plantilla</button>
                         </div>
                     </div>
                 </div>

@@ -1,18 +1,16 @@
 <?php encabezado() ?>
 
 <?php if($_SESSION['rol'] <= 1){ ?> 
-<div class="page-content bg-light">
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -27,7 +25,7 @@
             </div>
             <div class="col-lg-6 mt-auto">
                 <div class="card container-fluid2">
-                    <h5 class="card-header"><i class="fa fa-edit"></i> <strong>Editar Producto</strong></h5>
+                    <h5 class="card-header"><i class="fa fa-edit"></i> <strong>Editar Plantilla</strong></h5>
                     <form method="post" action="<?php echo base_url(); ?>Practicas/Tactualizar" autocomplete="off" enctype="multipart/form-data">
                         <div class="card-body">
                             <div class="form-group">
@@ -52,7 +50,8 @@
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" name="archivo">
                                     <label class="custom-file-label" for="customFile"></label>
-                                    <label><strong>Nota:</strong> Si no quieres cambiar el formato favor de dejar este campo vacío.</label>
+                                    <label><br><strong>Nota:</strong> Solo de admite formato PDF. El tamaño máximo del archivo debe ser menor a 20 MB.</label>
+                                    <label><strong>Nota2:</strong> Si no quieres cambiar el formato favor de dejar este campo vacío.</label>
                                 </div>
                             </div>
                         </div>

@@ -17,30 +17,74 @@ class PracticasModel extends Mysql{
     //Selecciona la lista de plantillas (materiales)
     public function selectPlantillasM()
     {
-        $sql = "SELECT * FROM cotizaciones WHERE estado = 1";
+        $sql = "SELECT detalle_coti.id_cotizacion AS id, cotizaciones.descripcion, cotizaciones.fecha, SUM(detalle_coti.cantidad * productos.precio) AS total FROM detalle_coti, productos, cotizaciones WHERE detalle_coti.id_producto = productos.id AND detalle_coti.id_cotizacion = cotizaciones.id AND cotizaciones.estado = 1 GROUP BY detalle_coti.id_cotizacion";
         $res = $this->select_all($sql);
         return $res;
     }
 
     //Agrega nueva plantilla (texto)
-    public function insertarPlantilla(String $nombre, string $descripcion, string $objetivo, string $requisitos, string $archivo)
+    public function insertarPlantilla(String $nombre, string $descripcion, string $objetivo, string $requisitos)
     {
         $return = "";
         $this->nombre = $nombre;
         $this->descripcion = $descripcion;
         $this->objetivo = $objetivo;
         $this->requisitos = $requisitos;
-        $this->archivo = $archivo;
         $sql = "SELECT * FROM plantillas WHERE nombre = '{$this->nombre}'";
         $result = $this->select_all($sql);
         if (empty($result)) {
-            $query = "INSERT INTO plantillas(nombre, descripcion, objetivo, requisitos, formato) VALUES (?,?,?,?,?)";
-            $data = array($this->nombre, $this->descripcion, $this->objetivo, $this->requisitos, $this->archivo);
+            $query = "INSERT INTO plantillas(nombre, descripcion, objetivo, requisitos) VALUES (?,?,?,?)";
+            $data = array($this->nombre, $this->descripcion, $this->objetivo, $this->requisitos);
             $resul = $this->insert($query, $data);
             $return = $resul;
         }else {
             $return = "existe";
         }
+        return $return;
+    }
+
+    //Selecciona plantilla materiales
+    public function selecPlantillaD(int $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT * FROM cotizaciones WHERE id = '{$this->id}'";
+        $res = $this->select($sql);
+        return $res;
+    }
+
+    //Selecciona las plantilla con mayor id
+    public function buscarPlantilla()
+    {
+        $sql = "SELECT * FROM plantillas ORDER BY id DESC LIMIT 1;";
+        $res = $this->select($sql);
+        return $res;
+    }
+
+    //Actualiza el formato
+    public function insertarFormato(string $archivo, int $id)
+    {
+        $return = "";
+        $this->archivo = $archivo;
+        $this->id = $id;
+        $query = "UPDATE plantillas SET formato=? WHERE id=?";
+        $data = array($this->archivo, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+
+    //Actualiza plantilla (MATERIALES)
+    public function editarCotizacion(string $descripcion, string $total, int $id)
+    {
+        $return = "";
+        $this->descripcion = $descripcion;
+        $this->total = $total;
+        $this->id = $id;
+        $query = "UPDATE cotizaciones SET descripcion=?, total=? WHERE id=?";
+        $data = array($this->descripcion, $this->total, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
         return $return;
     }
 
@@ -88,6 +132,15 @@ class PracticasModel extends Mysql{
         $return = $resul;
         return $return;
     }
+
+    //Vacía detalle de cotización
+    public function borrarDetalle(string $id)
+    {
+        $this->id = $id;
+        $sql = "DELETE FROM detalle_coti WHERE id_cotizacion = $id";
+        $resul = $this->delete($sql);
+    }
+
 
     //Actualiza las plantillas (texto) sin formato
     public function actualizarPlantillaNF(String $nombre, string $descripcion, string $objetivo, string $requisitos, int $id)
@@ -516,7 +569,7 @@ class PracticasModel extends Mysql{
     public function cuentaAsistencias(int $id)
     {
         $this->id = $id;
-        $sql = "SELECT COUNT(*) AS asistencias FROM asistencias WHERE id_practica = '{$this->id}'";
+        $sql = "SELECT COUNT(*) AS asistencias FROM asistencias WHERE id_practica = '{$this->id}' AND asistencia = 2";
         $res = $this->select($sql);
         return $res;
     }

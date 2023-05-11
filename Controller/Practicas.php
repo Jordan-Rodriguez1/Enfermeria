@@ -19,6 +19,7 @@ class Practicas extends Controllers{
         $data1 = $this->model->selectPlantillas();
         $data2 = $this->model->selectPlantillasM();
         $this->views->getView($this, "Plantillas", "", $data1, $data2);
+        die();
     }
 
     //Agrega nueva plantilla (texto)
@@ -28,18 +29,27 @@ class Practicas extends Controllers{
         $descripcion = $_POST['descripcion'];
         $objetivo = $_POST['objetivos'];
         $requisitos = $_POST['requisitos'];
+        $insert = $this->model->insertarPlantilla($nombre, $descripcion, $objetivo, $requisitos);
+        $id = $this->model->buscarPlantilla();
+        $tmaximo = 20 * 1024 * 1024;
+        $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES['archivo']["name"];
+        $nombre_nuevo = $id['id'].".".$name["extension"];
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $error_archivo = $_FILES["archivo"]["error"];
-        $insert = $this->model->insertarPlantilla($nombre, $descripcion, $objetivo, $requisitos, $nombre_archivo);
         if ($insert == 'existe') {
             $alert = 'existe';
         } else if ($insert > 0) {
-            $ruta_destino = "Assets/archivos/practicas/".$nombre_archivo;
-            move_uploaded_file($ruta_temporal, $ruta_destino);
-            $alert = 'registrado';
+            if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "pdf")){
+                $ruta_destino = "Assets/archivos/practicas/".$nombre_nuevo;
+                move_uploaded_file($ruta_temporal, $ruta_destino);
+                $agregar = $this->model->insertarFormato($nombre_nuevo, $id['id']);
+                $alert = 'registrado';
+            } else {
+                $alert = 'registradoe';
+            }
         } else {
             $alert = 'error';
         }
@@ -54,6 +64,7 @@ class Practicas extends Controllers{
         $data1 = $this->model->selecPlantillasInactivas();
         $data2 = $this->model->selecPlantillasMInactivas();
         $this->views->getView($this, "Eliminado", "", $data1, $data2);
+        die();
     }
 
     //Selecciona plantilla a editar (texto)
@@ -66,6 +77,7 @@ class Practicas extends Controllers{
         } else {
             $this->views->getView($this, "Teditar","",$data1);
         }
+        die();
     }
     
     //Actualiza la plantilla (texto)
@@ -76,22 +88,36 @@ class Practicas extends Controllers{
         $descripcion = $_POST['descripcion'];
         $objetivo = $_POST['objetivos'];
         $requisitos = $_POST['requisitos'];
+        $tmaximo = 20 * 1024 * 1024;
+        $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES['archivo']["name"];
+        $nombre_nuevo = $id.".".$name["extension"];
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $error_archivo = $_FILES["archivo"]["error"];
-        $data1 = $this->model->editarPlantillas($id);
         if ($nombre_archivo != "") {
-            $ruta_destino = "Assets/archivos/practicas/".$nombre_archivo;
-            move_uploaded_file($ruta_temporal, $ruta_destino); 
-            $actualizar = $this->model->actualizarPlantilla($nombre, $descripcion, $objetivo, $requisitos, $nombre_archivo, $id);
-        }
-        $actualizar = $this->model->actualizarPlantillaNF($nombre, $descripcion, $objetivo, $requisitos, $id);
-        if ($actualizar == 1) {
-            $alert =  'modificado';
+            if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "pdf")){
+                $plantilla = $this->model->editarPlantillas($id);
+                unlink("Assets/img/perfilesalumnos/".$plantilla["formato"]);
+                $ruta_destino = "Assets/archivos/practicas/".$nombre_nuevo;
+                move_uploaded_file($ruta_temporal, $ruta_destino);
+                $actualizar = $this->model->actualizarPlantilla($nombre, $descripcion, $objetivo, $requisitos, $nombre_nuevo, $id);
+                if ($actualizar == 1) {
+                    $alert =  'modificado';
+                } else {
+                    $alert = 'error';
+                }
+            } else {
+                $alert = 'modificadoe';
+            }
         } else {
-            $alert = 'error';
+            $actualizar = $this->model->actualizarPlantillaNF($nombre, $descripcion, $objetivo, $requisitos, $id);
+            if ($actualizar == 1) {
+                $alert =  'modificado';
+            } else {
+                $alert = 'error';
+            }
         }
         header("location: " . base_url() . "Practicas/Plantillas?msg=$alert");
         die();
@@ -132,8 +158,30 @@ class Practicas extends Controllers{
 
     public function Mplantilla()
     {
-        $data1 = $this->model->selectPlantillasM();
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $data1 = $this->model->selecPlantillaD($id);
+            $data2 = $this->model->selecPlantilla($id);
+            $this->model->VaciarDetalle($_SESSION['id']);
+            foreach ($data2 as $pl) {
+                $data3 = $this->model->detalleProducto($pl['id_producto']);
+                $nombre	= $data3['nombre'];
+                $cantidad = $pl['cantidad'];
+                $precio	= $data3['precio'];
+                $total = $cantidad * $precio;
+                $id_producto = $data3['id'];
+                $id_usuario = $_SESSION['id'];
+                $this->model->agregarTemp($nombre, $cantidad, $precio, $total, $id_producto, $id_usuario);
+            }
+        } else {
+            $data1 = [
+                "id" => "0",
+                "descripcion" => "",
+            ];
+            $this->model->VaciarDetalle($_SESSION['id']);
+        }
         $this->views->getView($this, "Mplantilla", "", $data1);
+        die();
     }
 
     //Ingresa a detalle temporal cotizaciones generadas
@@ -172,6 +220,7 @@ class Practicas extends Controllers{
                 echo "errorcantidad";
             }
         }    
+        die();
     }
 
     // Muestra la lista de prodcutos en el carrito
@@ -190,6 +239,7 @@ class Practicas extends Controllers{
         }
         $tot = number_format($this->totalPagar, 2, ".", "");
         echo "<input type='hidden' id='totalPagar' value='".$tot."'/>";
+        die();
     }
 
 
@@ -197,17 +247,23 @@ class Practicas extends Controllers{
     public function registrar()
     {
         $descripcion = $_POST['descripcion'];
+        $id = $_POST['id'];
         $total = $_POST['total'];
-        if ($descripcion == '') {
-            $this->model->registrarSalida('S/D', $total);
-        }else{
+        if ($id != 0) {
+            $data = $this->model->editarCotizacion($descripcion, $total, $id);
+            $reset = $this->model->borrarDetalle($id);
+            $productos = $this->model->verificarProductos($_SESSION['id']);
+            foreach ($productos as $data) {
+                $insertar = $this->model->registrarDetalle($id, $data['id_producto'], $data['cantidad'], $_SESSION['id']);
+            }
+        } else {
             $this->model->registrarSalida($descripcion, $total);
-        }
-        $data = $this->model->buscaridC();
-        $result = $data['MAX(id)'];
-        $productos = $this->model->verificarProductos($_SESSION['id']);
-        foreach ($productos as $data) {
-            $insertar = $this->model->registrarDetalle($result, $data['id_producto'], $data['cantidad'], $_SESSION['id']);
+            $data = $this->model->buscaridC();
+            $result = $data['MAX(id)'];
+            $productos = $this->model->verificarProductos($_SESSION['id']);
+            foreach ($productos as $data) {
+                $insertar = $this->model->registrarDetalle($result, $data['id_producto'], $data['cantidad'], $_SESSION['id']);
+            }
         }
         $this->model->VaciarDetalle($_SESSION['id']);
         die();
@@ -221,47 +277,6 @@ class Practicas extends Controllers{
         $data1 = $this->model->DetalleVenta($id);
         $data2 = $this->model->selectConfiguracion();
         $this->views->getView($this, "VerPlantilla", "", $data1, $data2, $data3);
-    }
-
-    //Selecciona plantilla a editar (materiales)
-    public function Meditar()
-    {
-        $id = $_GET['id'];
-        $data1 = $this->model->editarPlantillasM($id);
-        $data2 = $this->model-> DetalleVenta($id);
-        if ($data1 == 0) {
-            $this->Listar();
-        } else {
-            $this->views->getView($this, "Meditar","",$data1, $data2);
-        }
-    }
-    
-    //Actualiza la plantilla (materiales)
-    public function Mactualizar()
-    {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
-        $objetivo = $_POST['objetivos'];
-        $requisitos = $_POST['requisitos'];
-        $nombre_archivo = $_FILES['archivo']["name"];
-        $tipo_archivo = $_FILES["archivo"]["type"];
-        $tamano_archivo = $_FILES["archivo"]["size"];
-        $ruta_temporal = $_FILES["archivo"]["tmp_name"];
-        $error_archivo = $_FILES["archivo"]["error"];
-        $data1 = $this->model->editarPlantillas($id);
-        if ($nombre_archivo != "") {
-            $ruta_destino = "Assets/archivos/practicas/".$nombre_archivo;
-            move_uploaded_file($ruta_temporal, $ruta_destino); 
-            $actualizar = $this->model->actualizarPlantilla($nombre, $descripcion, $objetivo, $requisitos, $nombre_archivo, $id);
-        }
-        $actualizar = $this->model->actualizarPlantillaNF($nombre, $descripcion, $objetivo, $requisitos, $id);
-        if ($actualizar == 1) {
-            $alert =  'modificado';
-        } else {
-            $alert = 'error';
-        }
-        header("location: " . base_url() . "Practicas/Plantillas?msg=$alert");
         die();
     }
 
@@ -298,24 +313,6 @@ class Practicas extends Controllers{
         die();
     }
 
-    // Muestra la lista de prodcutos en el carrito (editar)
-    public function detalleE()
-    {
-        $data = $this->model->selectDetalle();
-        foreach ($data as $detalle) {
-        $this->totalPagar = $this->totalPagar + $detalle['cantidad']; 
-        echo "<tr>
-                <td>".$detalle['id']."</td>
-                <td>".$detalle['codigo']."</td>
-                <td>".$detalle['nombre']."</td>
-                <td>".$detalle['cantidad'] . "</td>
-                <td> <button type='button' data-id='".$detalle['id'] ."' class='btn btn-danger eliminar'>Eliminar</button></td>
-            </tr>";
-        }
-        $tot = number_format($this->totalPagar, 2, ".", "");
-        echo "<input type='hidden' id='totalPagar' value='".$tot."'/>";
-    }
-
 
     //
     //TERMINA PLANTILLAS
@@ -330,6 +327,7 @@ class Practicas extends Controllers{
         $data3 = $this->model->selectPlantillasM();
         $data4 = $this->model->selectUsuarios();
         $this->views->getView($this, "Practicas", "", $data1, $data2, $data3, $data4);
+        die();
     }
 
     //Selecciona lo requerido para editar una práctica
@@ -341,6 +339,7 @@ class Practicas extends Controllers{
         $data3 = $this->model->selectPlantillasM();
         $data4 = $this->model->selectUsuarios();
         $this->views->getView($this, "Peditar", "", $data1, $data2, $data3, $data4);
+        die();
     }
 
     //Agrega nueva practica

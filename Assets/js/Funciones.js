@@ -19,24 +19,35 @@ $(document).ready(function () {
         timer: 2500,
       });
     } else {
-      const total = {
-        total: $("#total").val(),
-        descripcion: document.getElementById("descripcion").value,
-        proveedor: document.getElementById("proveedor").value,
-      };
-      $.ajax({
-        url: base + "Entradas/registrar",
-        type: "POST",
-        data: total,
-        success: function (response) {
-          Swal.fire({
-            icon: "success",
-            title: "Compra Generada",
-            showConfirmButton: false,
-            timer: 1500,
+      Swal.fire({
+        title: "¿Está seguro que deseas confirmar el movimiento?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#dc3545",
+        confirmButtonText: "Confirmar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const total = {
+            total: $("#total").val(),
+            descripcion: document.getElementById("descripcion").value,
+            proveedor: document.getElementById("proveedor").value,
+          };
+          $.ajax({
+            url: base + "Entradas/registrar",
+            type: "POST",
+            data: total,
+            success: function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Compra Generada",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              ListaDetalle();
+            },
           });
-          ListaDetalle();
-        },
+        }
       });
     }
   });
@@ -52,24 +63,35 @@ $(document).ready(function () {
         timer: 2500,
       });
     } else {
-      const total = {
-        total: $("#total").val(),
-        descripcion: document.getElementById("descripcion").value,
-        responsable: document.getElementById("responsable").value,
-      };
-      $.ajax({
-        url: base + "Salidas/registrar",
-        type: "POST",
-        data: total,
-        success: function (response) {
-          Swal.fire({
-            icon: "success",
-            title: "Venta Generada",
-            showConfirmButton: false,
-            timer: 1500,
+      Swal.fire({
+        title: "¿Está seguro que deseas confirmar el movimiento?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#dc3545",
+        confirmButtonText: "Confirmar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const total = {
+            total: $("#total").val(),
+            descripcion: document.getElementById("descripcion").value,
+            responsable: document.getElementById("responsable").value,
+          };
+          $.ajax({
+            url: base + "Salidas/registrar",
+            type: "POST",
+            data: total,
+            success: function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Venta Generada",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              ListaDetalle();
+            },
           });
-          ListaDetalle();
-        },
+        }
       });
     }
   });
@@ -85,31 +107,43 @@ $(document).ready(function () {
         timer: 2500,
       });
     } else {
-      const total = {
-        total: $("#total").val(),
-        descripcion: document.getElementById("descripcion").value,
-      };
-      $.ajax({
-        url: base + "Practicas/registrar",
-        type: "POST",
-        data: total,
-        success: function (response) {
-          Swal.fire({
-            icon: "success",
-            title: "Plantilla Generada",
-            showConfirmButton: false,
-            timer: 1500,
+      Swal.fire({
+        title: "¿Está seguro que deseas confirmar el movimiento?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#dc3545",
+        confirmButtonText: "Confirmar",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          const total = {
+            total: $("#total").val(),
+            descripcion: document.getElementById("descripcion").value,
+            id: document.getElementById("id_plantilla").value,
+          };
+          $.ajax({
+            url: base + "Practicas/registrar",
+            type: "POST",
+            data: total,
+            success: function (response) {
+              Swal.fire({
+                icon: "success",
+                title: "Plantilla Generada",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              ListaDetalleC();
+            },
           });
-          ListaDetalleC();
-        },
+        }  
       });
     }
   });
-
+  
   //Eliminar detalle
   $("#AnularDetalle").click(function () {
     Swal.fire({
-      title: "¿Estás seguro que deseas anular?",
+      title: "¿Está seguro que deseas anular?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#28a745",
@@ -310,7 +344,8 @@ $(document).ready(function () {
   $(".Mprac").submit(function (e) {
     e.preventDefault();
     Swal.fire({
-      title: "¿Estás seguro de TERMINAR la práctica y continuar con la salida de materiales?",
+      title:
+        "¿Estás seguro de TERMINAR la práctica y continuar con la salida de materiales?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#28a745",
@@ -525,6 +560,7 @@ function BuscarCodigosC() {
 
 //Ingresa producto a la lista de detalle mediente enter
 function IngresarCantidad(e) {
+  const nombre = document.getElementById("nombre").value;
   const stockD = $("#stockD").val();
   const cantidad = document.getElementById("cantidad").value;
   if (e.which == 13) {
@@ -532,6 +568,13 @@ function IngresarCantidad(e) {
       Swal.fire({
         icon: "warning",
         title: "Ingrese la cantidad",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (nombre == "") {  
+      Swal.fire({
+        icon: "warning",
+        title: "Busque un producto.",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -600,11 +643,19 @@ function IngresarCantidad(e) {
 //Ingresa producto a la lista de detalle mediente botón
 function IngresarCantidades() {
   const stockD = $("#stockD").val();
+  const nombre = document.getElementById("nombre").value;
   const cantidad = document.getElementById("cantidad").value;
     if (cantidad == "") {
       Swal.fire({
         icon: "warning",
         title: "Ingrese la cantidad",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (nombre == "") {  
+      Swal.fire({
+        icon: "warning",
+        title: "Busque un producto.",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -673,12 +724,20 @@ function IngresarCantidades() {
 //Ingresa producto a la lista de detalle mediente enter (cotizaciones)
 function IngresarCantidadC(e) {
   const stockD = $("#stockD").val();
+  const nombre = document.getElementById("nombre").value;
   const cantidad = document.getElementById("cantidad").value;
   if (e.which == 13) {
     if (cantidad == "") {
       Swal.fire({
         icon: "warning",
         title: "Ingrese la cantidad",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (nombre == "") {  
+      Swal.fire({
+        icon: "warning",
+        title: "Busque un producto.",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -747,11 +806,19 @@ function IngresarCantidadC(e) {
 //Ingresa producto a la lista de detalle mediente botón (cotizaciones)
 function IngresarCantidadesC() {
   const stockD = $("#stockD").val();
+  const nombre = document.getElementById("nombre").value;
   const cantidad = document.getElementById("cantidad").value;
     if (cantidad == "") {
       Swal.fire({
         icon: "warning",
         title: "Ingrese la cantidad",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else if (nombre == "") {  
+      Swal.fire({
+        icon: "warning",
+        title: "Busque un producto.",
         showConfirmButton: false,
         timer: 1500,
       });

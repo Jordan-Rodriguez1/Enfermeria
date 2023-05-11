@@ -40,15 +40,23 @@
                                             </div>
                                         <?php } else if ($alert == "error") { ?>
                                             <div class="alert alert-danger" role="alert">
-                                                <strong>Error al registra.</strong>
+                                                <strong>Error al registrar.</strong>
                                             </div>
                                         <?php } else if ($alert == "registrado") { ?>
                                             <div class="alert alert-success" role="alert">
                                                 <strong>Plantilla registrada.</strong>
                                             </div>
+                                        <?php } else if ($alert == "registradoe") { ?>
+                                            <div class="alert alert-warning" role="alert">
+                                                <strong>Plantilla registrada. Hubo un error con el formato.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "modificadoe") { ?>
+                                            <div class="alert alert-warning" role="alert">
+                                                <strong>Plantilla modificada. Hubo un error con el formato.</strong>
+                                            </div>
                                         <?php } else if ($alert == "modificado") { ?>
                                             <div class="alert alert-success" role="alert">
-                                                <strong>Plantilla modificado.</strong>
+                                                <strong>Plantilla modificada.</strong>
                                             </div>
                                         <?php } else if ($alert == "inactivo") { ?>
                                             <div class="alert alert-success" role="alert">
@@ -142,6 +150,7 @@
                                         <tr>
                                             <th>Id</th>
                                             <th>Descripción</th>
+                                            <th>Costo Por Alumno</th>
                                             <th>Fecha</th>
                                             <th>Accion</th>
                                         </tr>
@@ -151,6 +160,7 @@
                                             <tr>
                                                 <td><?php echo $materiales['id']; ?></td>
                                                 <td><?php echo $materiales['descripcion']; ?></td>
+                                                <td><?php echo $materiales['total']; ?></td>
                                                 <td><?php echo $materiales['fecha']; ?></td>
                                                 <td>
                                                     <a title="Editar" href="<?php echo base_url() ?>Practicas/Mplantilla?id=<?php echo $materiales['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
@@ -204,6 +214,7 @@
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" name="archivo">
                             <label class="custom-file-label" for="customFile"></label>
+                            <label><br><strong>Nota:</strong> Solo de admite formato PDF. El tamaño máximo del archivo debe ser menor a 20 MB.</label>
                         </div>
                     </div>
                 </div>
