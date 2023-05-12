@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-05-2023 a las 04:56:46
+-- Tiempo de generación: 12-05-2023 a las 04:25:55
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -89,7 +89,7 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nombre`) VALUES
-(1, 'AAA'),
+(1, 'Genérica'),
 (23, 'Jeringa'),
 (24, 'Medicamento'),
 (26, 'XXX');
@@ -115,8 +115,8 @@ CREATE TABLE `compras` (
 --
 
 INSERT INTO `compras` (`id`, `descripcion`, `total`, `id_proveedor`, `id_generador`, `fecha`, `formato`) VALUES
-(37, 'Primera Prueba', 1400.00, '6', '14', '2023-04-16 13:46:19', ''),
-(38, 'Prueba 2', 200.00, '1', '14', '2023-04-16 13:47:30', ''),
+(37, 'Primera Prueba', 1400.00, '6', '14', '2023-04-16 13:46:19', 'LOGO.jpg'),
+(38, 'Prueba 2', 200.00, '1', '14', '2023-04-16 13:47:30', '38.pdf'),
 (39, 'Holaaa', 700.00, '6', '14', '2023-04-16 14:16:15', ''),
 (40, 'Quedó?', 100.00, '6', '14', '2023-04-16 23:43:29', ''),
 (41, 'Prueba Gestor', 100.00, '6', '26', '2023-04-17 11:21:00', ''),
@@ -345,7 +345,7 @@ CREATE TABLE `plantillas` (
 INSERT INTO `plantillas` (`id`, `nombre`, `descripcion`, `objetivo`, `requisitos`, `formato`, `estado`, `fecha`) VALUES
 (1, 'Prueba 1 Act', 'Hola Act', 'Adios Act', 'Hola Act', '', 1, '2023-04-21'),
 (2, 'Prueba 2 Act', 'Hola Act', 'Adios Act', 'Hola Act', '', 1, '2023-04-22'),
-(3, 'Prueba 3', 'Adios', 'Hola', 'Adios', '', 1, '2023-04-22'),
+(3, 'Prueba 3 Act', 'Adios', 'Hola', 'Adios', '', 1, '2023-04-22'),
 (4, 'Prueba 4', 'Hola', 'Adios', 'Hola', '', 1, '2023-04-22');
 
 -- --------------------------------------------------------
@@ -374,7 +374,8 @@ CREATE TABLE `practicas` (
 
 INSERT INTO `practicas` (`id`, `nombre`, `id_plantilla`, `id_plantillam`, `id_responsable`, `fecha_practica`, `semestre`, `capacidad`, `registros`, `estado`, `fecha`) VALUES
 (1, 'Prueba 1', 1, 47, 26, '2023-04-24 00:00:00', 6, 10, 2, 3, '2023-04-23 00:00:00'),
-(2, 'Prueba 2', 4, 47, 27, '2023-05-09 10:00:00', 6, 1, 0, 1, '2023-05-08 20:33:16');
+(2, 'Prueba 2', 4, 47, 27, '2023-05-09 10:00:00', 6, 1, 0, 0, '2023-05-08 20:33:16'),
+(3, 'Prueba 3 (Aula 1)', 1, 47, 14, '2023-05-10 10:45:00', 5, 1, 0, 0, '2023-05-09 17:44:08');
 
 -- --------------------------------------------------------
 
@@ -387,11 +388,11 @@ CREATE TABLE `productos` (
   `codigo` varchar(20) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `cantidad` decimal(10,2) NOT NULL DEFAULT 0.00,
-  `precio` decimal(10,2) NOT NULL,
-  `minimo` int(10) NOT NULL,
-  `categoria` varchar(40) DEFAULT NULL,
-  `proveedor` varchar(40) NOT NULL,
-  `tipo` varchar(30) NOT NULL,
+  `precio` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `minimo` int(10) NOT NULL DEFAULT 1,
+  `categoria` varchar(40) DEFAULT 'Genérica',
+  `proveedor` varchar(40) NOT NULL DEFAULT 'Genérico',
+  `tipo` varchar(30) NOT NULL DEFAULT 'Vigente',
   `estado` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -400,9 +401,15 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `codigo`, `nombre`, `cantidad`, `precio`, `minimo`, `categoria`, `proveedor`, `tipo`, `estado`) VALUES
-(253, '1', 'Ejemplo', 10.00, 100.00, 3, 'A', 'Guadalajara', '', 1),
-(254, '2', 'Prueba', 11.00, 100.00, 6, 'Medicamento', 'Prueba', '', 1),
-(256, '3', 'Otro', 3.00, 500.00, 0, 'Jeringa', 'Proveedor General', '', 1);
+(253, '1', 'Ejemplo', 5.00, 100.00, 3, 'A', 'Guadalajara', 'Vigente', 1),
+(254, '2', 'Prueba', 11.00, 100.00, 6, 'Medicamento', 'Prueba', 'Vigente', 1),
+(256, '3', 'Otro', 20.00, 500.00, 0, 'Jeringa', 'Proveedor General', 'Caducado', 1),
+(260, '4', 'Prueba 4', 0.00, 200.00, 0, 'AAA', 'Proveedor General', 'Vigente', 1),
+(261, '5', 'Hola', 15.00, 200.00, 0, 'Jeringa', 'Prueba2', 'Caducado', 1),
+(262, '7', 'Otro Mendigo Ejemplo', 0.00, 300.00, 6, 'Genérica', 'Genérico', 'Vigente', 1),
+(276, '78', 'Manzana', 0.00, 0.00, 0, 'C', 'D', 'E', 1),
+(277, '56', 'Uvas', 0.00, 0.00, 0, 'C', '', 'E', 1),
+(278, '75', 'Limón', 0.00, 0.00, 0, '', 'A', '', 1);
 
 -- --------------------------------------------------------
 
@@ -423,8 +430,8 @@ CREATE TABLE `proveedores` (
 --
 
 INSERT INTO `proveedores` (`id`, `nombre`, `direccion`, `telefono`, `estado`) VALUES
-(1, 'Proveedor General', 'NA', 'NA', 1),
-(6, 'Prueba2', 'AAAA', 'BBBBB', 1);
+(1, 'Genérico', 'NA', 'NA', 1),
+(6, 'Prueba2', 'AAAA', '3123123123', 1);
 
 -- --------------------------------------------------------
 
@@ -661,7 +668,7 @@ ALTER TABLE `detalle_coti`
 -- AUTO_INCREMENT de la tabla `detalle_temp`
 --
 ALTER TABLE `detalle_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=334;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
@@ -679,13 +686,13 @@ ALTER TABLE `plantillas`
 -- AUTO_INCREMENT de la tabla `practicas`
 --
 ALTER TABLE `practicas`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=260;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=279;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
