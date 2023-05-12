@@ -1,18 +1,31 @@
 <?php encabezado() ?>
 
-<?php if($_SESSION['rol'] <= 2){ ?> 
-<div class="page-content bg-light">
+<?php if($_SESSION['rol'] <= 1){ ?> 
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
+            </div>
+        </div>
+    </section>
+</div>
+<?php }  elseif ($_SESSION['rol'] <= 2) { ?>
+<div class="page-content">
+   <section>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Listar" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -31,10 +44,11 @@
                         <div class="col-lg-12 mt-2">
                             <div class="row">
                                 <div class="col-lg-8 mb-2">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#nuevo_producto"><i class="fas fa-plus-circle"></i> Nuevo</button>
-                                    <a class="btn btn-dark" href="<?php echo base_url(); ?>Productos/eliminados"><i class="fas fa-box"></i> Inactivos</a>
-                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>Productos/Categorias"><i class="fas fa-tags"></i> Categorias</a>
-                                    <a class="btn btn-secondary" href="<?php echo base_url(); ?>Productos/Proveedores"><i class="fas fa-truck"></i> Proveedores</a>
+                                    <button class="btn btn-success mb-2" type="button" data-toggle="modal" data-target="#nuevo_producto"><i class="fas fa-plus-circle"></i> Nuevo</button>
+                                    <a class="btn btn-dark mb-2" href="<?php echo base_url(); ?>Productos/eliminados"><i class="fas fa-box"></i> Inactivos</a>
+                                    <a class="btn btn-secondary mb-2" href="<?php echo base_url(); ?>Productos/Categorias"><i class="fas fa-tags"></i> Categorias</a>
+                                    <a class="btn btn-secondary mb-2" href="<?php echo base_url(); ?>Productos/Proveedores"><i class="fas fa-truck"></i> Proveedores</a>
+                                    <button class="btn btn-secondary mb-2" type="button" data-toggle="modal" data-target="#productos"><i class="fas fa-upload"></i> Cargar Productos</button>
                                 </div>
                                 <div class="col-lg-4">
                                     <?php if (isset($_GET['msg'])) {
@@ -55,6 +69,20 @@
                                             <div class="alert alert-success" role="alert">
                                                 <strong>El producto fue inactivado.</strong>
                                             </div>
+                                        <?php } else if ($alert == "bien") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>El producto fue transaccionado correctamente.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "cargado") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong><?php echo $_GET['a'];?> productos cargados.</strong> <br>
+                                            </div>
+                                            <div class="alert alert-danger" role="alert">
+                                                <strong><?php echo $_GET['e'];?> errores.</strong> <br>
+                                            </div>
+                                            <div class="alert alert-warning" role="alert">
+                                                <strong><?php echo $_GET['x'];?> productos ya existen.</strong> <br>
+                                            </div>
                                         <?php } else if ($alert == "modificado") { ?>
                                             <div class="alert alert-success" role="alert">
                                                 <strong>Producto Modificado.</strong>
@@ -73,6 +101,7 @@
                                             <th>Costo</th>
                                             <th>Categoría</th>
                                             <th>Proveedor</th>
+                                            <th>Tipo</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -91,11 +120,15 @@
                                                 <td><?php echo $cl['precio']; ?></td>
                                                 <td><?php echo $cl['categoria']; ?></td>
                                                 <td><?php echo $cl['proveedor']; ?></td>
+                                                <td><?php echo $cl['tipo']; ?></td>
                                                 <td>
-                                                    <a href="<?php echo base_url() ?>Productos/editar?id=<?php echo $cl['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                    <a title="Editar" href="<?php echo base_url() ?>Productos/editar?id=<?php echo $cl['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
                                                     <form action="<?php echo base_url() ?>Productos/eliminar?id=<?php echo $cl['id']; ?>" method="post" class="d-inline elim">
-                                                        <button type="submit" class="btn btn-dark"><i class="fas fa-box"></i></button>
+                                                        <button title="Inactivar" type="submit" class="btn btn-dark mb-2"><i class="fas fa-box"></i></button>
                                                     </form>
+                                                    <?php if($cl['tipo'] == "Vigente"){ ?>
+                                                        <a title="Caducar" href="<?php echo base_url() ?>Productos/Caducados?id=<?php echo $cl['id']; ?>" class="btn btn-secondary mb-2"><i class="fas fa-recycle"></i></a>
+                                                    <?php }?>
                                                 </td>
                                             </tr>
                                         <?php } ?>
@@ -161,6 +194,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="tipo">Tipo</label>
+                                <select name="tipo" id="tipo" class="form-control">
+                                    <option value="Vigente">Vigente</option>
+                                    <option value="Caducado">Caducado</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -168,6 +210,34 @@
                     <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+<div id="productos" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title"><i class="fas fa-upload"></i> Cargar Productos</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo base_url(); ?>Productos/subirarchivo" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="img">Selecciona Archivo</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" name="archivo">
+                            <label class="custom-file-label" for="customFile"></label>
+                            <label><br><strong>Nota:</strong> Favor de solo subir el formato que se proporciona editado con los productos, si no sabe como usar el formato dirigase al módulo Ayuda->Materiales. El tamaño máximo del archivo debe ser menor a 20 MB.</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-success mb-2" type="submit" id="subirarchivo"><i class="fas fa-save"></i> Registrar</button>
+                    <a href="<?php echo base_url() ?>/Assets/archivos/plantillas/PlantillaProductos.csv" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
+                    <button class="btn btn-danger mb-2" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
+                </form>
+            </div>
+            </div>
         </div>
     </div>
 </div>

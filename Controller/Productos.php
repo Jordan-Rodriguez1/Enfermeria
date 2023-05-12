@@ -34,7 +34,9 @@ class Productos extends Controllers
         $precio = $_POST['precio'];
         $proveedor = $_POST['proveedor'];
         $categoria = $_POST['categoria'];
-        $insert = $this->model->insertarProductos($codigo, $nombre, $precio, $proveedor, $categoria);
+        $tipo = $_POST['tipo'];
+        $minimo = $_POST['minimo'];
+        $insert = $this->model->insertarProductos($codigo, $nombre, $precio, $proveedor, $categoria, $tipo, $minimo);
         if ($insert == 'existe') {
             $alert = 'existe';
         } else if ($insert > 0) {
@@ -60,6 +62,35 @@ class Productos extends Controllers
             $this->views->getView($this, "Editar","",$data1, $data2, $data3);
         }
     }
+
+    //Selecciona producto a editar y muestra la lista de categorias y proveedores
+    public function caducados()
+    {
+        $id = $_GET['id'];
+        $data1 = $this->model->editarProductos($id);
+        $data2 = $this->model->caducadosProductos($id);
+        if ($data1 == 0) {
+            $this->Listar();
+        } else {
+            $this->views->getView($this, "Caducados","",$data1, $data2);
+        }
+    }
+
+    //Selecciona producto a editar y muestra la lista de categorias y proveedores
+    public function caducar()
+    {
+        $id = $_POST['id'];
+        $stock = $_POST['stock'];
+        $id_caducar = $_POST['id_caducar'];
+        $vigente = $this->model->editarProductos($id);
+        $descontar = $vigente['cantidad'] - $stock;
+        $this->model->editarStock($descontar, $id);
+        $caducado = $this->model->editarProductos($id_caducar);
+        $aumentar = $caducado['cantidad'] + $stock;
+        $this->model->editarStock($aumentar, $id_caducar);
+        $alert = "bien";
+        header("location: " . base_url() . "Productos/Listar?msg=$alert");
+    }
     
     //Actualiza el producto
     public function actualizar()
@@ -71,7 +102,9 @@ class Productos extends Controllers
         $precio = $_POST['precio'];
         $proveedor = $_POST['proveedor'];
         $categoria = $_POST['categoria'];
-        $actualizar = $this->model->actualizarProductos($codigo, $nombre, $cantidad, $precio, $proveedor, $categoria, $id);
+        $tipo = $_POST['tipo'];
+        $minimo = $_POST['minimo'];
+        $actualizar = $this->model->actualizarProductos($codigo, $nombre, $cantidad, $precio, $proveedor, $categoria, $tipo, $minimo, $id);
         if ($actualizar == 1) {
             $alert =  'modificado';
         } else {
@@ -218,6 +251,72 @@ class Productos extends Controllers
         die();
     }
 
-
+    //Carga muchos productos
+    public function subirarchivo()
+    {
+        $name = pathinfo($_FILES["archivo"]["name"]);
+        $tipo_archivo = $_FILES["archivo"]["type"];
+        $tamano_archivo = $_FILES["archivo"]["size"];
+        $ruta_temporal = $_FILES["archivo"]["tmp_name"];
+        $tmaximo = 20 * 1024 * 1024;
+        if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "csv")){
+            $lineas = file($ruta_temporal);
+            $i = 0;
+            $a = 0; //Agregados
+            $e = 0; //Error
+            $x = 0; //Ya existen
+            foreach (($lineas) as $linea) {
+                $cantidad_total = count($lineas);
+                $cantidad_agregada = ($cantidad_total - 2);
+                if ($i > 1) {
+                    $datos = explode(",", $linea);
+                    $codigo = $datos[0];
+                    $nombre = $datos[1];
+                    $precio = $datos[2];
+                    $minimo = $datos[3]; 
+                    $categoria = $datos[4];
+                    $proveedor = $datos[5];
+                    $tipo = $datos[6];
+                    if ($nombre != "" && $codigo != "" ){
+                        $insert = $this->model->insertarProductos($codigo, $nombre, $precio, $proveedor, $categoria, $tipo, $minimo);
+                        if ($insert == 'existe') {
+                            $data1 = $this->model->editarProductosC($codigo);
+                            if ($data1['estado'] == 2) {
+                                $id = $data1['id'];
+                                $actualizar = $this->model->actualizarProductos($codigo, $nombre, $cantidad, $precio, $proveedor, $categoria, $tipo, $minimo, $id);
+                                $eliminar = $this->model->reingresarProductos($id);
+                                    if ($actualizar == 1) {
+                                        $a++;
+                                    } else {
+                                        $e++;
+                                    }
+                            } else {
+                                $x++; 
+                            }
+                        } else if ($insert > 0) {
+                            $a++;
+                        } else {
+                            $e++;
+                        }
+                    } else{
+                        $e++;
+                    }
+                }
+                $i++;
+            }
+            $alert = "cargado";
+            $data1 = $this->model->selectProductos();
+            $data2 = $this->model->selectCat();
+            $data3 = $this->model->selectPro();
+            header("location: " . base_url() . "Productos/Listar?msg=$alert&a=$a&e=$e&x=$x");
+        }else{
+            $alert = "error";
+            $data1 = $this->model->selectProductos();
+            $data2 = $this->model->selectCat();
+            $data3 = $this->model->selectPro(); 
+            header("location: " . base_url() . "Productos/Listar?msg=$alert");
+        }
+        die();  
+    }
 }
 ?>

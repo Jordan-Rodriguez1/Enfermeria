@@ -14,6 +14,14 @@ class ProductosModel extends Mysql{
         return $res;
     }
 
+    //Selecciona los productos caducados
+    public function caducadosProductos()
+    {
+        $sql = "SELECT * FROM productos WHERE tipo = 'Caducado'";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
     //Selecciona las categorias existentes
     public function selectCat()
     {
@@ -39,7 +47,7 @@ class ProductosModel extends Mysql{
     }
 
     //Agrega nuevos productos
-    public function insertarProductos(String $codigo, string $nombre, string $precio, string $proveedor, string $categoria)
+    public function insertarProductos(String $codigo, string $nombre, string $precio, string $proveedor, string $categoria, string $tipo, string $minimo  )
     {
         $return = "";
         $this->codigo = $codigo;
@@ -47,11 +55,13 @@ class ProductosModel extends Mysql{
         $this->precio = $precio;
         $this->proveedor = $proveedor;
         $this->categoria = $categoria;
+        $this->tipo = $tipo;
+        $this->minimo = $minimo;
         $sql = "SELECT * FROM productos WHERE codigo = '{$this->codigo}'";
         $result = $this->select_all($sql);
         if (empty($result)) {
-            $query = "INSERT INTO productos(codigo, nombre, precio, proveedor, categoria) VALUES (?,?,?,?,?)";
-            $data = array($this->codigo, $this->nombre, $this->precio, $this->proveedor, $this->categoria);
+            $query = "INSERT INTO productos(codigo, nombre, precio, proveedor, categoria, tipo, minimo) VALUES (?,?,?,?,?,?,?)";
+            $data = array($this->codigo, $this->nombre, $this->precio, $this->proveedor, $this->categoria, $this->tipo, $this->minimo);
             $resul = $this->insert($query, $data);
             $return = $resul;
         }else {
@@ -72,8 +82,20 @@ class ProductosModel extends Mysql{
         return $res;
     }
 
+    //Selecciona el producto a editar mediante código
+    public function editarProductosC(string $id)
+    {
+        $this->id = $id;
+        $sql = "SELECT * FROM productos WHERE codigo = '{$this->id}'";
+        $res = $this->select($sql);
+        if (empty($res)) {
+            $res = 0;
+        }
+        return $res;
+    }
+
     //Actualiza los productos
-    public function actualizarProductos(String $codigo, string $nombre, string $cantidad, string $precio, string $proveedor, string $categoria, int $id)
+    public function actualizarProductos(String $codigo, string $nombre, string $cantidad, string $precio, string $proveedor, string $categoria, string $tipo, string $minimo, int $id)
     {
         $return = "";
         $this->codigo = $codigo;
@@ -82,9 +104,24 @@ class ProductosModel extends Mysql{
         $this->precio = $precio;
         $this->proveedor = $proveedor;
         $this->categoria = $categoria;
+        $this->tipo = $tipo;
+        $this->minimo = $minimo;
         $this->id = $id;
-        $query = "UPDATE productos SET codigo=?, nombre=?, cantidad=?, precio=?, proveedor=?, categoria=? WHERE id=?";
-        $data = array($this->codigo, $this->nombre, $this->cantidad, $this->precio, $this->proveedor, $this->categoria, $this->id);
+        $query = "UPDATE productos SET codigo=?, nombre=?, cantidad=?, precio=?, proveedor=?, categoria=?, tipo=?, minimo=? WHERE id=?";
+        $data = array($this->codigo, $this->nombre, $this->cantidad, $this->precio, $this->proveedor, $this->categoria, $this->tipo, $this->minimo, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
+    //Actualiza stock de los productos
+    public function editarStock(string $cantidad, int $id)
+    {
+        $return = "";
+        $this->cantidad = $cantidad;
+        $this->id = $id;
+        $query = "UPDATE productos SET cantidad=? WHERE id=?";
+        $data = array($this->cantidad, $this->id);
         $resul = $this->update($query, $data);
         $return = $resul;
         return $return;
