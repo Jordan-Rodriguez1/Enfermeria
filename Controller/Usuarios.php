@@ -23,21 +23,30 @@ class Usuarios extends Controllers
         $nombre = $_POST['nombre'];
         $usuario = $_POST['usuario'];
         $correo = $_POST['correo'];
-        $clave = $_POST['clave'];
+        $clave = $usuario; //Por defecto de pone número de usuario
         $rol = $_POST['rol'];
-        $confirmar = $_POST['confirmar'];
         $hash = hash("SHA256", $clave);
-        if ($clave != $confirmar) {
-            $alert = 'nocoincide';
-        } else {
-            $insert = $this->model->insertarUsuarios($nombre, $usuario, $hash, $rol, $correo);
-            if ($insert == 'existe') {
-                $alert = 'existe';
-            } else if ($insert > 0) {
-                $alert = 'registrado';
+        $insert = $this->model->insertarUsuarios($nombre, $usuario, $hash, $rol, $correo);
+        if ($insert == 'existe') {
+            $data1 = $this->model->editarUsuariosC($correo);
+            if ($data1['estado'] == 2) {
+                $estado = 1;
+                $id = $data1['id'];
+                $actualizar = $this->model->actualizarUsuarios($nombre, $usuario, $rol, $id, $correo);
+                $cambio =$this->model->cambiarContra($hash, $id);
+                $eliminar = $this->model->eliminarUsuarios($id, $estado);
+                    if ($actualizar == 1) {
+                        $alert = 'registrado';
+                    } else {
+                        $alert =  'error';
+                    }
             } else {
-                $alert = 'error';
+                $alert = 'existe';
             }
+        } else if ($insert > 0) {
+            $alert = 'registrado';
+        } else {
+            $alert = 'error';
         }
         $data1 = $this->model->selectUsuarios(); 
         header("location: " . base_url() . "Usuarios/Listar?msg=$alert");
@@ -144,7 +153,6 @@ class Usuarios extends Controllers
     //Cambiar contraseña
     public function cambiar()
     {
-
         $hash = hash("SHA256", $_POST['actual']);
         $nuevahash = hash("SHA256", $_POST['nueva']);
         $nueva = $_POST['nueva'];
@@ -163,27 +171,52 @@ class Usuarios extends Controllers
         header('location: ' . base_url() . "Dashboard/Listar?msg=$alert");  
     }
 
+    //restablecer contraseña
+    public function restablecer()
+    {
+        $id = $_GET['id'];
+        $data = $this->model->editarUsuarios($id);
+        $hash = hash("SHA256", $data['usuario']);
+        $cambio = $this->model->cambiarContra($hash, $id);
+        $alert =  'rest';
+        header('location: ' . base_url() . "Usuarios/Listar?msg=$alert");
+        die();  
+    }
+
     //Cambiar Imagen Perfil
     public function cambiarpic()
     {
+        $usuario = $this->model->editarUsuarios($_SESSION['id']);
+        $imgactual = $usuario['perfil'];
+        $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES["archivo"]["name"];
+        $nombre_nuevo = $_SESSION['id'].".".$name["extension"];
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];
         $error_archivo = $_FILES["archivo"]["error"];
-        if ($error_archivo == UPLOAD_ERR_OK) {
-            $ruta_destino = "Assets/img/perfiles/".$nombre_archivo;
-            if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
-            $id = $_SESSION['id'];
-            $this->model->img($nombre_archivo, $id);
-               $alert =  'registrado';
+        $tmaximo = 20 * 1024 * 1024;
+        if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
+            if ($error_archivo == UPLOAD_ERR_OK) {
+                if($imgactual != "perfil.jpg"){
+                    unlink("Assets/img/perfiles/".$imgactual);
+                }
+                $ruta_destino = "Assets/img/perfiles/".$nombre_nuevo;
+                if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
+                    $id = $_SESSION['id'];
+                    $this->model->img($nombre_nuevo, $id);
+                    $alert =  'imagen';
+                } else {
+                    $alert =  'noimagen';
+                }
             } else {
-               $alert =  'noimagen';
+            $alert =  'noimagen';
             }
         } else {
-        $alert =  'noimagen';
+            $alert =  'noimagen';
         }
         header('location: ' . base_url() . "Dashboard/Listar?msg=$alert");
+        die();
     }
 
     //Cerrar Sesión

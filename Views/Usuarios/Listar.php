@@ -1,18 +1,31 @@
 <?php encabezado() ?>
 
-<?php if($_SESSION['rol'] <= 2){ ?> 
-<div class="page-content bg-light">
+<?php if($_SESSION['rol'] <= 1){ ?> 
+<div class="page-content2">
     <section>
-        <div class="container-fluid container-fluidwelcome"  >
-            <div class="row">
-                <div class="col-lg-4 mt-2">
-                </div>
-                <div class="col-lg-4 mt-2">
-                <img src="../assets/img/unicornio.png" style="height: 400px; ">
-                <h2 class="h5 no-margin-bottom" style="text-align: center">Error: No tienes autorización para ingresar a esta página</h2>
-                </div>
-                <div class="col-lg-4 mt-2">
-                </div>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
+            </div>
+        </div>
+    </section>
+</div>
+<?php }  elseif ($_SESSION['rol'] <= 2) { ?>
+<div class="page-content">
+   <section>
+        <div class="card container-fluid2 text-center">
+            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
+            <div class="card-body">
+                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
+            </div>
+            <div class="card-footer text-muted">
+              <a href="<?php echo base_url() ?>Dashboard/Listar" class="btn btn-primary">Ir al inicio</a>
             </div>
         </div>
     </section>
@@ -30,7 +43,7 @@
                         <div class="col-lg-12 mt-2">
                             <div class="row">
                                 <div class="col-lg-8 mb-2">
-                                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
+                                    <button class="btn btn-success" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
                                     <a href="<?php echo base_url(); ?>/Usuarios/eliminados" class="btn btn-dark"><i class="fas fa-users-slash"></i> Inactivos</a>
                                 </div>
                                 <div class="col-lg-4">
@@ -51,6 +64,10 @@
                                         <?php } else if ($alert == "modificado") { ?>
                                             <div class="alert alert-success" role="alert">
                                                 <strong>Usuario modificado.</strong>
+                                            </div>
+                                        <?php } else if ($alert == "rest") { ?>
+                                            <div class="alert alert-success" role="alert">
+                                                <strong>La contraseña del usuario se restableció.</strong>
                                             </div>
                                         <?php } else if ($alert == "inactivo") { ?>
                                             <div class="alert alert-success" role="alert">
@@ -93,9 +110,12 @@
                                                         echo "Responsable";
                                                     } ?> </td>
                                                 <td>
-                                                    <a href="<?php echo base_url() ?>Usuarios/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                                    <a title="Editar" href="<?php echo base_url() ?>Usuarios/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
                                                     <form action="<?php echo base_url() ?>Usuarios/eliminar?id=<?php echo $us['id']; ?>" method="post" class="d-inline elim">
-                                                        <button type="submit" class="btn btn-dark"><i class="fas fa-user-slash"></i></button>
+                                                        <button title="Inactivar" type="submit" class="btn btn-dark mb-2"><i class="fas fa-user-slash"></i></button>
+                                                    </form>
+                                                    <form action="<?php echo base_url() ?>Usuarios/restablecer?id=<?php echo $us['id']; ?>" method="post" class="d-inline rest">
+                                                        <button title="Restablecer Contraseña" title="Restablecer contraseña" type="submit" class="btn btn-secondary mb-2"><i class="fas fa-unlock-alt"></i></button>
                                                     </form>              
                                                 </td>
                                             </tr>
@@ -133,7 +153,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="usuario">No. Trabajador</label>
-                                <input id="usuario" class="form-control" type="number" name="usuario" placeholder="No. Trabajador" required>
+                                <input id="usuario" class="form-control" type="number" min="10000000" max="99999999" name="usuario" placeholder="No. Trabajador" required>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -144,18 +164,6 @@
                                 <?php if($_SESSION['rol'] >= 3){ ?><option value="3">Vendedor</option> <?php } ?>
                                 <option value="2">Responsable</option>
                             </select>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="clave">Contraseña</label>
-                                <input id="clave" class="form-control" type="password" name="clave" placeholder="Contraseña" required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="confirmar">Confirma Contraseña</label>
-                                <input id="confirmar" class="form-control" type="password" name="confirmar" placeholder="Confirmar Contraseña" required>
-                            </div>
                         </div>
                     </div>
                 </div>

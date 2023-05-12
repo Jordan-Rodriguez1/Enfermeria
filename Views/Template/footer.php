@@ -76,7 +76,7 @@
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="archivo">
                               <label class="custom-file-label" for="customFile"></label>
-                              <label><br><strong>Nota:</strong> Se recomienda poner una imagen cuadrada para que se pueda apreciar. Solo se admiten en formato PNG, JPG O JPEG con un tamaño máximo de 5 MB</label>
+                              <label><br><strong>Nota:</strong> Se recomienda poner una imagen cuadrada para que se pueda apreciar. Solo se admiten en formato PNG, JPG O JPEG con un tamaño máximo de 20 MB</label>
                             </div>
                             </div>
                             <button class="btn btn-primary" type="submit" id="subirarchivo">Cambiar</button>
@@ -134,7 +134,7 @@
                             <div class="custom-file">
                               <input type="file" class="custom-file-input" name="archivo">
                               <label class="custom-file-label" for="customFile"></label>
-                              <label><br><strong>Nota:</strong> Se recomienda poner una imagen cuadrada para que se pueda apreciar. Solo se admiten en formato PNG, JPG O JPEG con un tamaño máximo de 5 MB</label>
+                              <label><br><strong>Nota:</strong> Se recomienda poner una imagen cuadrada para que se pueda apreciar. Solo se admiten en formato PNG, JPG O JPEG con un tamaño máximo de 20 MB</label>
                             </div>
                             </div>
                             <button class="btn btn-primary" type="submit" id="subirarchivo">Cambiar</button>

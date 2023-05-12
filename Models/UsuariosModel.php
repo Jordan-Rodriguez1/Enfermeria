@@ -31,7 +31,7 @@ class UsuariosModel extends Mysql{
         $this->clave = $clave;
         $this->rol = $rol;
         $this->correo = $correo;
-        $sql = "SELECT * FROM usuarios WHERE usuario = '{$this->usuario}'";
+        $sql = "SELECT * FROM usuarios WHERE correo = '{$this->correo}'";
         $result = $this->selecT($sql);
         if (empty($result)) {
             $query = "INSERT INTO usuarios(nombre, usuario, clave, rol, correo) VALUES (?,?,?,?,?)";
@@ -49,6 +49,18 @@ class UsuariosModel extends Mysql{
     {
         $this->id = $id;
         $sql = "SELECT * FROM usuarios WHERE id = '{$this->id}'";
+        $res = $this->select($sql);
+        if (empty($res)) {
+            $res = 0;
+        }
+        return $res;
+    }
+
+    //Seleciona los datos de un usuario mediante correo
+    public function editarUsuariosC(string $correo)
+    {
+        $this->correo = $correo;
+        $sql = "SELECT * FROM usuarios WHERE correo = '{$this->correo}'";
         $res = $this->select($sql);
         if (empty($res)) {
             $res = 0;
