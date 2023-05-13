@@ -118,20 +118,39 @@
 
         public function EntradasSalidasPiezas()
         {
+        if (isset($_GET['inicio'])) {
+            $inicio = $_GET['inicio'];
+            $fin = $_GET['fin'];
+            $data = $this->model->EntradasVSSalidasPiezasC($inicio, $fin);
+        } else {
             $data = $this->model->EntradasVSSalidasPiezas();
+        }
             echo json_encode($data);
             die();
         }
 
         public function PastelMateriales1()
         {
+        if (isset($_GET['inicio'])) {
+            $inicio = $_GET['inicio'];
+            $fin = $_GET['fin'];
+            $data = $this->model->MasSalidasC($inicio, $fin);
+        } else {
             $data = $this->model->MasSalidas();
+        }
             echo json_encode($data);
             die();
         }
 
         public function PastelMateriales2()
         {
+        if (isset($_GET['inicio'])) {
+            $inicio = $_GET['inicio'];
+            $fin = $_GET['fin'];
+            $data = $this->model->MasEntradasC($inicio, $fin);
+        } else {
+            $data = $this->model->MasEntradas();
+        }
             $data = $this->model->MasEntradas();
             echo json_encode($data);
             die();

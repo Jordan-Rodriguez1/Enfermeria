@@ -49,7 +49,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Total Piezas</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data3['piezas']; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo  round($data3['piezas'],2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Valor Stock</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$ <?php echo $data3['total']; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$ <?php echo  round($data3['total'],2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Stock Promedio Artículo</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data4['stock']; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo  round($data4['stock'],2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +91,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Costo Promedio Artículo</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$ <?php echo $data4['costo']; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$ <?php echo  round($data4['costo'],2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -113,7 +113,7 @@
                 <div class="container-fluid ">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form action="<?php echo base_url(); ?>/Reportes/Materiales" method="get">
+                            <form action="<?php echo base_url(); ?>Reportes/Materiales" method="get">
                                 <div class="row">
                                     <div class="col-lg-3">
                                         <div class="form-group">
@@ -173,60 +173,60 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Productos con Más Salidas en Piezas (FILTRO)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Productos con Más Salidas en Piezas (FILTRO)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Materiales1" width="100%" height="50"></canvas>
+                            <canvas id="Materiales1" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Productos con Más Salidas en Dinero (FILTRO)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Productos con Más Salidas en Dinero (FILTRO)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Materiales2" width="100%" height="50"></canvas>
+                            <canvas id="Materiales2" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Vigente VS Caducado</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Vigente VS Caducado</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Materiales3" width="100%" height="50"></canvas>
+                            <canvas id="Materiales3" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Proveedores con Más Materiales</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Proveedores con Más Materiales</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Materiales4" width="100%" height="50"></canvas>
+                            <canvas id="Materiales4" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Categorías con Más Materiales</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Categorías con Más Materiales</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Materiales5" width="100%" height="50"></canvas>
+                            <canvas id="Materiales5" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Materiales en Más Plantillas</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Materiales en Más Plantillas</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Materiales6" width="100%" height="50"></canvas>
+                            <canvas id="Materiales6" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
     <!-- Tablas -->
     <section>
         <div class="card container-fluid3">
-            <h5 class="card-header"><i class="fas fa-user-plus"></i> <strong>Materiales Sin Stock</strong></h5>
+            <h5 class="card-header"><i class="fas fa-times"></i> <strong>Materiales Sin Stock</strong></h5>
             <div class="card-body">
                 <div class="container-fluid ">
                     <div class="row">
@@ -272,7 +272,7 @@
             </div>
         </div>
         <div class="card container-fluid3">
-            <h5 class="card-header"><i class="fas fa-user-plus"></i> <strong>Materiales con Poco Stock</strong></h5>
+            <h5 class="card-header"><i class="fas fa-minus"></i> <strong>Materiales con Poco Stock</strong></h5>
             <div class="card-body">
                 <div class="container-fluid ">
                     <div class="row">

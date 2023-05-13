@@ -103,7 +103,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 1° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre1" width="100%" height="50"></canvas>
+                            <canvas id="Semestre1" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 2° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre2" width="100%" height="50"></canvas>
+                            <canvas id="Semestre2" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -123,7 +123,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 3° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre3" width="100%" height="50"></canvas>
+                            <canvas id="Semestre3" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -133,7 +133,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 4° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre4" width="100%" height="50"></canvas>
+                            <canvas id="Semestre4" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 5° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre5" width="100%" height="50"></canvas>
+                            <canvas id="Semestre5" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 6° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre6" width="100%" height="50"></canvas>
+                            <canvas id="Semestre6" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                     <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Asistencias 7° Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre7" width="100%" height="50"></canvas>
+                            <canvas id="Semestre7" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>

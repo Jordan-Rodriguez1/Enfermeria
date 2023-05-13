@@ -256,14 +256,14 @@ class ReportesModel extends Mysql{
 
     public function MasSalidas()
     {
-        $sql = "SELECT SUM(detalle_venta.id_producto) AS total, productos.nombre FROM detalle_venta, productos WHERE detalle_venta.id_producto = productos.id GROUP BY detalle_venta.id_producto ASC LIMIT 10";
+        $sql = "SELECT SUM(detalle_venta.cantidad) AS total, productos.nombre FROM detalle_venta, productos WHERE detalle_venta.id_producto = productos.id GROUP BY detalle_venta.id_producto ASC LIMIT 10";
         $res = $this->select_all($sql);
         return $res;
     }
 
     public function MasEntradas()
     {
-        $sql = "SELECT SUM(detalle_compra.id_producto) AS total, productos.nombre FROM detalle_compra, productos WHERE detalle_compra.id_producto = productos.id GROUP BY detalle_compra.id_producto ASC LIMIT 10";
+        $sql = "SELECT SUM(detalle_venta.cantidad*detalle_venta.precio) AS total, productos.nombre FROM detalle_venta, productos WHERE detalle_venta.id_producto = productos.id GROUP BY detalle_venta.id_producto ASC LIMIT 10";
         $res = $this->select_all($sql);
         return $res;
     }
@@ -272,7 +272,7 @@ class ReportesModel extends Mysql{
     {
         $this->inicio = $inicio;
         $this->fin = $fin;
-        $sql = "SELECT SUM(detalle_venta.id_producto) AS total, productos.nombre FROM detalle_venta, productos WHERE detalle_venta.id_producto = productos.id AND fecha BETWEEN '{$this->inicio}' AND '{$this->fin}' GROUP BY detalle_venta.id_producto ASC LIMIT 10";
+        $sql = "SELECT SUM(detalle_venta.cantidad) AS total, productos.nombre FROM detalle_venta, productos WHERE detalle_venta.id_producto = productos.id AND fecha BETWEEN '{$this->inicio}' AND '{$this->fin}' GROUP BY detalle_venta.id_producto ASC LIMIT 10";
         $res = $this->select_all($sql);
         return $res;
     }
@@ -281,7 +281,7 @@ class ReportesModel extends Mysql{
     {
         $this->inicio = $inicio;
         $this->fin = $fin;
-        $sql = "SELECT SUM(detalle_compra.id_producto) AS total, productos.nombre FROM detalle_compra, productos WHERE detalle_compra.id_producto = productos.id AND fecha BETWEEN '{$this->inicio}' AND '{$this->fin}' GROUP BY detalle_compra.id_producto ASC LIMIT 10";
+        $sql = "SELECT SUM(detalle_venta.cantidad*detalle_venta.precio) AS total, productos.nombre FROM detalle_venta, productos WHERE detalle_venta.id_producto = productos.id AND fecha BETWEEN '{$this->inicio}' AND '{$this->fin}' GROUP BY detalle_venta.id_producto ASC LIMIT 10";
         $res = $this->select_all($sql);
         return $res;
     }

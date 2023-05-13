@@ -2,6 +2,12 @@ const base = document.getElementById("url").value;
 const urls = base + "Entradas/ingresar";
 const cotizacion = base + "Practicas/ingresar";
 
+
+var URLactual = String(window.location);
+var Posicion = URLactual.indexOf("?");
+var Final = Posicion + 33;
+let Part = URLactual.slice(Posicion, Final);
+
 window.addEventListener("load", function () {
   ListaDetalle();
   ListaDetalleC();
@@ -1038,8 +1044,7 @@ function BarrasPracticas() {
 
 function BarrasMateriales1() {
   $.ajax({
-    url:
-      base + "Reportes/EntradasSalidasDinero?inicio=2023-04-10&fin=2023-04-30",
+    url: base + "Reportes/EntradasSalidasDinero" + Part,
     type: "POST",
     success: function (response) {
       var data = JSON.parse(response);
@@ -1099,7 +1104,7 @@ function BarrasMateriales1() {
 
 function BarrasMateriales2() {
   $.ajax({
-    url: base + "Reportes/EntradasSalidasPiezas",
+    url: base + "Reportes/EntradasSalidasPiezas" + Part,
     type: "POST",
     success: function (response) {
       var data = JSON.parse(response);
@@ -1187,50 +1192,14 @@ function PastelSemestre1() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
-              ],
-            },
-          ],
-        },
-      });
-    },
-  });
-}
-
-function PastelSemestre1() {
-  $.ajax({
-    url: base + "Reportes/PastelSemestre1",
-    type: "POST",
-    success: function (response) {
-      var data = JSON.parse(response);
-      var asistencias = [];
-      var total = [];
-      for (var i = 0; i < data.length; i++) {
-        asistencias.push(data[i]["asistencias"] + " Asistencias");
-        total.push(data[i]["total"]);
-      }
-      // Set new default font family and font color to mimic Bootstrap's default styling
-      Chart.defaults.global.defaultFontFamily =
-        '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-      Chart.defaults.global.defaultFontColor = "#292b2c";
-
-      // Pie Chart Example
-      var ctx = document.getElementById("Semestre1");
-      var myPieChart = new Chart(ctx, {
-        type: "pie",
-        data: {
-          labels: asistencias,
-          datasets: [
-            {
-              data: total,
-              backgroundColor: [
-                "#C2258E",
-                "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1269,9 +1238,14 @@ function PastelSemestre2() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1310,9 +1284,14 @@ function PastelSemestre3() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1351,9 +1330,14 @@ function PastelSemestre4() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1392,9 +1376,14 @@ function PastelSemestre5() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1433,9 +1422,14 @@ function PastelSemestre6() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1474,9 +1468,14 @@ function PastelSemestre7() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1515,9 +1514,14 @@ function PastelPracticas1() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1555,9 +1559,14 @@ function PastelPracticas2() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1595,9 +1604,14 @@ function PastelPracticas3() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1635,9 +1649,14 @@ function PastelPracticas4() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1675,9 +1694,14 @@ function PastelPracticas5() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1715,9 +1739,14 @@ function PastelPracticas6() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1729,7 +1758,7 @@ function PastelPracticas6() {
 
 function PastelMateriales1() {
   $.ajax({
-    url: base + "Reportes/PastelMateriales1",
+    url: base + "Reportes/PastelMateriales1" + Part,
     type: "POST",
     success: function (response) {
       var data = JSON.parse(response);
@@ -1756,9 +1785,14 @@ function PastelMateriales1() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1770,7 +1804,7 @@ function PastelMateriales1() {
 
 function PastelMateriales2() {
   $.ajax({
-    url: base + "Reportes/PastelMateriales2",
+    url: base + "Reportes/PastelMateriales2" + Part,
     type: "POST",
     success: function (response) {
       var data = JSON.parse(response);
@@ -1797,9 +1831,14 @@ function PastelMateriales2() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1838,9 +1877,14 @@ function PastelMateriales3() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1879,9 +1923,14 @@ function PastelMateriales4() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1920,9 +1969,14 @@ function PastelMateriales5() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],
@@ -1961,9 +2015,14 @@ function PastelMateriales6() {
               backgroundColor: [
                 "#C2258E",
                 "Blue",
-                "Purple",
-                "Orange",
-                "fuchsia",
+                "Salmon",
+                "Wheat",
+                "Peru",
+                "CadetBlue",
+                "Navy",
+                "SandyBrown",
+                "LimeGreen",
+                "SpringGreen",
               ],
             },
           ],

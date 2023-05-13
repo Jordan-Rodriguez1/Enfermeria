@@ -129,7 +129,7 @@
                     <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Plantillas Más Usadas (Texto)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Practicas1" width="100%" height="50"></canvas>
+                            <canvas id="Practicas1" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                     <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Plantillas Más Usadas (Materiales)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Practicas2" width="100%" height="50"></canvas>
+                            <canvas id="Practicas2" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                     <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Prácticas Con Más Asistencias</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Practicas3" width="100%" height="50"></canvas>
+                            <canvas id="Practicas3" width="100%" height="75"></canvas>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -162,7 +162,7 @@
                     <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Prácticas Con Más Faltas</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Practicas4" width="100%" height="50"></canvas>
+                            <canvas id="Practicas4" width="100%" height="75"></canvas>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -175,7 +175,7 @@
                     <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Usuarios con Más Prácticas Terminadas</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Practicas5" width="100%" height="50"></canvas>
+                            <canvas id="Practicas5" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
@@ -185,7 +185,7 @@
                     <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Prácticas Realizadas por Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Practicas6" width="100%" height="50"></canvas>
+                            <canvas id="Practicas6" width="100%" height="75"></canvas>
                         </div>
                     </div>
                 </div>
