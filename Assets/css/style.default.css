@@ -3643,6 +3643,14 @@ pre code {
   margin: 50px 30px;
 }
 
+.container-fluid3 {
+  margin: 0px 30px 50px 30px;
+}
+
+.container-fluid4 {
+  margin: 0px 0px 50px 30px;
+}
+
 .thead-personality {
   background: var(--lavanda);
   color: var(--white);

@@ -5,6 +5,69 @@ class ReportesModel extends Mysql{
         parent::__construct();
     }
 
+    public function Configuracion()
+    {
+        $sql = "SELECT *  FROM configsemestre";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    public function AlumnosCompletos(string $grado, string $asistencias)
+    {
+        $this->grado = $grado;
+        $this->asistencias = $asistencias;
+        $sql = "SELECT * FROM alumnos WHERE grado = '{$this->grado}' AND asistencias >= '{$this->asistencias}'";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    public function AlumnosNoCompletos(string $grado, string $asistencias)
+    {
+        $this->grado = $grado;
+        $this->asistencias = $asistencias;
+        $sql = "SELECT * FROM alumnos WHERE grado = '{$this->grado}' AND asistencias < '{$this->asistencias}'";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    public function AlumnosFaltas(string $grado, string $faltas)
+    {
+        $this->grado = $grado;
+        $this->faltas = $faltas;
+        $sql = "SELECT * FROM alumnos WHERE grado = '{$this->grado}' AND faltas >= '{$this->faltas}'";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    public function Asistencias(int $grado)
+    {
+        $this->grado = $grado;
+        $sql = "SELECT asistencias, COUNT(asistencias) AS total FROM alumnos WHERE grado = '{$this->grado}' GROUP BY asistencias";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    public function AsistenciasyFaltas()
+    {
+        $sql = "SELECT grado, SUM(asistencias) AS asistencias, SUM(faltas) AS faltas FROM alumnos GROUP BY grado";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+    public function AlumnosGrados()
+    {
+        $sql = "SELECT grado, COUNT(*) AS total FROM alumnos GROUP BY grado";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
+
+
+
+
+
+
+
     public function ventas()
     {
         $sql = "SELECT SUM(total) AS suma FROM ventas";
@@ -79,12 +142,7 @@ class ReportesModel extends Mysql{
         $res = $this->select_all($sql);
         return $res;
     }
-    public function selectProductos()
-    {
-        $sql = "SELECT producto, cantidad, SUM(cantidad) as total FROM detalle_venta group by id_producto ORDER BY cantidad DESC LIMIT 10";
-        $res = $this->select_all($sql);
-        return $res;
-    }
+
 
     public function selectClientes()
     {

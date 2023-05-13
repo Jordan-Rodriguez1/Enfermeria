@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -125,22 +125,17 @@
             </div>
             <ul class="list-unstyled" style="margin-bottom: 5rem;">
                 <li><a href="<?php echo base_url(); ?>Dashboard/Listar"> <i class="fas fa-home"></i> <strong class="text-black"> Home </strong></a></li> 
-
-                
-<!--
+                <li><a href="<?php echo base_url(); ?>Dashboard/Ayuda"> <i class="fas fa-info-circle"></i> <strong class="text-black"> Ayuda </strong></a></li> 
+    
+                <?php if($_SESSION['rol'] > 4){ ?>
+                    <li><a href="<?php echo base_url(); ?>Configuracion/Listar"> <i class="fas fa-cog"></i> <strong class="text-black"> Configuración </strong></a></li>
                 <li><a href="#DropdownReportes" aria-expanded="false" data-toggle="collapse"><i class="fas fa-file-signature"></i> <strong class="text-black"> Reportes </strong></a>
                     <ul id="DropdownReportes" class="collapse list-unstyled ">
-                        <li><a href="<?php echo base_url(); ?>Reportes/Caja"><i class="fas fa-cash-register"></i> Caja </a></li>
-                        <li><a href="<?php echo base_url(); ?>Reportes/Graficas"><i class="fas fa-chart-area"></i> Reportes de Ventas </a></li>
-                        <li><a href="<?php echo base_url(); ?>Reportes/Otros"><i class="fas fa-chart-pie"></i> Otros Reportes </a></li>
+                        <li><a href="<?php echo base_url(); ?>Reportes/Alumnos"><i class="fas fa-user"></i> Alumnos </a></li>
+                        <li><a href="<?php echo base_url(); ?>Reportes/Practicas"><i class="fas fa-book"></i> Prácticas </a></li>
+                        <li><a href="<?php echo base_url(); ?>Reportes/Materiales"><i class="fas fa-boxes"></i> Materiales </a></li>
                     </ul>
                 </li>
--->
-
-                
-                 <!-- CORRECTO-->
-                <?php if($_SESSION['rol'] > 4){ ?>
-                <li><a href="<?php echo base_url(); ?>Configuracion/Listar"> <i class="fas fa-cog"></i> <strong class="text-black"> Configuración </strong></a></li>
                 <?php } ?>
 
                 <?php if($_SESSION['rol'] > 2){ ?>
@@ -164,6 +159,7 @@
                         <li><a href="<?php echo base_url(); ?>Entradas/lista"><i class="fas fa-clipboard-list"></i> Consulta Entradas</a></li>
                     </ul>
                 </li>
+
                 <?php } ?>
 
                 <?php if($_SESSION['rol'] > 1){ ?>
@@ -176,7 +172,6 @@
                 </li>
                 <li><a href="<?php echo base_url(); ?>Alumnos/Listar"> <i class="fas fa-user"></i> <strong class="text-black"> Alumnos </strong></a></li>
                 <?php } ?>
-
 
             </ul>
         </nav>
