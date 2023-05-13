@@ -49,7 +49,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Costo Promedio Plantillas</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data5; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$<?php echo round($data1,2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Costo Promedio Salidas</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data5; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$<?php echo round($data2['total'],2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                                                     <br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Promedio Asistencias</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data5; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo round($data3,2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,10 +88,10 @@
                                         <div class="card-body" style="height: 100%">
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-lg-12">
-                                                    <br><br>
+                                                    <br><br><br>
                                                     <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Promedio Faltas</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data5; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo round($data4,2); ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -110,10 +110,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Plantillas Más Caras (Por Alumno)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Plantillas Más Caras (Por Alumno)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="BarrasAlumnos" width="100%" height="50">
+                            <canvas id="PracticasCaras" width="100%" height="50">
                         </div>
                     </div>
                 </div>
@@ -126,43 +126,30 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Plantillas Más Usadas (Texto)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Plantillas Más Usadas (Texto)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre1" width="100%" height="50"></canvas>
+                            <canvas id="Practicas1" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Plantillas Más Usadas (Materiales)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Plantillas Más Usadas (Materiales)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre2" width="100%" height="50"></canvas>
+                            <canvas id="Practicas2" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Prácticas Con Más Asistencias</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Prácticas Con Más Asistencias</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre3" width="100%" height="50"></canvas>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <p><strong>Nota:</strong> se toma en cuenta la plantilla de texto.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Prácticas Con Más Faltas</strong></h5>
-                    <div class="card-body">
-                        <div class="container-fluid ">
-                            <canvas id="Semestre4" width="100%" height="50"></canvas>
+                            <canvas id="Practicas3" width="100%" height="50"></canvas>
                         </div>
                     </div>
                     <div class="card-footer">
@@ -172,20 +159,33 @@
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Usuario con Más Prácticas</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Prácticas Con Más Faltas</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre5" width="100%" height="50"></canvas>
+                            <canvas id="Practicas4" width="100%" height="50"></canvas>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <p><strong>Nota:</strong> se toma en cuenta la plantilla de texto.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card container-fluid3">
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Usuarios con Más Prácticas Terminadas</strong></h5>
+                    <div class="card-body">
+                        <div class="container-fluid ">
+                            <canvas id="Practicas5" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Prácticas Realizadas por Semestre</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-pie"></i> <strong>Top 10 Prácticas Realizadas por Semestre</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre6" width="100%" height="50"></canvas>
+                            <canvas id="Practicas6" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
@@ -194,14 +194,13 @@
     </section>
     <script>
         window.addEventListener("load", function() {
-            BarrasAlumnos();
-            PastelSemestre1();
-            PastelSemestre2();
-            PastelSemestre3();
-            PastelSemestre4();
-            PastelSemestre5();
-            PastelSemestre6();
-            PastelSemestre7();
+            BarrasPracticas();
+            PastelPracticas1();
+            PastelPracticas2();
+            PastelPracticas3();
+            PastelPracticas4();
+            PastelPracticas5();
+            PastelPracticas6();
         })
     </script>
 </div>

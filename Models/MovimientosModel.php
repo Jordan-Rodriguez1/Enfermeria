@@ -12,7 +12,7 @@ class MovimientosModel extends Mysql{
         $sql = "SELECT ventas.id, ventas.estado, ventas.total, ventas.fecha, ventas.descripcion, ventas.id_responsable AS idresp, u1.nombre as id_responsable, u2.nombre as id_generador FROM ventas 
                 JOIN usuarios u1 ON ventas.id_responsable = u1.id
                 JOIN usuarios u2 ON ventas.id_generador = u2.id 
-                WHERE ventas.estado = 1;";
+                WHERE ventas.estado = 1";
         $res = $this->select_all($sql);
         return $res;
     }

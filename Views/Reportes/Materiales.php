@@ -75,9 +75,9 @@
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-lg-12">
                                                     <br><br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Promedio Stock Artículo</div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">Stock Promedio Artículo</div>
                                                     <br>
-                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;">$ <?php echo $data4['stock']; ?></div>
+                                                    <div class="h3 font-weight-bold text-white text-uppercase mb-1" style="text-align: center;"><?php echo $data4['stock']; ?></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,10 +145,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Entradas VS Salidas (Piezas) por Mes en Piezas (FILTRO)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Entradas VS Salidas (Piezas) por Día en Piezas (FILTRO)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="BarrasAlumnos" width="100%" height="50">
+                            <canvas id="BarrasMateriales1" width="100%" height="50">
                         </div>
                     </div>
                 </div>
@@ -157,10 +157,10 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Entradas VS Salidas por Mes en Dinero (FILTRO)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Entradas VS Salidas por Día en Dinero (FILTRO)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="BarrasAlumnos" width="100%" height="50">
+                            <canvas id="BarrasMateriales2" width="100%" height="50">
                         </div>
                     </div>
                 </div>
@@ -173,60 +173,60 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Productos con Más Salidas en Piezas (FILTRO)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Productos con Más Salidas en Piezas (FILTRO)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre4" width="100%" height="50"></canvas>
+                            <canvas id="Materiales1" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Productos con Más Salidas en Dinero (FILTRO)</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Productos con Más Salidas en Dinero (FILTRO)</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre5" width="100%" height="50"></canvas>
+                            <canvas id="Materiales2" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Vigente VS Caducado</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Vigente VS Caducado</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre1" width="100%" height="50"></canvas>
+                            <canvas id="Materiales3" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Materiales por Proveedor</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Proveedores con Más Materiales</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre2" width="100%" height="50"></canvas>
+                            <canvas id="Materiales4" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Materiales por Categoría</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Categorías con Más Materiales</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre3" width="100%" height="50"></canvas>
+                            <canvas id="Materiales5" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="card container-fluid3">
-                    <h5 class="card-header"><i class="fas fa-chalkboard-teacher"></i> <strong>Materiales en Más Plantillas</strong></h5>
+                    <h5 class="card-header"><i class="fas fa-chart-bar"></i> <strong>Top 10 Materiales en Más Plantillas</strong></h5>
                     <div class="card-body">
                         <div class="container-fluid ">
-                            <canvas id="Semestre6" width="100%" height="50"></canvas>
+                            <canvas id="Materiales6" width="100%" height="50"></canvas>
                         </div>
                     </div>
                 </div>
@@ -246,19 +246,21 @@
                                 <table class="table table-hover table-bordered" id="Table">
                                     <thead class="thead-personality">
                                         <tr>
-                                            <th>No. Cuenta</th>
+                                            <th>Código</th>
                                             <th>Nombre</th>
-                                            <th>Semestre</th>
-                                            <th>Asistencias</th>
+                                            <th>Stock</th>
+                                            <th>Precio</th>
+                                            <th>Proveedor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($data1 as $cl) { ?>
                                             <tr>
-                                                <td><?php echo $cl['usuario']; ?></td>
+                                                <td><?php echo $cl['codigo']; ?></td>
                                                 <td><?php echo $cl['nombre']; ?></td>
-                                                <td><?php echo $cl['grado'] . " " . $cl['grupo']; ?></td>
-                                                <td><?php echo $cl['asistencias']; ?></td>
+                                                <td><?php echo $cl['cantidad']; ?></td>
+                                                <td><?php echo $cl['precio']; ?></td>
+                                                <td><?php echo $cl['proveedor']; ?></td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -279,19 +281,21 @@
                                 <table class="table table-hover table-bordered" id="Table2">
                                     <thead class="thead-personality">
                                         <tr>
-                                            <th>No. Cuenta</th>
+                                            <th>Código</th>
                                             <th>Nombre</th>
-                                            <th>Semestre</th>
-                                            <th>Asistencias</th>
+                                            <th>Stock</th>
+                                            <th>Precio</th>
+                                            <th>Proveedor</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($data2 as $no) { ?>
                                             <tr>
-                                                <td><?php echo $no['usuario']; ?></td>
+                                                <td><?php echo $no['codigo']; ?></td>
                                                 <td><?php echo $no['nombre']; ?></td>
-                                                <td><?php echo $no['grado'] . " " . $no['grupo']; ?></td>
-                                                <td><?php echo $no['asistencias']; ?></td>
+                                                <td><?php echo $no['cantidad']; ?></td>
+                                                <td><?php echo $no['precio']; ?></td>
+                                                <td><?php echo $no['proveedor']; ?></td>
                                             </tr>
                                         <?php } ?>
                                     </tbody>
@@ -305,14 +309,14 @@
     </section>
     <script>
         window.addEventListener("load", function() {
-            BarrasAlumnos();
-            PastelSemestre1();
-            PastelSemestre2();
-            PastelSemestre3();
-            PastelSemestre4();
-            PastelSemestre5();
-            PastelSemestre6();
-            PastelSemestre7();
+            BarrasMateriales1();
+            BarrasMateriales2();
+            PastelMateriales1();
+            PastelMateriales2();
+            PastelMateriales3();
+            PastelMateriales4();
+            PastelMateriales5();
+            PastelMateriales6();
         })
     </script>
 </div>
