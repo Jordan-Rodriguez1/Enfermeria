@@ -118,13 +118,13 @@
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="inicio">Fecha Inicio</label>
-                                            <input id="inicio" class="form-control" type="date" name="inicio" value="">
+                                            <input id="inicio" class="form-control" type="date" name="inicio" value="" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label for="fin">Fecha Fin</label>
-                                            <input id="fin" class="form-control" type="date" name="fin" value="">
+                                            <input id="fin" class="form-control" type="date" name="fin" value="" required>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">

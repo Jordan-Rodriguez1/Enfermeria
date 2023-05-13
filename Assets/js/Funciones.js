@@ -1038,7 +1038,8 @@ function BarrasPracticas() {
 
 function BarrasMateriales1() {
   $.ajax({
-    url: base + "Reportes/EntradasSalidasDinero",
+    url:
+      base + "Reportes/EntradasSalidasDinero?inicio=2023-04-10&fin=2023-04-30",
     type: "POST",
     success: function (response) {
       var data = JSON.parse(response);

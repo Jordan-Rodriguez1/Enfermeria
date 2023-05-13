@@ -105,7 +105,13 @@
 
         public function EntradasSalidasDinero()
         {
+        if (isset($_GET['inicio'])) {
+            $inicio = $_GET['inicio'];
+            $fin = $_GET['fin'];
+            $data = $this->model->EntradasVSSalidasDineroC($inicio, $fin);
+        } else {
             $data = $this->model->EntradasVSSalidasDinero();
+        }
             echo json_encode($data);
             die();
         }
