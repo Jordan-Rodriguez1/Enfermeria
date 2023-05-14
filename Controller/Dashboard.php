@@ -14,22 +14,24 @@ class Dashboard extends Controllers{
         $this->views->getView($this, "Listar", "");
     }
 
-    public function Lista()
+    public function Ayuda()
     {
-        $id = $_SESSION['id'];
-        $data1 = $this->model->Historial($id);
-        $this->views->getView($this, "Lista", "",  $data1);
+        $this->views->getView($this, "Ayuda", "");
     }
 
     public function Alumnos()
     {
         $grado = $_SESSION['grado'];
-        $id = $_SESSION['id'];
         $data1 = $this->model->practicas($grado);
-        $data2 = $this->model->config();
-        $data3 = $this->model->Asistencias($id);
-        $data4 = $this->model->Faltas($id);
-        $this->views->getView($this, "Alumnos", "",  $data1, $data2, $data3, $data4);
+        $data2 = $this->model->config($grado);
+        $this->views->getView($this, "Alumnos", "",  $data1, $data2);
+    }
+
+    public function Lista()
+    {
+        $id = $_SESSION['id'];
+        $data1 = $this->model->Historial($id);
+        $this->views->getView($this, "Lista", "",  $data1);
     }
 
     public function Detalles()
@@ -53,12 +55,9 @@ class Dashboard extends Controllers{
         $id = $_GET['id'];
         $alumnos = $_SESSION['id'];
         $actualizar = $this->model->registrarPractica($id, $alumnos);
-        if ($actualizar == 1) {
-            $alert =  'registrado';
-        } else {
-            $alert = 'error';
-        }
+        $alert =  'registrado';
         header("location: " . base_url() . "Dashboard/Alumnos?msg=$alert");
         die();
     }
 }
+?>

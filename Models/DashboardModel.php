@@ -66,28 +66,13 @@ class DashboardModel extends Mysql{
         return $return;
     }
 
-    public function config()
+    public function config(string $grado)
     {
-        $sql = "SELECT * FROM configuracion";
+        $this->grado = $grado;
+        $sql = "SELECT * FROM configsemestre WHERE id = '{$this->grado}'";
         $res = $this->select($sql);
         return $res;
     }
-
-    public function Asistencias(int $id)
-    {
-        $this->id = $id;
-        $sql = "SELECT COUNT(*) AS total FROM asistencias WHERE id_alumno = '{$this->id}' AND asistencia = 2";
-        $res = $this->select($sql);
-        return $res;
-    } 
-
-    public function Faltas(int $id)
-    {
-        $this->id = $id;
-        $sql = "SELECT COUNT(*) AS total FROM asistencias WHERE id_alumno = '{$this->id}' AND asistencia = 0";
-        $res = $this->select($sql);
-        return $res;
-    } 
 
     public function Historial(int $id)
     {
@@ -97,3 +82,4 @@ class DashboardModel extends Mysql{
         return $res;
     } 
 }
+?>

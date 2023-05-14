@@ -48,7 +48,7 @@
                         <?php if($data2['formato'] != ""){ ?> 
                             <a href="<?php echo base_url(); ?>/Assets/archivos/practicas/<?php echo $data2['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i> Formato</a>
                         <?php }?>
-                        <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-danger"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</a>
+                        <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-danger"><i class="fas fa-window-close"></i> Cancelar</a>
                     </div>
                 </div>
             </div>

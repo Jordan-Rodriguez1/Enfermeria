@@ -18,6 +18,8 @@ Dark Admin Bootstrap Template by Bootstrapious.com
   --graylight: #e2e2e2; /*Fondo*/
   --grayheader: #F7F7F7; /*HeaderCard*/
   --lavanda: #c2258e;
+  --lavanda2: #d771b6;
+  --lavanda3: #edbedd;
   --black: #000; /*ModaLabel*/
   --white: #fff;
 }
@@ -237,7 +239,7 @@ pre {
   position: relative;
   background: var(--graylight);
   min-height: 100vh;
-  width: calc(100% - 280px);
+  width: calc(100% - 230px);
   padding: 0;
   padding-bottom: 70px;
 }
@@ -271,6 +273,9 @@ pre {
 
 .footer .footer__block {
   min-height: 70px;
+  border: none; 
+  box-shadow: 10px 0px 0px 0px rgba(0, 0, 0, 0.40); 
+  background: white;
 }
 
 .dropdown-menu {
@@ -417,11 +422,11 @@ i[class*="icon-"] {
 * ==========================================================
 */
 nav.navbar {
-  background: #2d3035;
-  color: #8a8d93;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #34373d;
+  background: var(--white);
+  color: var(--lavanda);
+  padding: 10px 16px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.40);
+  border: none;
   z-index: 10;
 }
 
@@ -431,8 +436,8 @@ nav.navbar .sidebar-toggle {
   line-height: 29px;
   text-align: center;
   border-radius: 50%;
-  background: #282b2f;
-  color: #8a8d93;
+  background: var(--lavanda);
+  color: var(--white);
   font-size: 1.1rem;
   border: 2px solid #3d4148;
   outline: none;
@@ -567,7 +572,7 @@ nav.navbar .dropdown-item {
 }
 
 nav.navbar .dropdown-item:hover {
-  background: #282b2f;
+  background: var(--lavanda2);
 }
 
 nav.navbar .dropdown-item:last-of-type {
@@ -687,10 +692,13 @@ nav.navbar .dropdown .dropdown-menu.active {
     width: 100%;
   }
   nav.navbar .sidebar-toggle {
+    background: var(--lavanda);
+    color: var(--white);
     width: 30px;
     height: 30px;
     line-height: 25px;
     font-size: 1rem;
+    border: none;
   }
   nav.navbar .messages-toggle,
   nav.navbar .tasks-toggle {
@@ -749,10 +757,10 @@ nav.navbar .dropdown .dropdown-menu.active {
 * ==========================================================
 */
 nav#sidebar {
-  width: 280px;
-  background: #2d3035;
-  color: #6a6c70;
-  border-right: 1px solid #34373d;
+  width: 230px;
+  background: var(--white);
+  color: var(--black);
+  border: outset;
   /* shrinked navbar */
 }
 
@@ -774,7 +782,7 @@ nav#sidebar a[data-toggle="collapse"]::after {
 }
 
 nav#sidebar a[aria-expanded="true"] {
-  background: #0d6efd;
+  background: var(--lavanda);
 }
 
 nav#sidebar a[aria-expanded="true"]::after {
@@ -843,11 +851,11 @@ nav#sidebar li a {
 }
 
 nav#sidebar li a:hover {
-  background: #0d6efd;
+  background: var(--lavanda);
 }
 
 nav#sidebar li a:hover i {
-  color: #db6574;
+  color: var(--lavanda2);
 }
 
 nav#sidebar li a i {
@@ -861,11 +869,11 @@ nav#sidebar li a i {
 nav#sidebar li li a {
   padding: 14px;
   padding-left: 60px;
-  background: #4792ff;
+  background: var(--lavanda2);
 }
 
 nav#sidebar li li a:hover {
-  background: #6ba6ff;
+  background: var(--lavanda3);
 }
 
 nav#sidebar li li a:hover i {

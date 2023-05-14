@@ -21,7 +21,7 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="h3 mb-0 font-weight-bold text-white text-center"><?php echo $data3['total']; ?> / <?php echo $data2['aminimas']; ?></div>
+                                    <div class="h3 mb-0 font-weight-bold text-white text-center"><?php echo $_SESSION['asistencias']; ?> / <?php echo $data2['aminimas']; ?></div>
                                 </div>
                                 </a>
                             </div>
@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                                     <br>
-                                    <div class="h3 mb-0 font-weight-bold text-white text-center"><?php echo $data4['total']; ?> / <?php echo $data2['fmaximas']; ?></div>
+                                    <div class="h3 mb-0 font-weight-bold text-white text-center"><?php echo$_SESSION['faltas']; ?> / <?php echo $data2['fmaximas']; ?></div>
                                 </div>
                                 </a>
                             </div>
