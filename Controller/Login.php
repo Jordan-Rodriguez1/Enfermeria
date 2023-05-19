@@ -12,20 +12,5 @@
         {
             $this->views->getView($this, "login");
         }
-
-        public function loginprof()
-        {
-            $this->views->getView($this, "loginprof");
-        }
-
-        public function recuperar()
-        {
-            $this->views->getView($this, "recuperar");
-        }
-
-        public function recuperarprof()
-        {
-            $this->views->getView($this, "recuperarprof");
-        }
 }
 ?>
