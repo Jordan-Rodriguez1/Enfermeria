@@ -12,8 +12,7 @@ class Entradas extends Controllers{
 
     //Muestra la lista de proveedores.
     public function Listar()
-    {   
-        $this->model->VaciarDetalle($_SESSION['id']);     
+    {    
         $data1 = $this->model->proveedores();
         $this->views->getView($this, "Listar", "", $data1);
         die();

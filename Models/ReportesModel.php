@@ -164,14 +164,14 @@ class ReportesModel extends Mysql{
 
     public function NoStock()
     {
-        $sql = "SELECT * FROM productos WHERE estado = 1 AND cantidad = 0";
+        $sql = "SELECT * FROM productos WHERE estado = 1 AND cantidad = 0 AND tipo = 'Vigente'";
         $res = $this->select_all($sql);
         return $res;
     }
 
     public function PocoStock()
     {
-        $sql = "SELECT * FROM productos WHERE estado = 1 AND cantidad <= minimo AND cantidad > 0";
+        $sql = "SELECT * FROM productos WHERE estado = 1 AND cantidad <= minimo AND cantidad > 0 AND tipo = 'Vigente'";
         $res = $this->select_all($sql);
         return $res;
     }
