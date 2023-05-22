@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css?family=Sen&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Assets/css/main.css">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
   </head>
 
   <body>
@@ -24,11 +25,19 @@
           <p>Bienvenido Alumno</p><br>
           <input type="email"  name="usuario" placeholder="Correo" id="usuario"  required><br>
           <input type="password" name="clave" placeholder="Contraseña"  id="clave" required><br>
-            <?php if (isset($_GET['msg'])) { ?>
+            <?php if (isset($_GET['msg'])) { 
+              $alert = $_GET['msg'];
+              if ($alert == "capcha") { ?> 
+                  <div class="alert alert-success" role="alert">
+                      <strong>Valida el Capcha.</strong>
+                  </div>
+              <?php } else { ?>     
               <div class="alert alert-danger" role="alert">
                 <strong>Usuario o Contraseña Incorrecta</strong>
               </div>
-            <?php } ?>
+            <?php }} ?>
+          <br>
+          <div class="g-recaptcha" data-sitekey="6LcsES8mAAAAAJno5nv0VXeNp0LZ5l3otHIfNQjj"></div>
           <input type="submit" value="Entrar"/><br>
           <a href="Login/recuperar">¿Olvidaste tu contraseña?</a><br><br>
           <a href="Login/loginprof">Soy Administrador</a>

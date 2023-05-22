@@ -22,8 +22,8 @@ body {
 }
 
 #user{
-  height: 440px;
-  padding: 3em;
+  height: 540px;
+  padding: 2em;
   border-radius: 20px;
   background: var(--white);
   backdrop-filter: blur(10px);

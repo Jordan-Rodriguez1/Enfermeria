@@ -129,7 +129,24 @@ class Usuarios extends Controllers
     //Iniciar sesión
     public function login()
     {
-        if (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
+        $ip = $_SERVER["REMOTE_ADDR"];
+        $captcha = $_POST['g-recaptcha-response'];
+        $secretKey = '6LcsES8mAAAAAB1qsF1R4WKhpXg_dm1l5hTFi852';
+
+        $error = 0;
+
+        $response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret={$secretKey}&response={$captcha}&remoteip={$ip}");
+
+        $atributos = json_decode($response, TRUE);
+
+        if (!$atributos['success']) {
+            $error = "capcha";
+            echo $response;
+            echo $atributos;
+            echo $ip;
+            header("location: ".base_url(). 'Login/loginprof'."?msg=$error");
+        }
+        elseif (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
             $usuario = $_POST['usuario'];
             $clave = $_POST['clave'];
             $hash = hash("SHA256", $clave);
@@ -144,7 +161,6 @@ class Usuarios extends Controllers
                     $_SESSION['activo'] = true;
                     header('location: '.base_url(). 'Dashboard/Listar');
             } else {
-                $error = 0;
                 header("location: ".base_url(). 'Login/loginprof'."?msg=$error");
             }
         }
