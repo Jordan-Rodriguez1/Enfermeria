@@ -6,7 +6,7 @@
         <div class="card container-fluid2 text-center">
             <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
             <div class="card-body">
-                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <img src="<?php echo base_url() ?>Assets/img/unicornio.png" style="height: 400px; ">
                 <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
             </div>
             <div class="card-footer text-muted">
@@ -21,7 +21,7 @@
         <div class="card container-fluid2 text-center">
             <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
             <div class="card-body">
-                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <img src="<?php echo base_url() ?>Assets/img/unicornio.png" style="height: 400px; ">
                 <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
             </div>
             <div class="card-footer text-muted">
@@ -233,7 +233,7 @@
                         </div>
                     </div>
                     <button class="btn btn-success mb-2" type="submit" id="subirarchivo"><i class="fas fa-save"></i> Registrar</button>
-                    <a href="<?php echo base_url() ?>/Assets/archivos/plantillas/PlantillaProductos.csv" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
+                    <a href="<?php echo base_url() ?>Assets/archivos/plantillas/PlantillaProductos.csv" class="btn btn-primary mb-2"><i class="fas fa-download"></i> Formato</a>
                     <button class="btn btn-danger mb-2" type="button" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
                 </form>
             </div>

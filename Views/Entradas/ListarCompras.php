@@ -87,7 +87,7 @@
                                                         <button title="Subir Factura" class="btn btn-primary mb-2" type="button" data-toggle="modal" data-target="#cargar_formato" data-bs-id="<?php echo $lista['id']; ?>" onclick="idModal();"><i class="fas fa-upload"></i></button>
                                                         <?php }  elseif($lista['formato'] == "") { ?>
                                                         <?php }  else { ?>
-                                                        <a title="Factura" href="<?php echo base_url(); ?>/Assets/archivos/entradas/<?php echo $lista['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mb-2"><i class="fa fa-file-image"></i></a>
+                                                        <a title="Factura" href="<?php echo base_url(); ?>Assets/archivos/entradas/<?php echo $lista['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mb-2"><i class="fa fa-file-image"></i></a>
                                                     <?php }?>
                                                 </td>
                                             </tr>

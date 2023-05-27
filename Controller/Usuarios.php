@@ -215,7 +215,7 @@ class Usuarios extends Controllers
         if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "png" || $name["extension"] == "jpg" || $name["extension"] == "jpeg")){
             if ($error_archivo == UPLOAD_ERR_OK) {
                 if($imgactual != "perfil.jpg"){
-                    unlink("Assets/img/perfiles/".$imgactual);
+                    unlink('Assets/img/perfiles/'.$imgactual);
                 }
                 $ruta_destino = "Assets/img/perfiles/".$nombre_nuevo;
                 if (move_uploaded_file($ruta_temporal, $ruta_destino)) {

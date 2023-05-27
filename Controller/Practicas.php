@@ -43,7 +43,7 @@ class Practicas extends Controllers{
             $alert = 'existe';
         } else if ($insert > 0) {
             if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "pdf")){
-                $ruta_destino = "Assets/archivos/practicas/".$nombre_nuevo;
+                $ruta_destino = 'Assets/archivos/practicas/'.$nombre_nuevo;
                 move_uploaded_file($ruta_temporal, $ruta_destino);
                 $agregar = $this->model->insertarFormato($nombre_nuevo, $id['id']);
                 $alert = 'registrado';

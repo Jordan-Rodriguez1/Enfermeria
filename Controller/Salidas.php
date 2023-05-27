@@ -92,7 +92,7 @@ class Salidas extends Controllers{
         $tmaximo = 20 * 1024 * 1024;
         if(($tamano_archivo < $tmaximo && $tamano_archivo != 0) && ($name["extension"] == "pdf")){
             if ($error_archivo == UPLOAD_ERR_OK) {
-                $ruta_destino = "Assets/archivos/salidas/".$nombre_nuevo;
+                $ruta_destino = 'Assets/archivos/salidas/'.$nombre_nuevo;
                 if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
                 $id = $_POST['id'];
                 $this->model->img($nombre_nuevo, $id);

@@ -373,7 +373,7 @@ class Alumnos extends Controllers
                 if($imgactual != "perfil.jpg"){
                     unlink("Assets/img/perfilesalumnos/".$imgactual);
                 }
-                $ruta_destino = "Assets/img/perfilesalumnos/".$nombre_nuevo;
+                $ruta_destino = 'Assets/img/perfilesalumnos/'.$nombre_nuevo;
                 if (move_uploaded_file($ruta_temporal, $ruta_destino)) {
                     $id = $_SESSION['id'];
                     $this->model->img($nombre_nuevo, $id);

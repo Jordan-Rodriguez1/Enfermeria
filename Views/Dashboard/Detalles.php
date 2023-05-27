@@ -6,7 +6,7 @@
         <div class="card container-fluid2 text-center">
             <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
             <div class="card-body">
-                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
+                <img src="<?php echo base_url() ?>Assets/img/unicornio.png" style="height: 400px; ">
                 <h5 class="card-title">Error: Esta práctica no es de tu grado.</h5>
             </div>
             <div class="card-footer text-muted">
@@ -46,7 +46,7 @@
                             <button type="button" class="btn btn-outline-success"><i class="fas fa-check"></i> Registrado</button>
                         <?php }?>
                         <?php if($data2['formato'] != ""){ ?> 
-                            <a href="<?php echo base_url(); ?>/Assets/archivos/practicas/<?php echo $data2['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i> Formato</a>
+                            <a href="<?php echo base_url(); ?>Assets/archivos/practicas/<?php echo $data2['formato']; ?>" target="_blank" rel="noopener noreferrer" class="btn btn-dark"><i class="fa fa-file-pdf"></i> Formato</a>
                         <?php }?>
                         <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-danger"><i class="fas fa-window-close"></i> Cancelar</a>
                     </div>
