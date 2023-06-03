@@ -19,6 +19,11 @@ class Dashboard extends Controllers{
         $this->views->getView($this, "Ayuda", "");
     }
 
+    public function Horarios()
+    {
+        $this->views->getView($this, "Horarios", "");
+    }
+
     public function Alumnos()
     {
         $grado = $_SESSION['grado'];

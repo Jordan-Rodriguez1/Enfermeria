@@ -7,7 +7,7 @@
         }
         public function notFound()
         {
-            $this->views->getView($this, "error");
+            $this->views->getView($this, "Error404");
         }
     }
     $notFound = new Errors();

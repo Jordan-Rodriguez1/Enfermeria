@@ -161,9 +161,12 @@
                             </ul>
                         </li>
                         <li><a href="<?php echo base_url(); ?>Configuracion/Listar"> <i class="fas fa-cog"></i> <strong class="text-black"> Configuración </strong></a></li>
+                        <li><a href="<?php echo base_url(); ?>Dashboard/Horarios"> <i class="fas fa-calendar"></i> <strong class="text-black"> Horarios </strong></a></li> 
                     <?php } ?>
 
                     <li><a href="<?php echo base_url(); ?>Dashboard/Ayuda"> <i class="fas fa-info-circle"></i> <strong class="text-black"> Ayuda </strong></a></li> 
+
+                    
                 </ul>
             </nav>
         <?php } ?>

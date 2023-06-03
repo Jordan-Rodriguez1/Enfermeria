@@ -1,0 +1,300 @@
+/*          L O G I N           */
+*{
+    margin: 0;
+    padding: 0;
+}
+.principal{
+    width: 390px;
+    padding: auto;
+    margin: auto;
+    background-color: rgb(216, 213, 208);
+    border: 1px solid rgb(132, 129, 129);
+    margin-top: 10%;
+    border-radius:7px;
+}
+
+
+.centrar{
+    margin: 20px;
+    text-align: center;
+}
+.form-group{
+    margin: 20px;
+}
+.btnLogin{
+    background-color:#669934;
+    height: auto;
+    width: 350px;
+    margin: 20px;
+    color: white;
+}
+.btnLogin:hover{
+    background-color: #1b8306;
+    color: white;
+}
+
+
+
+/*                  E L E M E N T O S   G E N E R A L E S           */
+.boton{
+    background-color: #1b8306;
+    color: white;
+    height: auto;
+    width: auto;
+    border: black;
+}
+.boton:hover{
+    background-color: #105203;
+    color: white;
+}
+.text{
+    color: white;
+}
+.link{
+    text-decoration: none;
+}
+
+
+/*                                  BARRA DE NAVEGACION */
+
+a{
+    color: white;
+}
+
+.navbar{
+    background-color: green;
+}
+.nav-item:hover{
+    color: black;
+}
+
+.nActive{
+    color: green;
+}
+
+.nActive:hover{
+    color: white;
+    background-color: #669934;;
+}
+.active{
+    color: black;
+    font-weight: bold;
+}
+/*              P A G I N A     P R I N C I P A L           */
+.imagenContainer{
+    width: 300px;
+    height: 300px;
+    animation-delay: none;
+    background: beige; 
+    border: 1px solid black ;
+    padding: 10px;
+    margin: 10px;
+    text-decoration: none;
+    text-align: center;
+    flex-wrap: wrap;
+    display:inline-block;   
+    color: black;
+    border-radius: 5%;
+}
+.conte{
+    align-items: stretch;
+    justify-content: space-around;
+    text-align: center;
+}
+
+/*      P E S T A Ñ A   M A E S T R O S - A L U M N O S         */
+thead{
+    background-color: #669934;
+    color: white;
+    border-color: black;
+}
+
+
+/*      H O R A R I O           */
+.QE{
+    text-align: center;
+}
+#M, #T {
+    display: none;
+}
+#boton1, #boton{
+    display: none;
+}
+#O{
+    display: none;
+}
+li{
+    list-style-type: none;
+
+}
+.Mañana, .Tarde{
+    transform: scale(1.5);
+}
+#Mañana1, #Tarde1, #Mañana2, #Tarde2{
+    display: none;
+    position: absolute;
+    left: 0px;
+    text-align: center;
+    padding-right: 10px;
+}/*se quiere alinear los grupos con la tabla de horario pero existe un problema*/
+.todo, .todo1{
+    position: static;
+    left: 0px;
+    bottom: 450px;
+    margin-top: -400px;
+    height: 300px;
+    width: 200px;
+    border: 1px none solid;
+}
+
+/* TABLA */
+
+.clases{
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+.horario{
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.celdaHorario{
+    box-sizing: border-box;
+    word-wrap: break-word;
+    border-collapse: collapse;
+}
+
+
+/*      V E N T A N A    E M E R G E N T E           */
+body {
+    box-sizing: border-box;
+    font-family: 'Raleway', Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.window-select {
+    background: rgba(33, 41, 52, .85);
+    bottom: 0;
+    display: flex;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    transition: background .6s;
+}
+
+.window-select .content {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(33, 41, 52, .75);
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    margin: 15% auto;
+    max-width: 600px;
+    min-width: 320px !important;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding: 2rem;
+    font-size: 1.3rem;
+}
+
+.content-buttons {
+    text-align: center;
+    margin-top: 1rem;
+    
+}
+
+.content-buttons a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 1rem;
+    background-color:#669934;
+    color: #FFF;
+    text-transform: uppercase;
+    border-radius: 5px;
+}
+
+.content-buttons a:hover {
+    background-color:#105203;
+}
+
+.content-text a {
+    color: #0080DE;
+    text-decoration: none;
+}
+
+.content-text a:hover {
+    color: #006AB8;
+    text-decoration: underline;
+    text-align: justify;
+}
+.opcion{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border-color: black;
+}
+.link{
+    text-decoration: none;
+    color: black;
+}
+
+/*          D A S H B O A R D       */
+.opcion{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border-color: black;
+    padding: 15% 15%;
+}
+.link{
+    text-decoration: none;
+    color: black;
+}
+
+#btncheck5:checked + .btn {
+    background-color:#1b8306;
+    color: white;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer .footer__block {
+  min-height: 70px;
+  border: none; 
+  box-shadow: 10px 0px 0px 0px rgba(0, 0, 0, 0.40); 
+  background: white;
+}
+
+.modal-open .modal .modal-header,
+.modal-open .modal .modal-footer {
+  border-color: var(--graylight);
+}
+
+.blockquote-footer {
+  color: #868e96;
+}
+
+.blockquote-footer::before {
+  content: "\2014 \00A0";
+}
+
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid #34373d;
+}
+
+.card-footer:last-child {
+  border-radius: 0 0 0 0;
+}
