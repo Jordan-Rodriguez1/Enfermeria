@@ -10,63 +10,25 @@ class Maestros extends Controllers
         parent::__construct();
     }
 
-    //Vista de Alumnos
+    //Vista de Profesores
     public function Listar()
     {
-        $data1 = $this->model->selectAlumnos();
-        $this->views->getView($this, "Listar", "", $data1);
+        $data1 = $this->model->selectProfesores();
+        $data2 = $this->model->selectMaterias();
+    $this->views->getView($this, "Listar", "", $data1,$data2);
         die();  
     }
 
-    //Añade un nuevo Alumno
-    public function insertar()
-    {
-        $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $correo = $_POST['correo'];
-        $clave = $_POST['usuario']; //Por defecto se pone el no.cuenta
-        $grado = $_POST['grado'];
-        $grupo = $_POST['grupo'];
-        $hash = hash("SHA256", $clave);
-        $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
-        if ($insert == 'existe') {
-            $data1 = $this->model->editarAlumnoC($correo);
-            if ($data1['estado'] == 2) {
-                $asistencias = 0;
-                $faltas = 0;
-                $estado = 1;
-                $id = $data1['id'];
-                $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);
-                $cambio =$this->model->cambiarContra($hash, $id);
-                $eliminar = $this->model->estadoAlumnos($id, $estado);
-                    if ($actualizar == 1) {
-                        $alert = 'registrado';
-                    } else {
-                        $alert =  'error';
-                    }
-            } else {
-                $alert = 'existe';
-            }
-        } else if ($insert > 0) {
-            $alert = 'registrado';
-        } else {
-            $alert = 'error';
-        }
-        $data1 = $this->model->selectAlumnos(); 
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
-        die();   
-    }
-
-    //Seleciona los datos de un Alumno
+    //Seleciona los datos de un Profesor
     public function editar()
     {
         $id = $_GET['id'];
-        $data1 = $this->model->editarAlumnos($id);
-        $data2 = $this->model->configuracion();
+        $data1 = $this->model->editarProfesores($id);
+        $data2 = $this->model->selectMaterias();       
         if ($data1 == 0) {
             $this->Listar();
         } else {
-            $this->views->getView($this, "Editar","", $data1, $data2);
+        $this->views->getView($this, "Editar","", $data1, $data2);
         }
         die();  
     }
@@ -77,18 +39,15 @@ class Maestros extends Controllers
         $id = $_POST['id'];
         $nombre = $_POST['nombre'];
         $usuario = $_POST['usuario'];
-        $asistencias = $_POST['asistencias'];
-        $faltas = $_POST['faltas'];
-        $correo = $_POST['correo'];
-        $grado = $_POST['grado'];
-        $grupo = $_POST['grupo'];
-        $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);     
+        $materia = $_POST['materia'];
+        $semestre = $_POST['semestre']; 
+        $actualizar = $this->model->actualizarProfesores($nombre, $usuario, $materia, $semestre, $id);     
             if ($actualizar == 1) {
                 $alert = 'modificado';
             } else {
                 $alert =  'error';
             }
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        header("location: " . base_url() . "Maestros/Listar?msg=$alert");
         die();
     }
 
@@ -97,10 +56,10 @@ class Maestros extends Controllers
     {
         $id = $_GET['id'];
         $estado = 0;
-        $eliminar = $this->model->estadoAlumnos($id, $estado);
+        $eliminar = $this->model->estadoProfesores($id, $estado);
         $alert = 'inactivo';
-        $data1 = $this->model->selectAlumnos();
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        $data1 = $this->model->selectProfesores();
+        header("location: " . base_url() . "Maestros/Listar?msg=$alert");
         die();
     }
 
@@ -109,10 +68,10 @@ class Maestros extends Controllers
     {
         $id = $_GET['id'];
         $estado = 2;
-        $eliminar = $this->model->estadoAlumnos($id, $estado);
+        $eliminar = $this->model->estadoProfesores($id, $estado);
         $alert =  'eliminado';
-        $data1 = $this->model->selectAlumnos(); 
-        header("location: " . base_url() . "Alumnos/eliminados?msg=$alert");
+        $data1 = $this->model->selectProfesores(); 
+        header("location: " . base_url() . "Maestros/eliminados?msg=$alert");
         die();
     }
 
@@ -129,11 +88,49 @@ class Maestros extends Controllers
     {
         $id = $_GET['id'];
         $estado = 1;
-        $eliminar = $this->model->estadoAlumnos($id, $estado);
-        $data1 = $this->model->selectAlumnos(); 
-        header('location: ' . base_url() . "Alumnos/eliminados?msg=$alert");
+        $eliminar = $this->model->estadoProfesores($id, $estado);
+        $data1 = $this->model->selectProfesores(); 
+        header('location: ' . base_url() . "Maestros/eliminados?msg=$alert");
         die();
     }
 
+
+
+    //Profesores
+    public function insertar_profesor()
+    {
+        $nombre = $_POST['nombre'];
+        $usuario = $_POST['usuario'];
+        $materia = $_POST['materia'];        
+        $semestre = $_POST['semestre'];
+        $estado=1;        
+        $insert = $this->model->insertarProfesores($nombre, $usuario, $materia, $semestre,$estado);
+        if ($insert == 'existe') {
+            $data1 = $this->model->editarAlumnoC($materia);
+            if ($data1['estado'] == 2) {
+                $asistencias = 0;
+                $faltas = 0;
+                $estado = 1;
+                $id = $data1['id'];
+                $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $materia, $semestre,$estado);
+                //$cambio =$this->model->cambiarContra($hash, $id);
+                //$eliminar = $this->model->estadoAlumnos($id, $estado);
+                    if ($actualizar == 1) {
+                        $alert = 'registrado';
+                    } else {
+                        $alert =  'error';
+                    }
+            } else {
+                $alert = 'existe';
+            }
+        } else if ($insert > 0) {
+            $alert = 'registrado';
+        } else {
+            $alert = 'error';
+        }
+        $data1 = $this->model->selectProfesores(); 
+        header("location: " . base_url() . "Maestros/Listar?msg=$alert");
+        die();   
+    }
 }
 ?>

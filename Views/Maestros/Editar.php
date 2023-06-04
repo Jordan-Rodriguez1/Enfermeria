@@ -49,8 +49,10 @@
                                 <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre" value="<?php echo $data1['nombre']; ?>" required>
                             </div>
                             <div class="form-group">
-                                 <label for="nombre">Correo</label>
-                                 <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo" value="<?php echo $data1['correo']; ?>" required>
+                                 <label for="materia">Materia</label>
+                                 <select class="form-control" name="materia" id="materia" ><?php foreach ($data2 as $materias){}endforeach ?>
+                                    <option value="<?php echo $materias['materia']; ?>"><?php echo $materias['materia']; ?></option>
+                                 </select>                                
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
@@ -59,24 +61,17 @@
                                         <input id="usuario" class="form-control" type="number" name="usuario" placeholder="No. Cuenta" min="10000000" max="99999999" value="<?php echo $data1['usuario']; ?>" required>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <label for="grupo">Grupo</label>
-                                        <input id="grupo" class="form-control" type="text" name="grupo" placeholder="Grupo" value="<?php echo $data1['grupo']; ?>" required>
+                                        <label for="semestre">Semestre</label>
+                                        <input id="semestre" class="form-control" type="text" name="semestre" placeholder="Semestre" value="<?php echo $data1['semestre']; ?>" required>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input id="asistencias" class="form-control" type="hidden" name="asistencias" placeholder="Asistencias" value="<?php echo $data1['asistencias']; ?>" required>
-                                        <input id="faltas" class="form-control" type="hidden" name="faltas" placeholder="Faltas" value="<?php echo $data1['faltas']; ?>" required>
-                                    </div>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-success mb-2" type="submit"><i class="fas fa-save"></i> Modificar</button>
-                            <a href="<?php echo base_url(); ?>Maestros/ListarH" class="btn btn-danger mb-2"><i class="fas fa-window-close"></i> Cancelar</a>
+                            <a href="<?php echo base_url(); ?>Maestros/Listar" class="btn btn-danger mb-2"><i class="fas fa-window-close"></i> Cancelar</a>
                         </div>
                     </form>
                 </div>
