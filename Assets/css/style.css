@@ -264,8 +264,9 @@ body {
 }
 
 .footer {
-  position: absolute;
+  position: relative;
   bottom: 0;
+  margin-top: 20px;
   width: 100%;
 }
 
@@ -273,7 +274,7 @@ body {
   min-height: 70px;
   border: none; 
   box-shadow: 10px 0px 0px 0px rgba(0, 0, 0, 0.40); 
-  background: white;
+  background: gainsboro;
 }
 
 .modal-open .modal .modal-header,

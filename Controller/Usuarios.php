@@ -17,6 +17,13 @@ class Usuarios extends Controllers
         $this->views->getView($this, "Listar", "", $data1);
     }
 
+    //Vista de usuarios
+    public function ListarH()
+    {
+        $data1 = $this->model->selectUsuarios();
+        $this->views->getView($this, "ListarH", "", $data1);
+    }
+
     //Añade un nuevo usuario
     public function insertar()
     {
@@ -62,6 +69,18 @@ class Usuarios extends Controllers
             $this->Listar();
         } else {
             $this->views->getView($this, "Editar","", $data1);
+        }
+    }
+
+    //Seleciona los datos de un Usuario
+    public function editarH()
+    {
+        $id = $_GET['id'];
+        $data1 = $this->model->editarUsuarios($id);
+        if ($data1 == 0) {
+            $this->Listar();
+        } else {
+            $this->views->getView($this, "EditarH","", $data1);
         }
     }
 
@@ -113,6 +132,14 @@ class Usuarios extends Controllers
     {
         $data1 = $this->model->selectInactivos();
         $this->views->getView($this, "Eliminados", "", $data1);      
+    }
+
+
+    //Consulta los usuarios inactivos
+    public function eliminadosH()
+    {
+        $data1 = $this->model->selectInactivos();
+        $this->views->getView($this, "EliminadosH", "", $data1);      
     }
 
     //Reactiva los datos de un Usuario

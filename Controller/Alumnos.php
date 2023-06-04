@@ -20,6 +20,16 @@ class Alumnos extends Controllers
         die();  
     }
 
+    //Vista de Alumnos
+    public function ListarH()
+    {
+        $data1 = $this->model->selectAlumnos();
+        $data2 = $this->model->configuracion();
+        $data3 = $this->model->configuracionA();
+        $this->views->getView($this, "ListarH", "", $data1, $data2, $data3);
+        die();  
+    }
+
     //Añade un nuevo Alumno
     public function insertar()
     {
@@ -69,6 +79,20 @@ class Alumnos extends Controllers
             $this->Listar();
         } else {
             $this->views->getView($this, "Editar","", $data1, $data2);
+        }
+        die();  
+    }
+
+    //Seleciona los datos de un Alumno
+    public function editarH()
+    {
+        $id = $_GET['id'];
+        $data1 = $this->model->editarAlumnos($id);
+        $data2 = $this->model->configuracion();
+        if ($data1 == 0) {
+            $this->Listar();
+        } else {
+            $this->views->getView($this, "EditarH","", $data1, $data2);
         }
         die();  
     }
@@ -191,6 +215,14 @@ class Alumnos extends Controllers
     {
         $data1 = $this->model->selectInactivos();
         $this->views->getView($this, "Eliminados", "", $data1);   
+        die();     
+    }
+
+    //Consulta los Alumno inactivos
+    public function eliminadosH()
+    {
+        $data1 = $this->model->selectInactivos();
+        $this->views->getView($this, "EliminadosH", "", $data1);   
         die();     
     }
 

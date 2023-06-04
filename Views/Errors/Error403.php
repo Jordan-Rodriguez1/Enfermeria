@@ -2,7 +2,7 @@
 <!-- Begin Page Content -->
 
 <div class="page-content2">
-   <section><br><br>
+   <section><br>
         <div class="card container-fluid2 text-center">
             <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
             <div class="card-body">
