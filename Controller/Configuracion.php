@@ -20,12 +20,12 @@ class Configuracion extends Controllers{
     //ACTUALIZA LOS DATOSA EXISTENTES
     public function actualizar()
     {
-        $id = $_POST['id'];
-        $facultad = $_POST['facultad'];
-        $calle = $_POST['calle'];
-        $colonia = $_POST['colonia'];
-        $cp = $_POST['cp'];
-        $ciudad = $_POST['ciudad'];
+        $id = limpiarInput($_POST['id']);
+        $facultad = limpiarInput($_POST['facultad']);
+        $calle = limpiarInput($_POST['calle']);
+        $colonia = limpiarInput($_POST['colonia']);
+        $cp = limpiarInput($_POST['cp']);
+        $ciudad = limpiarInput($_POST['ciudad']);
         $actualizar = $this->model->actualizarConfiguracion($facultad, $calle, $colonia, $cp, $ciudad ,$id);
         if ($actualizar == 1) {
             $alert = 'modificado';
@@ -41,8 +41,8 @@ class Configuracion extends Controllers{
     //ACTUALIZA LOS DATOSA EXISTENTES FALTAS
     public function actualizarA()
     {
-        $id = $_POST['id'];
-        $semestres = $_POST['semestres'];
+        $id = limpiarInput($_POST['id']);
+        $semestres = limpiarInput($_POST['semestres']);
         $actualizar = $this->model->actualizarConfiguracionA($semestres, $id);
         if ($actualizar == 1) {
             $alert = array('mensaje' => 'registrado');
@@ -62,9 +62,9 @@ class Configuracion extends Controllers{
     //ACTUALIZA LOS semestres EXISTENTES FALTAS
     public function ActSemestre()
     {
-        $id = $_POST['id'];
-        $aminimas = $_POST['aminimas'];
-        $fmaximas = $_POST['fmaximas'];
+        $id = limpiarInput($_POST['id']);
+        $aminimas = limpiarInput($_POST['aminimas']);
+        $fmaximas = limpiarInput($_POST['fmaximas']);
         $actualizar = $this->model->actsemestre($aminimas, $fmaximas, $id);
         if ($actualizar == 1) {
             $alert = 'registrado';

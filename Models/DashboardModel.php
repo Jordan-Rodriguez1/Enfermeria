@@ -66,6 +66,18 @@ class DashboardModel extends Mysql{
         return $return;
     }
 
+    public function SumarAsistencia(int $id, int $total)
+    {
+        $return = "";
+        $this->id = $id;
+        $this->total = $total;
+        $query = "UPDATE practicas SET registros = ? WHERE id = ?";
+        $data = array($this->total, $this->id);
+        $resul = $this->update($query, $data);
+        $return = $resul;
+        return $return;
+    }
+
     public function config(string $grado)
     {
         $this->grado = $grado;

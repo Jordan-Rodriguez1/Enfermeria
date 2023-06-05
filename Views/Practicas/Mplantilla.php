@@ -28,8 +28,9 @@
             <?php } ?>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-lg-6 mb-2">
+                    <div class="col-lg-6 mb-2 mb-2">
                         <a class="btn btn-primary" href="<?php echo base_url(); ?>Practicas/Plantillas"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</a>
+                        <button class="btn btn-secondary mb-2" type="button" data-toggle="modal" data-target="#nuevo_producto"><i class="fas fa-book"></i> Catálogo</button>
                     </div>
                     <div class="col-lg-6">
                         <div class="alert alert-warning" role="alert">
@@ -119,6 +120,43 @@
         </div>
     </section>
 </div>
+<div id="nuevo_producto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title"><i class="fas fa-book"></i> Catálogo Productos</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive mt-4">
+                    <table class="table table-hover table-bordered" id="Table">
+                        <thead class="thead-personality">
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($data2 as $cl) { ?>
+                                <tr>
+                                    <td><?php echo $cl['codigo']; ?></td>
+                                    <td><?php echo $cl['nombre']; ?></td>
+                                    <td>
+                                        <button class="btn btn-success" type="button" onclick="BuscarCodigosB(<?php echo $cl['codigo']; ?>);" data-dismiss="modal" aria-label="Close"> <i class="fas fa-plus"></i></button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php } ?>
 
 <?php pie() ?>

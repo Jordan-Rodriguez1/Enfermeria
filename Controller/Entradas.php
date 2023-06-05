@@ -14,7 +14,8 @@ class Entradas extends Controllers{
     public function Listar()
     {    
         $data1 = $this->model->proveedores();
-        $this->views->getView($this, "Listar", "", $data1);
+        $data2 = $this->model->productos();
+        $this->views->getView($this, "Listar", "", $data1, $data2);
         die();
     }
 
@@ -29,10 +30,10 @@ class Entradas extends Controllers{
     //Ingresa a detalle temporal las entras/salidas generadas
     public function ingresar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $cantidad = $_POST['cantidad'];
-        $precio = $_POST['precio'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $cantidad = limpiarInput($_POST['cantidad']);
+        $precio = limpiarInput($_POST['precio']);
         $total = $cantidad * $precio;
         $id_usuario = $_SESSION['id'];
         $existe = $this->model->verificarProductoexiste($id, $id_usuario);
@@ -43,7 +44,7 @@ class Entradas extends Controllers{
             if ($piezas > 0) {
                 $idP = $existe['id'];
                 $cant = $existe['cantidad'];
-                $cantidad = $_POST['cantidad'] + $cant;
+                $cantidad = limpiarInput($_POST['cantidad']) + $cant;
                 $total = $existe['precio'] * $cantidad;
                 $this->model->actualizarCantidad($cantidad,$total ,$idP);
                 echo "actualizado";
@@ -92,7 +93,7 @@ class Entradas extends Controllers{
     // Elimina 1 elemento de la lista de prodcutos en el carrito
     public function eliminar()
     {    
-        $id = $_POST['id'];
+        $id = limpiarInput($_POST['id']);
         $this->model->eliminarDetalle($id);
         die();
     }
@@ -107,7 +108,7 @@ class Entradas extends Controllers{
     //Busca detalles de los productos
     public function buscar()
     {
-        $codigo = $_POST['codigo'];
+        $codigo = limpiarInput($_POST['codigo']);
         $data = $this->model->buscarProducto($codigo);
         echo json_encode($data);
         die();
@@ -116,9 +117,9 @@ class Entradas extends Controllers{
     //registra la compra
     public function registrar()
     {
-        $descripcion = $_POST['descripcion'];
-        $id_proveedor = $_POST['proveedor'];
-        $total = $_POST['total'];
+        $descripcion = limpiarInput($_POST['descripcion']);
+        $id_proveedor = limpiarInput($_POST['proveedor']);
+        $total = limpiarInput($_POST['total']);
         $id_generador = $_SESSION['id'];
             if ($descripcion == '') {
             $this->model->registrarCompra('S/D', $total, $id_generador, $id_proveedor);
@@ -141,7 +142,7 @@ class Entradas extends Controllers{
     //Datos PDF
     public function ver()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data5 = $this->model->ListaCompra($id);
         $nombre_generador = $data5['id_generador'];
         $nombre_proveedor = $data5['id_proveedor'];
@@ -158,7 +159,7 @@ class Entradas extends Controllers{
     {
         $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES["archivo"]["name"];
-        $nombre_nuevo = $_POST['id'].".".$name["extension"];
+        $nombre_nuevo = limpiarInput($_POST['id']).".".$name["extension"];
         $tipo_archivo = $_FILES["archivo"]["type"];
         $tamano_archivo = $_FILES["archivo"]["size"];
         $ruta_temporal = $_FILES["archivo"]["tmp_name"];

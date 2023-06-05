@@ -41,7 +41,7 @@ class Dashboard extends Controllers{
 
     public function Detalles()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $alumnos = $_SESSION['id'];
         $data1 = $this->model->detallePracticas($id);
         $id_plantilla = $data1['id_plantilla'];
@@ -57,9 +57,12 @@ class Dashboard extends Controllers{
 
     public function Registrar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $alumnos = $_SESSION['id'];
-        $actualizar = $this->model->registrarPractica($id, $alumnos);
+        $data1 = $this->model->detallePracticas($id);
+        $total = $data1['registros']+1;
+        $registar = $this->model->registrarPractica($id, $alumnos);
+        $actualizar = $this->model->SumarAsistencia($id, $total);
         $alert =  'registrado';
         header("location: " . base_url() . "Dashboard/Alumnos?msg=$alert");
         die();

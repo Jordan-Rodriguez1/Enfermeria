@@ -10,7 +10,11 @@
                 <h5 class="card-title">Error 403: Sin Autorización.</h5>
             </div>
             <div class="card-footer text-muted">
-              <a href="<?php echo base_url() ?>Dashboard/Listar" class="btn btn-primary">Ir al inicio</a>
+                <?php if($_SESSION['rol'] > 1 ){  ?>  
+                    <a href="<?php echo base_url() ?>Dashboard/Listar" class="btn btn-primary">Ir al inicio</a>
+                <?php } else{ ?>
+                    <a href="<?php echo base_url() ?>Dashboard/Lista" class="btn btn-primary">Ir al inicio</a>
+                <?php } ?>
             </div>
         </div>
     </section>

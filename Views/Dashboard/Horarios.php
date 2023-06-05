@@ -47,7 +47,7 @@
                 <div class="card mt-3">
                     <a href="<?php echo base_url(); ?> Horarios/Configuracion" class="link">
                         <div class="card-body">
-                            <h5 class="card-title text-center">Horarios</h5>
+                            <h5 class="card-title text-center">Clases</h5>
                             <img src="<?php echo base_url(); ?>Assets/img/horarios/calendario.png" class="opcion" alt="">
                         </div>
                     </a>

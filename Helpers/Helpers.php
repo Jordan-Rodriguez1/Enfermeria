@@ -39,24 +39,15 @@ function fin($data="")
     require_once($VistaF);
 }
 
-/*function Limpiar($cadena)
-{
-    $String = trim($String);
-    $String = stripslashes($String);
-    $String = str_ireplace("<script>", "",$String);
-    $String = str_ireplace("<script>", "",$String);
-    $String = str_ireplace("<script src>", "",$String);
-    $String = str_ireplace("</script type>", "", $String);
-    $String = str_ireplace("SELECT * FROM ", "", $String);
-    $String = str_ireplace("DELETE FROM", "", $String);
-    $String = str_ireplace("INSERT INTO", "", $String);
-    $String = str_ireplace("SELECT COUNT(*) FROM", "", $String);
-    $String = str_ireplace("DROP TABLE", "", $String);
-    $String = str_ireplace("OR '1' = '1", "", $String);
-    $String = str_ireplace('OR "1" = "1"', "", $String);
-    $String = str_ireplace('OR ´1" = "1"', "", $String);
-    $String = str_ireplace("</script type>", "", $String);
-    $String = str_ireplace("</script type>", "", $String);
-    $String = str_ireplace("</script type>", "", $String);
-}*/
+function limpiarInput($dato) {
+    // Eliminar espacios en blanco al principio y al final
+    $dato = trim($dato);
+    // Eliminar barras invertidas
+    $dato = stripslashes($dato);
+    // Convertir caracteres especiales en entidades HTML
+    $dato = htmlspecialchars($dato);
+    
+    return $dato;
+}
+
 ?>

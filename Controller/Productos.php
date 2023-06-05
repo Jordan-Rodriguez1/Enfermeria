@@ -182,7 +182,7 @@ class Productos extends Controllers
         if ($data1 == 0) {
             $this->Listar();
         }else{
-            $this->views->getView($this, "Proveedoreseditar", "", $data1);
+            $this->views->getView($this, "ProveedoresEditar", "", $data1);
         }
     }
 
@@ -228,7 +228,7 @@ class Productos extends Controllers
     //Agrega una nueva ategoria
     public function Categoriasinsertar()
     {
-        $nombre = $_POST['nombre'];
+        $nombre = limpiarInput($_POST['nombre']);
         $insert = $this->model->insertarCategorias($nombre);
         if ($insert > 0) {
         $alert = 'registrado';

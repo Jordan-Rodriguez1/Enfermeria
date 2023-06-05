@@ -44,12 +44,13 @@ $(document).ready(function () {
             type: "POST",
             data: total,
             success: function (response) {
-              Swal.fire({
-                icon: "success",
-                title: "Compra Generada",
-                showConfirmButton: false,
-                timer: 1500,
-              });
+              document.getElementById("descripcion").value = "";
+                Swal.fire({
+                  icon: "success",
+                  title: "Entrada Generada",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
               ListaDetalle();
             },
           });
@@ -88,9 +89,10 @@ $(document).ready(function () {
             type: "POST",
             data: total,
             success: function (response) {
+              document.getElementById("descripcion").value = "";
               Swal.fire({
                 icon: "success",
-                title: "Venta Generada",
+                title: "Salida Generada",
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -132,6 +134,7 @@ $(document).ready(function () {
             type: "POST",
             data: total,
             success: function (response) {
+              document.getElementById("descripcion").value = "";
               Swal.fire({
                 icon: "success",
                 title: "Plantilla Generada",
@@ -474,6 +477,38 @@ function BuscarCodigo(e) {
 //Trae el detalle de los productos mediante botón
 function BuscarCodigos() {
   const codigo = document.getElementById("buscar_codigo").value;
+  const url = document.getElementById("url").value;
+  const urls = url + "Entradas/buscar";
+  $.ajax({
+    url: urls,
+    type: "POST",
+    data: {
+      codigo,
+    },
+    success: function (response) {
+      if (response != 0) {
+        $("#error").addClass("d-none");
+        var info = JSON.parse(response);
+        document.getElementById("id").value = info.id;
+        document.getElementById("nombre").value = info.nombre;
+        document.getElementById("precio").value = info.precio;
+        $("#stockD").val(info.cantidad);
+        document.getElementById("cantidad").value = 1;
+        document.getElementById("nombreP").innerHTML = info.nombre;
+        document.getElementById("precioP").innerHTML = info.precio;
+        document.getElementById("cantidad").focus();
+      } else {
+        $("#error").removeClass("d-none");
+        document.getElementById("cantidad").value = "";
+        document.getElementById("nombreP").innerHTML = "";
+        document.getElementById("precio").value = "";
+      }
+    },
+  });
+}
+
+//Trae el detalle de los productos mediante BUSCADOR
+function BuscarCodigosB(codigo) {
   const url = document.getElementById("url").value;
   const urls = url + "Entradas/buscar";
   $.ajax({

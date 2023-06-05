@@ -33,12 +33,12 @@ class Alumnos extends Controllers
     //Añade un nuevo Alumno
     public function insertar()
     {
-        $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $correo = $_POST['correo'];
-        $clave = $_POST['usuario']; //Por defecto se pone el no.cuenta
-        $grado = $_POST['grado'];
-        $grupo = $_POST['grupo'];
+        $nombre = limpiarInput($_POST['nombre']);
+        $usuario = limpiarInput($_POST['usuario']);
+        $correo = limpiarInput($_POST['correo']);
+        $clave = limpiarInput($_POST['usuario']); //Por defecto se pone el no.cuenta
+        $grado = limpiarInput($_POST['grado']);
+        $grupo = limpiarInput($_POST['grupo']);
         $hash = hash("SHA256", $clave);
         $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
         if ($insert == 'existe') {
@@ -72,7 +72,7 @@ class Alumnos extends Controllers
     //Seleciona los datos de un Alumno
     public function editar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->editarAlumnos($id);
         $data2 = $this->model->configuracion();
         if ($data1 == 0) {
@@ -86,7 +86,7 @@ class Alumnos extends Controllers
     //Seleciona los datos de un Alumno
     public function editarH()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->editarAlumnos($id);
         $data2 = $this->model->configuracion();
         if ($data1 == 0) {
@@ -100,14 +100,14 @@ class Alumnos extends Controllers
     //Actualiza los datos de un Alumno
     public function actualizar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $asistencias = $_POST['asistencias'];
-        $faltas = $_POST['faltas'];
-        $correo = $_POST['correo'];
-        $grado = $_POST['grado'];
-        $grupo = $_POST['grupo'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $usuario = limpiarInput($_POST['usuario']);
+        $asistencias = limpiarInput($_POST['asistencias']);
+        $faltas = limpiarInput($_POST['faltas']);
+        $correo = limpiarInput($_POST['correo']);
+        $grado = limpiarInput($_POST['grado']);
+        $grupo = limpiarInput($_POST['grupo']);
         $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);     
             if ($actualizar == 1) {
                 $alert = 'modificado';
@@ -121,7 +121,7 @@ class Alumnos extends Controllers
     //Inactiva los datos de un Alumno
     public function eliminar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $estado = 0;
         $eliminar = $this->model->estadoAlumnos($id, $estado);
         $alert = 'inactivo';
@@ -133,7 +133,7 @@ class Alumnos extends Controllers
     //elimina un usuario (Solo se cambia de estado para no alterar pdf de reportes)
     public function eliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $estado = 2;
         $eliminar = $this->model->estadoAlumnos($id, $estado);
         $alert =  'eliminado';
@@ -229,7 +229,7 @@ class Alumnos extends Controllers
     //Reactiva los datos de un Usuario
     public function reingresar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $estado = 1;
         $eliminar = $this->model->estadoAlumnos($id, $estado);
         $data1 = $this->model->selectAlumnos(); 
@@ -256,12 +256,12 @@ class Alumnos extends Controllers
                 $cantidad_agregada = ($cantidad_total - 2);
                 if ($i > 1) {
                     $datos = explode(",", $linea);
-                    $nombre = $datos[0];
-                    $usuario = $datos[1];
-                    $correo = $datos[2];
-                    $clave = $datos[1]; //Por defecto se pone el no.cuenta
-                    $grado = $datos[3];
-                    $grupo = $datos[4];
+                    $nombre = limpiarInput($datos[0]);
+                    $usuario = limpiarInput($datos[1]);
+                    $correo = limpiarInput($datos[2]);
+                    $clave = limpiarInput($datos[1]); //Por defecto se pone el no.cuenta
+                    $grado = limpiarInput($datos[3]);
+                    $grupo = limpiarInput($datos[4]);
                     if (empty($grupo)) {
                         $grupo = "X";
                     }
@@ -329,8 +329,8 @@ class Alumnos extends Controllers
             header("location: ".base_url()."?msg=$response");
         }
         elseif (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
-            $usuario = $_POST['usuario'];
-            $clave = $_POST['clave'];
+            $usuario = limpiarInput($_POST['usuario']);
+            $clave = limpiarInput($_POST['clave']);
             $hash = hash("SHA256", $clave);
             $data = $this->model->selectAlumno($usuario, $hash);
             if (!empty($data)) {
@@ -358,8 +358,8 @@ class Alumnos extends Controllers
     {
         $hash = hash("SHA256", $_POST['actual']);
         $nuevahash = hash("SHA256", $_POST['nueva']);
-        $nueva = $_POST['nueva'];
-        $confirmar = $_POST['confirmar'];
+        $nueva = limpiarInput($_POST['nueva']);
+        $confirmar = limpiarInput($_POST['confirmar']);
         if ($nueva == $confirmar) {
             $data = $this->model->verificarPass($hash, $_SESSION['id']);
             if ($data != null) {
@@ -378,7 +378,7 @@ class Alumnos extends Controllers
     //restablecer contraseña
     public function restablecer()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data = $this->model->editarAlumnos($id);
         $hash = hash("SHA256", $data['usuario']);
         $cambio = $this->model->cambiarContra($hash, $id);

@@ -24,6 +24,14 @@ class EntradasModel extends Mysql{
         return $res;
     }
 
+    // Muestra la lista de productos
+    public function productos()
+    {
+        $sql = "SELECT nombre, codigo FROM productos WHERE estado = 1 ORDER BY nombre ASC";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+
     //Selecciona el detalle que se muestra en el carrito
     public function selectDetalle()
     {

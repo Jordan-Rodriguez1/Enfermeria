@@ -15,7 +15,7 @@
     <!-- Custom stylesheet - for your changes-->
     <link rel="stylesheet" href="<?php echo base_url(); ?>Assets/css/dataTables.bootstrap4.min.css">
     <!-- Favicon-->
-    <link rel="icon" href="../Assets/img/icon.png">
+    <link rel="icon" href="<?php echo base_url(); ?>Assets/img/icon.png">
     <!-- Tweaks for older IEs-->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -31,13 +31,13 @@
                     <!-- Navbar Header-->
                     <?php if ($_SESSION['rol'] != 1) {?>
                         <a href="<?php echo base_url(); ?>Dashboard/Listar" class="navbar-brand">
-                            <img src="../Assets/img/logo2.png" style="height: 60px;">
+                            <img src="<?php echo base_url(); ?>Assets/img/logo2.png" style="height: 60px;">
                         </a>
                         <!-- Sidebar Toggle Btn-->
                         <button class="sidebar-toggle"><i class="fas fa-bars"></i></button>
                     <?php } else {?>
                         <a href="<?php echo base_url(); ?>Dashboard/Alumnos" class="navbar-brand">
-                            <img src="../Assets/img/logo2.png" style="height: 60px;">
+                            <img src="<?php echo base_url(); ?>Assets/img/logo2.png" style="height: 60px;">
                         </a>
                     <?php }?>
                 </div>
@@ -77,12 +77,12 @@
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <?php if ($_SESSION['rol'] != 1) {?>
-                                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url(); ?>/Assets/img/perfiles/<?php echo $_SESSION['perfil']; ?>" alt="..." class="img-fluid rounded-circle" style="height: 50px;"><span class="text-primary"><h4 style="color: #c2258e;">Hola  <strong><b><?php echo $_SESSION['nombre']; ?></b></strong></h4></span></a>
+                                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url(); ?>Assets/img/perfiles/<?php echo $_SESSION['perfil']; ?>" alt="..." class="img-fluid rounded-circle" style="height: 50px;"><span class="text-primary"><h4 style="color: #c2258e;">Hola  <strong><b><?php echo $_SESSION['nombre']; ?></b></strong></h4></span></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style=" position: absolute;">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cambiarPass">Cambiar Contraseña</a>
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cambiarPic">Cambiar Foto</a>
                             <?php } else {?>
-                                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url(); ?>/Assets/img/perfilesalumnos/<?php echo $_SESSION['perfil']; ?>" alt="..." class="img-fluid rounded-circle" style="height: 50px;"><span class="text-primary"><h4 style="color: #c2258e;">Hola  <strong><b><?php echo $_SESSION['nombre']; ?></b></strong></h4></span></a>
+                                <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="<?php echo base_url(); ?>Assets/img/perfilesalumnos/<?php echo $_SESSION['perfil']; ?>" alt="..." class="img-fluid rounded-circle" style="height: 50px;"><span class="text-primary"><h4 style="color: #c2258e;">Hola  <strong><b><?php echo $_SESSION['nombre']; ?></b></strong></h4></span></a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown" style=" position: absolute;">
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cambiarPassA">Cambiar Contraseña</a>
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#cambiarPicA">Cambiar Foto</a>
