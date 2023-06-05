@@ -7,9 +7,14 @@ class MaestrosModel extends Mysql{
     }
 
     //Selecciona Alumnos activos
-    public function selectAlumnos()
+    public function selectProfesores()
     {
-        $sql = "SELECT * FROM alumnos WHERE estado = 1";
+        $sql = "SELECT * FROM profesores WHERE estado = 1";
+        $res = $this->select_all($sql);
+        return $res;
+    }
+    public function selectMaterias(){
+        $sql = "SELECT * FROM materias";
         $res = $this->select_all($sql);
         return $res;
     }
@@ -17,26 +22,25 @@ class MaestrosModel extends Mysql{
     //selecciona Alumnos inactivos
     public function selectInactivos()
     {
-        $sql = "SELECT * FROM alumnos WHERE estado = 0";
+        $sql = "SELECT * FROM profesores WHERE estado = 0";
         $res = $this->select_all($sql);
         return $res;
     }
 
-    //Registra un nuevo Alumno
-    public function insertarAlumnos(string $nombre, string $usuario, string $clave, string $correo, string $grado, string $grupo)
+    //Registra un nuevo Profesor
+    public function insertarProfesores(string $nombre, int $usuario, string $materia, int $semestre, int $estado)
     {
         $return = "";
         $this->nombre = $nombre;
         $this->usuario = $usuario;
-        $this->clave = $clave;
-        $this->correo = $correo;
-        $this->grado = $grado;
-        $this->grupo = $grupo;
-        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->correo}'";
+        $this->materia = $materia;
+        $this->semestre = $semestre;  
+        $this->estado=$estado;     
+        $sql = "SELECT * FROM profesores WHERE usuario = '{$this->usuario}'";
         $result = $this->selecT($sql);
         if (empty($result)) {
-            $query = "INSERT INTO alumnos(nombre, usuario, clave, correo, grado, grupo) VALUES (?,?,?,?,?,?)";
-            $data = array($this->nombre, $this->usuario, $this->clave, $this->correo, $this->grado, $this->grupo);
+            $query = "INSERT INTO profesores(usuario, nombre, materia, semestre, estado) VALUES (?,?,?,?,?)";
+            $data = array($this->usuario, $this->nombre, $this->materia, $this->semestre, $this->estado);
             $resul = $this->insert($query, $data);
             $return = $resul;
         }else {
@@ -46,22 +50,10 @@ class MaestrosModel extends Mysql{
     }
 
     //Seleciona los datos de un usuario
-    public function editarAlumnos(int $id)
+    public function editarProfesores(int $id)
     {
         $this->id = $id;
-        $sql = "SELECT * FROM alumnos WHERE id = '{$this->id}'";
-        $res = $this->select($sql);
-        if (empty($res)) {
-            $res = 0;
-        }
-        return $res;
-    }
-
-    //Seleciona los datos de un usuario mediante correo
-    public function editarAlumnoC(string $correo)
-    {
-        $this->correo = $correo;
-        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->correo}'";
+        $sql = "SELECT * FROM profesores WHERE id = '{$this->id}'";
         $res = $this->select($sql);
         if (empty($res)) {
             $res = 0;
@@ -70,31 +62,28 @@ class MaestrosModel extends Mysql{
     }
 
     //Edita los datos de un usuario
-    public function actualizarAlumnos(string $nombre, string $usuario, string $asistencias, string $faltas, int $id, string $correo, string $grado, string $grupo)
+    public function actualizarProfesores(string $nombre, int $usuario, string $materia, int $semestre, int $id)
     {
         $return = "";
         $this->nombre = $nombre;
         $this->usuario = $usuario;
-        $this->asistencias = $asistencias;
-        $this->faltas = $faltas;
-        $this->id = $id;
-        $this->correo = $correo;
-        $this->grado = $grado;
-        $this->grupo = $grupo;
-        $query = "UPDATE alumnos SET nombre=?, usuario=?, asistencias=?, faltas=?, correo=?, grado=?, grupo=? WHERE id=?";
-        $data = array($this->nombre, $this->usuario, $this->asistencias, $this->faltas, $this->correo, $this->grado, $this->grupo, $this->id);
+        $this->materia = $materia;
+        $this->semestre = $semestre;
+        $this->id = $id;      
+        $query = "UPDATE profesores SET nombre=?, usuario=?, materia=?, semestre=? WHERE id=?";
+        $data = array($this->nombre, $this->usuario, $this->materia, $this->semestre, $this->id);
         $resul = $this->update($query, $data);
         $return = $resul;
         return $return;
     }
 
     //cambia de estado un usuario
-    public function estadoAlumnos(int $id, int $estado)
+    public function estadoProfesores(int $id, int $estado)
     {
         $return = "";
         $this->id = $id;
         $this->estado = $estado;
-        $query = "UPDATE alumnos SET estado = ? WHERE id=?";
+        $query = "UPDATE profesores SET estado = ? WHERE id=?";
         $data = array($this->estado, $this->id);
         $resul = $this->update($query, $data);
         $return = $resul;

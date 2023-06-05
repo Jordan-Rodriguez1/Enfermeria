@@ -32,7 +32,7 @@
                 $alert = $_GET['msg'];
                 if ($alert == "existe") { ?>
                     <div class="alert alert-warning" role="alert">
-                        <strong>El alumno ya existe.</strong>
+                        <strong>El profesor ya existe.</strong>
                     </div>
                 <?php } else if ($alert == "error") { ?>
                     <div class="alert alert-danger" role="alert">
@@ -40,15 +40,15 @@
                     </div>
                 <?php } else if ($alert == "registrado") { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>Alumno registrado.</strong>
+                        <strong>Profesor registrado.</strong>
                     </div>
                 <?php } else if ($alert == "rest") { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>La contraseña del alumno se restableció.</strong>
+                        <strong>La contraseña del Profesor se restableció.</strong>
                     </div>
                 <?php } else if ($alert == "modificado") { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>Alumno modificado.</strong>
+                        <strong>Profesor modificado.</strong>
                     </div>
                 <?php } else if ($alert == "subido") { ?>
                     <div class="alert alert-success" role="alert">
@@ -78,19 +78,19 @@
             <tr>
                 <th>Nombre</th>
                 <th>No. Cuenta</th>
-                <th>Correo</th>
-                <th>Grado</th>
+                <th>Materia</th>
+                <th>Semestre</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($data1 as $us) { ?>
-            <?php if($_SESSION['rol'] >= $us['rol']){ ?>
+            <?php //if($_SESSION['rol'] >= $us['rol']){ ?>
                 <tr>
                     <td><?php echo $us['nombre']; ?></td>
                     <td><?php echo $us['usuario']; ?></td>
-                    <td><?php echo $us['correo']; ?></td>
-                    <td><?php echo $us['grado'];?></td>
+                    <td><?php echo $us['materia']; ?></td>
+                    <td><?php echo $us['semestre'];?></td>
                     <td>
                         <a title="Editar" href="<?php echo base_url() ?>Maestros/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
                         <form action="<?php echo base_url() ?>Maestros/eliminar?id=<?php echo $us['id']; ?>" method="post" class="d-inline elim">
@@ -98,7 +98,7 @@
                         </form>     
                     </td>
                 </tr>
-            <?php } }?>
+            <?php } //}?>
         </tbody>
     </table>
 </div>
@@ -111,15 +111,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="<?php echo base_url(); ?>Maestros/insertar" autocomplete="off">
+            <form method="post" action="<?php echo base_url(); ?>Maestros/insertar_profesor" autocomplete="off">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="nombre">Correo</label>
-                        <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo" required>
+                        <label for="materia">Materia</label>
+                        <select class="form-control" name="materia" id="materia"><?php foreach($data2 as $materias){} ?>
+                        <!--El foreach pasa los datos de la tabla materias a la variable $materias y despues muestra todas las materias-->
+                            <option value="<?php echo  $materias['materia']; ?>"  type="text" placeholder="materia" required><?php echo  $materias['materia']; ?>></option>
+                        </select>                        
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
@@ -130,8 +133,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="grupo">Grupo</label>
-                                <input id="grupo" class="form-control" type="text" name="grupo" maxlength="1" placeholder="Grupo" required>
+                                <label for="semestre">Semestre</label>
+                                <input id="semestre" class="form-control" type="text" name="semestre" maxlength="1" placeholder="Semestre" required>
                             </div>
                         </div>
                     </div>

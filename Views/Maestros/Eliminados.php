@@ -45,19 +45,19 @@
                 $alert = $_GET['msg'];
                 if ($alert == "eliminado") { ?>
                     <div class="alert alert-danger" role="alert">
-                        <strong>El alumno fue eliminado.</strong>
+                        <strong>El profesor fue eliminado.</strong>
                     </div>
                 <?php } elseif ($alert == "Rtodo") { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>Todos los alumnos fueron reingresados.</strong>
+                        <strong>Todos los profesores fueron reingresados.</strong>
                     </div>
                 <?php } elseif ($alert == "Etodo") { ?>
                     <div class="alert alert-danger" role="alert">
-                        <strong>Todos los alumnos fueron eliminados.</strong>
+                        <strong>Todos los profesores fueron eliminados.</strong>
                     </div>
                 <?php } else { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>El alumno fue reingresado.</strong>
+                        <strong>El profesor fue reingresado.</strong>
                     </div>
                 <?php }
             } ?>
@@ -69,19 +69,19 @@
                 <tr>
                     <th>Nombre</th>
                     <th>No. Cuenta</th>
-                    <th>Correo</th>
-                    <th>Grado</th>
+                    <th>Materia</th>
+                    <th>Semestre</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($data1 as $us) { ?>
-                <?php if($_SESSION['rol'] >= $us['rol']){ ?>
+                <?php //if($_SESSION['rol'] >= $us['rol']){ ?>
                     <tr>
                         <td><?php echo $us['nombre']; ?></td>
                         <td><?php echo $us['usuario']; ?></td>
-                        <td><?php echo $us['correo']; ?></td>
-                        <td><?php echo $us['grado'];?></td>
+                        <td><?php echo $us['materia']; ?></td>
+                        <td><?php echo $us['semestre'];?></td>
                         <td>
                             <form action="<?php echo base_url() ?>Maestros/reingresar?id=<?php echo $us['id']; ?>" method="post" class="d-inline confirmar">
                                 <button title="Reingresar" type="submit" class="btn btn-success mb-2"><i class="fas fa-user"></i></button>
@@ -91,7 +91,7 @@
                             </form>
                         </td>
                     </tr>
-                <?php }} ?>
+                <?php }//} ?>
             </tbody>
         </table>
     </div>
