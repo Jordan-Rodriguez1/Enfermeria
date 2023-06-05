@@ -25,10 +25,10 @@ class Practicas extends Controllers{
     //Agrega nueva plantilla (texto)
     public function insertar()
     {
-        $nombre = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
-        $objetivo = $_POST['objetivos'];
-        $requisitos = $_POST['requisitos'];
+        $nombre = limpiarInput($_POST['nombre']);
+        $descripcion = limpiarInput($_POST['descripcion']);
+        $objetivo = limpiarInput($_POST['objetivos']);
+        $requisitos = limpiarInput($_POST['requisitos']);
         $insert = $this->model->insertarPlantilla($nombre, $descripcion, $objetivo, $requisitos);
         $id = $this->model->buscarPlantilla();
         $tmaximo = 20 * 1024 * 1024;
@@ -83,11 +83,11 @@ class Practicas extends Controllers{
     //Actualiza la plantilla (texto)
     public function Tactualizar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $descripcion = $_POST['descripcion'];
-        $objetivo = $_POST['objetivos'];
-        $requisitos = $_POST['requisitos'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $descripcion = limpiarInput($_POST['descripcion']);
+        $objetivo = limpiarInput($_POST['objetivos']);
+        $requisitos = limpiarInput($_POST['requisitos']);
         $tmaximo = 20 * 1024 * 1024;
         $name = pathinfo($_FILES["archivo"]["name"]);
         $nombre_archivo = $_FILES['archivo']["name"];
@@ -126,7 +126,7 @@ class Practicas extends Controllers{
     //Inactiva una plantilla (texto)
     public function Teliminar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $eliminar = $this->model->eliminarPlantilla($id);
         $data1 = $this->model->selectPlantillas();
         $alert =  'inactivo';
@@ -137,7 +137,7 @@ class Practicas extends Controllers{
     //Elimina una plantilla (texto)
     public function Teliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $eliminar = $this->model->eliminarperPlantilla($id);
         $data1 = $this->model->selectPlantillas();
         $alert =  'eliminado';
@@ -148,7 +148,7 @@ class Practicas extends Controllers{
     //reactiva una plantilla (texto)
     public function Treingresar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $this->model->reingresarPlantilla($id);
         $data1 = $this->model->selectPlantillas();
         $alert =  'reingresar';
@@ -159,7 +159,7 @@ class Practicas extends Controllers{
     public function Mplantilla()
     {
         if (isset($_GET['id'])) {
-            $id = $_GET['id'];
+            $id = limpiarInput($_GET['id']);
             $data1 = $this->model->selecPlantillaD($id);
             $data2 = $this->model->selecPlantilla($id);
             $this->model->VaciarDetalle($_SESSION['id']);
@@ -180,17 +180,18 @@ class Practicas extends Controllers{
             ];
             $this->model->VaciarDetalle($_SESSION['id']);
         }
-        $this->views->getView($this, "Mplantilla", "", $data1);
+        $data3 = $this->model->productos();
+        $this->views->getView($this, "Mplantilla", "", $data1, "", $data3);
         die();
     }
 
     //Ingresa a detalle temporal cotizaciones generadas
     public function ingresar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $cantidad = $_POST['cantidad'];
-        $id_usuario = $_SESSION['id'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $cantidad = limpiarInput($_POST['cantidad']);
+        $id_usuario = limpiarInput($_SESSION['id']);
         $existe = $this->model->verificarProductoexiste($id, $id_usuario);
         if ($existe == "existe" && $cantidad != 0 ) {
             $existe = $this->model->buscarProductoexiste($id, $id_usuario);
@@ -199,7 +200,7 @@ class Practicas extends Controllers{
             if ($piezas > 0) {
                 $idP = $existe['id'];
                 $cant = $existe['cantidad'];
-                $cantidad = $_POST['cantidad'] + $cant;
+                $cantidad = limpiarInput($_POST['cantidad']) + $cant;
                 $this->model->actualizarCantidad($cantidad ,$idP);
                 echo "actualizado";
             }else{
@@ -246,9 +247,9 @@ class Practicas extends Controllers{
     //Registra cotizacion sin descontar stock
     public function registrar()
     {
-        $descripcion = $_POST['descripcion'];
-        $id = $_POST['id'];
-        $total = $_POST['total'];
+        $descripcion = limpiarInput($_POST['descripcion']);
+        $id = limpiarInput($_POST['id']);
+        $total = limpiarInput($_POST['total']);
         if ($id != 0) {
             $data = $this->model->editarCotizacion($descripcion, $total, $id);
             $reset = $this->model->borrarDetalle($id);
@@ -272,7 +273,7 @@ class Practicas extends Controllers{
     //Datos PDF
     public function ver()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data3 = $this->model->ListaVenta($id);
         $data1 = $this->model->DetalleVenta($id);
         $data2 = $this->model->selectConfiguracion();
@@ -283,7 +284,7 @@ class Practicas extends Controllers{
     //Inactiva una plantilla (materiales)
     public function Meliminar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $eliminar = $this->model->eliminarPlantillaM($id);
         $data1 = $this->model->selectPlantillasM();
         $alert =  'inactivoM';
@@ -294,7 +295,7 @@ class Practicas extends Controllers{
     //Elimina una plantilla (materiales)
     public function Meliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $eliminar = $this->model->eliminarperPlantillaM($id);
         $data1 = $this->model->selectPlantillasM();
         $alert =  'eliminadoM';
@@ -305,7 +306,7 @@ class Practicas extends Controllers{
     //reactiva una plantilla (materiales)
     public function Mreingresar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $this->model->reingresarPlantillaM($id);
         $data1 = $this->model->selectPlantillasM();
         $alert =  'reingresarM';
@@ -333,7 +334,7 @@ class Practicas extends Controllers{
     //Selecciona lo requerido para editar una práctica
     public function Peditar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->selectPractica($id);
         $data2 = $this->model->selectPlantillas();
         $data3 = $this->model->selectPlantillasM();
@@ -345,13 +346,13 @@ class Practicas extends Controllers{
     //Agrega nueva practica
     public function agregar()
     {
-        $nombre = $_POST['nombre'];
-        $id_plantilla = $_POST['id_plantilla'];
-        $id_plantillam = $_POST['id_plantillam'];
-        $id_responsable = $_POST['id_responsable'];
-        $fecha_practica = $_POST['fecha_practica'];
-        $capacidad = $_POST['capacidad'];
-        $Semestre = $_POST['Semestre'];
+        $nombre = limpiarInput($_POST['nombre']);
+        $id_plantilla = limpiarInput($_POST['id_plantilla']);
+        $id_plantillam = limpiarInput($_POST['id_plantillam']);
+        $id_responsable = limpiarInput($_POST['id_responsable']);
+        $fecha_practica = limpiarInput($_POST['fecha_practica']);
+        $capacidad = limpiarInput($_POST['capacidad']);
+        $Semestre = limpiarInput($_POST['Semestre']);
         $insert = $this->model->insertarPractica($nombre, $id_plantilla, $id_plantillam, $id_responsable, $fecha_practica, $capacidad, $Semestre);
         if ($insert == 'existe') {
             $alert = 'existe';
@@ -368,14 +369,14 @@ class Practicas extends Controllers{
     //Edita una practica 
     public function Pactualizar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $id_plantilla = $_POST['id_plantilla'];
-        $id_plantillam = $_POST['id_plantillam'];
-        $id_responsable = $_POST['id_responsable'];
-        $fecha_practica = $_POST['fecha_practica'];
-        $capacidad = $_POST['capacidad'];
-        $Semestre = $_POST['Semestre'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $id_plantilla = limpiarInput($_POST['id_plantilla']);
+        $id_plantillam = limpiarInput($_POST['id_plantillam']);
+        $id_responsable = limpiarInput($_POST['id_responsable']);
+        $fecha_practica = limpiarInput($_POST['fecha_practica']);
+        $capacidad = limpiarInput($_POST['capacidad']);
+        $Semestre = limpiarInput($_POST['Semestre']);
         $insert = $this->model->editarPractica($nombre, $id_plantilla, $id_plantillam, $id_responsable, $fecha_practica, $capacidad, $Semestre, $id);
         $alert = 'modificada';
         $data1 = $this->model->selectPlantillas();
@@ -386,7 +387,7 @@ class Practicas extends Controllers{
     //Muestra la lista de alumnos registrados.
     public function NombrarLista()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->asistencia($id);
         $data2 = $this->model->selectPractica($id);
         $this->views->getView($this, "NombrarLista", "", $data1, $data2);
@@ -396,9 +397,9 @@ class Practicas extends Controllers{
     //Muestra la lista de alumnos registrados.
     public function editAsistencia()
     {
-        $id = $_GET['id'];
-        $estado = $_GET['estado'];
-        $practica = $_GET['practica'];
+        $id = limpiarInput($_GET['id']);
+        $estado = limpiarInput($_GET['estado']);
+        $practica = limpiarInput($_GET['practica']);
         $data1 = $this->model->detalleAlumno($id);
         if ($estado == 1) {
             $estado = 2;
@@ -424,8 +425,8 @@ class Practicas extends Controllers{
     //Muestra la lista de alumnos registrados.
     public function ListaVerificada()
     {
-        $estado = $_GET['estado'];
-        $practica = $_GET['practica'];
+        $estado = limpiarInput($_GET['estado']);
+        $practica = limpiarInput($_GET['practica']);
         $edit = $this->model->estadoPractica($practica, $estado);
         $data1 = $this->model->selectPlantillas();
         $alert = "lista";
@@ -436,8 +437,8 @@ class Practicas extends Controllers{
     //Cancela una práctica
     public function Peliminar()
     {
-        $estado = $_GET['estado'];
-        $practica = $_GET['id'];
+        $estado = limpiarInput($_GET['estado']);
+        $practica = limpiarInput($_GET['id']);
         $edit = $this->model->estadoPractica($practica, $estado);
         $data1 = $this->model->selectPlantillas();
         $alert = "cancelada";
@@ -448,8 +449,8 @@ class Practicas extends Controllers{
     //Agrega el material a salida
     public function agregarMateriales()
     {
-        $id = $_GET['id'];
-        $id_plantilla = $_GET['plantilla'];
+        $id = limpiarInput($_GET['id']);
+        $id_plantilla = limpiarInput($_GET['plantilla']);
         $data1 = $this->model->cuentaAsistencias($id);
         $data2 = $this->model->selecPlantilla($id_plantilla);
         $this->model->VaciarDetalle($_SESSION['id']);

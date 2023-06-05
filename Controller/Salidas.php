@@ -30,7 +30,8 @@ class Salidas extends Controllers{
         }
         $id = $_SESSION['id'];
         $data1 = $this->model->responsables($id);
-        $this->views->getView($this, "Listar", "", $data1, $data2, $data3);
+        $data4 = $this->model->productos();
+        $this->views->getView($this, "Listar", "", $data1, $data2, $data3, $data4);
         die();
     }
 

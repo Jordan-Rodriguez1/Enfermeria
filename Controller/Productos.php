@@ -29,13 +29,13 @@ class Productos extends Controllers
     //Agrega nuevos productos
     public function insertar()
     {
-        $codigo = $_POST['codigo'];
-        $nombre = $_POST['nombre'];
-        $precio = $_POST['precio'];
-        $proveedor = $_POST['proveedor'];
-        $categoria = $_POST['categoria'];
-        $tipo = $_POST['tipo'];
-        $minimo = $_POST['minimo'];
+        $codigo = limpiarInput($_POST['codigo']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $precio = limpiarInput($_POST['precio']);
+        $proveedor = limpiarInput($_POST['proveedor']);
+        $categoria = limpiarInput($_POST['categoria']);
+        $tipo = limpiarInput($_POST['tipo']);
+        $minimo = limpiarInput($_POST['minimo']);
         $insert = $this->model->insertarProductos($codigo, $nombre, $precio, $proveedor, $categoria, $tipo, $minimo);
         if ($insert == 'existe') {
             $alert = 'existe';
@@ -79,9 +79,9 @@ class Productos extends Controllers
     //Selecciona producto a editar y muestra la lista de categorias y proveedores
     public function caducar()
     {
-        $id = $_POST['id'];
-        $stock = $_POST['stock'];
-        $id_caducar = $_POST['id_caducar'];
+        $id = limpiarInput($_POST['id']);
+        $stock = limpiarInput($_POST['stock']);
+        $id_caducar = limpiarInput($_POST['id_caducar']);
         $vigente = $this->model->editarProductos($id);
         $descontar = $vigente['cantidad'] - $stock;
         $this->model->editarStock($descontar, $id);
@@ -95,15 +95,15 @@ class Productos extends Controllers
     //Actualiza el producto
     public function actualizar()
     {
-        $id = $_POST['id'];
-        $codigo = $_POST['codigo'];
-        $nombre = $_POST['nombre'];
-        $cantidad = $_POST['cantidad'];
-        $precio = $_POST['precio'];
-        $proveedor = $_POST['proveedor'];
-        $categoria = $_POST['categoria'];
-        $tipo = $_POST['tipo'];
-        $minimo = $_POST['minimo'];
+        $id = limpiarInput($_POST['id']);
+        $codigo = limpiarInput($_POST['codigo']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $cantidad = limpiarInput($_POST['cantidad']);
+        $precio = limpiarInput($_POST['precio']);
+        $proveedor = limpiarInput($_POST['proveedor']);
+        $categoria = limpiarInput($_POST['categoria']);
+        $tipo = limpiarInput($_POST['tipo']);
+        $minimo = limpiarInput($_POST['minimo']);
         $actualizar = $this->model->actualizarProductos($codigo, $nombre, $cantidad, $precio, $proveedor, $categoria, $tipo, $minimo, $id);
         if ($actualizar == 1) {
             $alert =  'modificado';
@@ -117,7 +117,7 @@ class Productos extends Controllers
     //Inactiva un producto
     public function eliminar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $eliminar = $this->model->eliminarProductos($id);
         $data1 = $this->model->selectProductos();
         $alert =  'eliminado';
@@ -128,7 +128,7 @@ class Productos extends Controllers
     //Elimina un producto
     public function eliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $eliminar = $this->model->eliminarperProductos($id);
         $data1 = $this->model->selectProductos();
         $alert =  'eliminado';
@@ -139,7 +139,7 @@ class Productos extends Controllers
     //reactiva un producto
     public function reingresar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $this->model->reingresarProductos($id);
         $data1 = $this->model->selectProductos();
         header('location: ' . base_url() . "Productos/eliminados?msg=$alert");
@@ -160,9 +160,9 @@ class Productos extends Controllers
     //Agrega un nuevo proveedor
     public function Proveedoresinsertar()
     {
-        $nombre = $_POST['nombre'];
-        $telefono = $_POST['telefono'];
-        $direccion = $_POST['direccion'];
+        $nombre = limpiarInput($_POST['nombre']); 
+        $telefono = limpiarInput($_POST['telefono']);   
+        $direccion = limpiarInput($_POST['direccion']);            
         $insert = $this->model->insertarProveedores($nombre, $telefono, $direccion);
         if ($insert > 0) {
         $alert = 'registrado';
@@ -177,7 +177,7 @@ class Productos extends Controllers
     //Selecciona el proveedor a editar
     public function Proveedoreseditar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->editarProveedores($id);
         if ($data1 == 0) {
             $this->Listar();
@@ -189,10 +189,10 @@ class Productos extends Controllers
     //Edita los datos del proveedor
     public function Proveedoresactualizar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $telefono = $_POST['telefono'];
-        $direccion = $_POST['direccion'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $telefono = limpiarInput($_POST['telefono']);
+        $direccion = limpiarInput($_POST['direccion']);
         $actualizar = $this->model->actualizarProveedores($nombre, $telefono, $direccion, $id);
         if ($actualizar == 1) {
             $alert = 'modificado';
@@ -206,7 +206,7 @@ class Productos extends Controllers
     //Elimina porveedor
     public function Proveedoreseliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $this->model->eliminarperProveedores($id);
         $data = $this->model->selectProveedores();
         $alert = 'eliminado';
@@ -243,7 +243,7 @@ class Productos extends Controllers
     //Elimina porveedor
     public function Categoriaseliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $this->model->eliminarperCategorias($id);
         $data = $this->model->selectCategorias();
         $alert = 'eliminado';

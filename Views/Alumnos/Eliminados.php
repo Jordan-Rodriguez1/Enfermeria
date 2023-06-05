@@ -1,8 +1,7 @@
-<?php encabezado() ?>
 <?php if($_SESSION['rol'] <= 3){ ?> 
     <?php eror403() ?>
 <?php }  else { ?>
-
+    <?php encabezado() ?>
 <!-- Begin Page Content -->
 <div class="page-content">
     <section>

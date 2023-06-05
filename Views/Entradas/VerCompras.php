@@ -1,4 +1,3 @@
-<?php encabezado() ?>
 <?php if($_SESSION['rol'] <= 1){ ?> 
     <?php eror403() ?>
 <?php }  else { 

@@ -1,21 +1,7 @@
-<?php encabezado() ?>
-
 <?php if($_SESSION['rol'] <= 1){ ?> 
-<div class="page-content2">
-    <section>
-        <div class="card container-fluid2 text-center">
-            <div class="card-header"><i class="fas fa-exclamation-circle"></i> ERROR</div>
-            <div class="card-body">
-                <img src="../Assets/img/unicornio.png" style="height: 400px; ">
-                <h5 class="card-title">Error: No tienes acceso a esta página.</h5>
-            </div>
-            <div class="card-footer text-muted">
-              <a href="<?php echo base_url() ?>Dashboard/Alumnos" class="btn btn-primary">Ir al inicio</a>
-            </div>
-        </div>
-    </section>
-</div>
+    <?php eror403() ?>
 <?php }  else { ?>
+    <?php encabezado() ?>
 
 <!-- Begin Page Content -->
 <div class="page-content">
@@ -29,7 +15,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6 mb-2 mb-2">
-                        <a class="btn btn-primary" href="<?php echo base_url(); ?>Practicas/Plantillas"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</a>
+                        <a class="btn btn-primary mb-2" href="<?php echo base_url(); ?>Practicas/Plantillas"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</a>
                         <button class="btn btn-secondary mb-2" type="button" data-toggle="modal" data-target="#nuevo_producto"><i class="fas fa-book"></i> Catálogo</button>
                     </div>
                     <div class="col-lg-6">
@@ -140,7 +126,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($data2 as $cl) { ?>
+                            <?php foreach ($data3 as $cl) { ?>
                                 <tr>
                                     <td><?php echo $cl['codigo']; ?></td>
                                     <td><?php echo $cl['nombre']; ?></td>

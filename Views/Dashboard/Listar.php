@@ -1,7 +1,7 @@
-<?php encabezado() ?>
 <?php if($_SESSION['rol'] <= 1){ ?> 
     <?php eror403() ?>
 <?php }  else { ?>
+    <?php encabezado() ?>
 <!-- Sidebar Navigation end-->
 <div class="page-content">
     <section>

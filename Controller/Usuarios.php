@@ -27,11 +27,11 @@ class Usuarios extends Controllers
     //Añade un nuevo usuario
     public function insertar()
     {
-        $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $correo = $_POST['correo'];
+        $nombre = limpiarInput($_POST['nombre']);
+        $usuario = limpiarInput($_POST['usuario']);
+        $correo = limpiarInput($_POST['correo']);
         $clave = $usuario; //Por defecto de pone número de usuario
-        $rol = $_POST['rol'];
+        $rol = limpiarInput($_POST['rol']);
         $hash = hash("SHA256", $clave);
         $insert = $this->model->insertarUsuarios($nombre, $usuario, $hash, $rol, $correo);
         if ($insert == 'existe') {
@@ -63,7 +63,7 @@ class Usuarios extends Controllers
     //Seleciona los datos de un Usuario
     public function editar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->editarUsuarios($id);
         if ($data1 == 0) {
             $this->Listar();
@@ -75,7 +75,7 @@ class Usuarios extends Controllers
     //Seleciona los datos de un Usuario
     public function editarH()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $data1 = $this->model->editarUsuarios($id);
         if ($data1 == 0) {
             $this->Listar();
@@ -87,11 +87,11 @@ class Usuarios extends Controllers
     //Actualiza los datos de un Usuario
     public function actualizar()
     {
-        $id = $_POST['id'];
-        $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $rol = $_POST['rol'];
-        $correo = $_POST['correo'];
+        $id = limpiarInput($_POST['id']);
+        $nombre = limpiarInput($_POST['nombre']);
+        $usuario = limpiarInput($_POST['usuario']);
+        $rol = limpiarInput($_POST['rol']);
+        $correo = limpiarInput($_POST['correo']);
         $actualizar = $this->model->actualizarUsuarios($nombre, $usuario, $rol, $id, $correo);     
             if ($actualizar == 1) {
                 $alert = 'modificado';
@@ -105,7 +105,7 @@ class Usuarios extends Controllers
     //Inactiva los datos de un Usuario
     public function eliminar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $estado = 0;
         $eliminar = $this->model->eliminarUsuarios($id, $estado);
         $alert = 'inactivo';
@@ -117,7 +117,7 @@ class Usuarios extends Controllers
     //elimina un usuario (Solo se cambia de estado para no alterar pdf de reportes)
     public function eliminarper()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $estado = 2;
         $eliminar = $this->model->eliminarUsuarios($id, $estado);
         $data = $this->model->selectUsuarios();

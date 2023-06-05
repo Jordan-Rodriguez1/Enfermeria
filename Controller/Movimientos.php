@@ -19,7 +19,7 @@ class Movimientos extends Controllers{
     //Descuenta el stock de la salida y la aprueba
     public function aprobar()
     {
-        $id = $_GET['id'];
+        $id = limpiarInput($_GET['id']);
         $estado = 2;
         $productos = $this->model->seleccionarProductos($id);
         foreach ($productos as $data) {
@@ -58,9 +58,9 @@ class Movimientos extends Controllers{
     //Datos PDF
     public function ver()
     {
-        $id = $_GET['id'];
-        $nombre_generador = $_GET['generador'];
-        $nombre_responsable = $_GET['responsable'];
+        $id = limpiarInput($_GET['id']);
+        $nombre_generador = limpiarInput($_GET['generador']);
+        $nombre_responsable = limpiarInput($_GET['responsable']);
         $data1 = $this->model->DetalleVenta($id);
         $data2 = $this->model->selectConfiguracion();
         $data3 = $this->model->PdfGenerador($nombre_generador);
