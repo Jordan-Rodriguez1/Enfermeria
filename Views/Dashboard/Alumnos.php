@@ -1,7 +1,4 @@
-<?php if($_SESSION['rol'] <= 4){ ?> 
-    <?php eror403() ?>
-<?php }  else { ?>
-    <?php encabezado() ?>
+<?php encabezado() ?>
 
 
 <!-- Sidebar Navigation end-->
@@ -107,6 +104,5 @@
         </div>
     </section>
 </div>
-<?php } ?>
 
 <?php pie() ?>
