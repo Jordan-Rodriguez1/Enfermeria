@@ -156,6 +156,7 @@ class Usuarios extends Controllers
     //Iniciar sesión
     public function login()
     {
+        /* DESACTIVA CAPTCHA
         $ip = $_SERVER["REMOTE_ADDR"];
         $captcha = $_POST['g-recaptcha-response'];
         $secretKey = '6LcsES8mAAAAAB1qsF1R4WKhpXg_dm1l5hTFi852';
@@ -173,7 +174,7 @@ class Usuarios extends Controllers
             echo $ip;
             header("location: ".base_url(). 'Login/loginprof'."?msg=$error");
         }
-        elseif (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
+        else */ if (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
             $usuario = $_POST['usuario'];
             $clave = $_POST['clave'];
             $hash = hash("SHA256", $clave);

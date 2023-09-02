@@ -37,7 +37,7 @@
                 </div>
               <?php } } ?>
           <br>
-          <div class="g-recaptcha" data-sitekey="6LcsES8mAAAAAJno5nv0VXeNp0LZ5l3otHIfNQjj"></div>
+          <!-- <div class="g-recaptcha" data-sitekey="6LcsES8mAAAAAJno5nv0VXeNp0LZ5l3otHIfNQjj"></div> captcha -->
           <input type="submit" value="Entrar"/><br>
           <a href="recuperarprof">¿Olvidaste tu contraseña?</a><br><br>
           <a href="../">Soy Alumno</a>

@@ -314,6 +314,7 @@ class Alumnos extends Controllers
     //Iniciar sesión
     public function login()
     {
+        /* DESACTIVA CAPTCHA
         $ip = $_SERVER["REMOTE_ADDR"];
         $captcha = $_POST['g-recaptcha-response'];
         $secretKey = '6LcsES8mAAAAAB1qsF1R4WKhpXg_dm1l5hTFi852';
@@ -328,7 +329,7 @@ class Alumnos extends Controllers
             $error = "capcha";
             header("location: ".base_url()."?msg=$response");
         }
-        elseif (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
+        else */ if (!empty($_POST['usuario']) || !empty($_POST['clave'])) {
             $usuario = limpiarInput($_POST['usuario']);
             $clave = limpiarInput($_POST['clave']);
             $hash = hash("SHA256", $clave);

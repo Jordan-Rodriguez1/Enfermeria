@@ -37,7 +37,7 @@
               </div>
             <?php }} ?>
           <br>
-          <div class="g-recaptcha" data-sitekey="6LcsES8mAAAAAJno5nv0VXeNp0LZ5l3otHIfNQjj"></div>
+          <!-- <div class="g-recaptcha" data-sitekey="6LcsES8mAAAAAJno5nv0VXeNp0LZ5l3otHIfNQjj"></div> Desactivé el captcha --> 
           <input type="submit" value="Entrar"/><br>
           <a href="Login/recuperar">¿Olvidaste tu contraseña?</a><br><br>
           <a href="Login/loginprof">Soy Administrador</a>
