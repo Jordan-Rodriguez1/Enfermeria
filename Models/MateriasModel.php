@@ -7,9 +7,9 @@ class MateriasModel extends Mysql{
     }
 
     //Selecciona Alumnos activos
-    public function selectAlumnos()
+    public function selectMateria()
     {
-        $sql = "SELECT * FROM alumnos WHERE estado = 1";
+        $sql = "SELECT * FROM materias WHERE estado = 1";
         $res = $this->select_all($sql);
         return $res;
     }
@@ -17,26 +17,22 @@ class MateriasModel extends Mysql{
     //selecciona Alumnos inactivos
     public function selectInactivos()
     {
-        $sql = "SELECT * FROM alumnos WHERE estado = 0";
+        $sql = "SELECT * FROM materias WHERE estado = 0";
         $res = $this->select_all($sql);
         return $res;
     }
 
     //Registra un nuevo Alumno
-    public function insertarAlumnos(string $nombre, string $usuario, string $clave, string $correo, string $grado, string $grupo)
+    public function insertarMateria(string $nombre)
     {
         $return = "";
-        $this->nombre = $nombre;
-        $this->usuario = $usuario;
-        $this->clave = $clave;
-        $this->correo = $correo;
-        $this->grado = $grado;
-        $this->grupo = $grupo;
-        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->correo}'";
+        $this->nombre = $nombre;     
+        $this->estado = 1;
+        $sql = "SELECT * FROM materias WHERE materia = '{$this->nombre}'";
         $result = $this->selecT($sql);
         if (empty($result)) {
-            $query = "INSERT INTO alumnos(nombre, usuario, clave, correo, grado, grupo) VALUES (?,?,?,?,?,?)";
-            $data = array($this->nombre, $this->usuario, $this->clave, $this->correo, $this->grado, $this->grupo);
+            $query = "INSERT INTO materias(materia, estado) VALUES (?,?)";
+            $data = array($this->nombre, $this->estado);
             $resul = $this->insert($query, $data);
             $return = $resul;
         }else {
@@ -46,10 +42,10 @@ class MateriasModel extends Mysql{
     }
 
     //Seleciona los datos de un usuario
-    public function editarAlumnos(int $id)
+    public function editarMaterias(int $id)
     {
         $this->id = $id;
-        $sql = "SELECT * FROM alumnos WHERE id = '{$this->id}'";
+        $sql = "SELECT * FROM materias WHERE id = '{$this->id}'";
         $res = $this->select($sql);
         if (empty($res)) {
             $res = 0;
@@ -57,11 +53,11 @@ class MateriasModel extends Mysql{
         return $res;
     }
 
-    //Seleciona los datos de un usuario mediante correo
-    public function editarAlumnoC(string $correo)
+    //Seleciona los datos de un usuario mediante nombre
+    public function editarMateriaC(string $nombre)
     {
-        $this->correo = $correo;
-        $sql = "SELECT * FROM alumnos WHERE correo = '{$this->correo}'";
+        $this->nombre = $nombre;
+        $sql = "SELECT * FROM materias WHERE materia = '{$this->nombre}'";
         $res = $this->select($sql);
         if (empty($res)) {
             $res = 0;
@@ -70,31 +66,25 @@ class MateriasModel extends Mysql{
     }
 
     //Edita los datos de un usuario
-    public function actualizarAlumnos(string $nombre, string $usuario, string $asistencias, string $faltas, int $id, string $correo, string $grado, string $grupo)
+    public function actualizarMaterias(string $nombre, int $id)
     {
         $return = "";
-        $this->nombre = $nombre;
-        $this->usuario = $usuario;
-        $this->asistencias = $asistencias;
-        $this->faltas = $faltas;
-        $this->id = $id;
-        $this->correo = $correo;
-        $this->grado = $grado;
-        $this->grupo = $grupo;
-        $query = "UPDATE alumnos SET nombre=?, usuario=?, asistencias=?, faltas=?, correo=?, grado=?, grupo=? WHERE id=?";
-        $data = array($this->nombre, $this->usuario, $this->asistencias, $this->faltas, $this->correo, $this->grado, $this->grupo, $this->id);
+        $this->nombre = $nombre;        
+        $this->id = $id;        
+        $query = "UPDATE materias SET materia=? WHERE id=?";
+        $data = array($this->nombre, $this->id);
         $resul = $this->update($query, $data);
         $return = $resul;
         return $return;
     }
 
     //cambia de estado un usuario
-    public function estadoAlumnos(int $id, int $estado)
+    public function estadoMaterias(int $id, int $estado)
     {
         $return = "";
         $this->id = $id;
         $this->estado = $estado;
-        $query = "UPDATE alumnos SET estado = ? WHERE id=?";
+        $query = "UPDATE materias SET estado = ? WHERE id=?";
         $data = array($this->estado, $this->id);
         $resul = $this->update($query, $data);
         $return = $resul;

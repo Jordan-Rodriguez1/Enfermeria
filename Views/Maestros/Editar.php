@@ -50,8 +50,9 @@
                             </div>
                             <div class="form-group">
                                  <label for="materia">Materia</label>
-                                 <select class="form-control" name="materia" id="materia" ><?php foreach ($data2 as $materias){}endforeach ?>
+                                 <select class="form-control" name="materia" id="materia" ><?php foreach ($data2 as $materias){ ?>
                                     <option value="<?php echo $materias['materia']; ?>"><?php echo $materias['materia']; ?></option>
+                                    <?php }?>
                                  </select>                                
                             </div>
                             <div class="row">

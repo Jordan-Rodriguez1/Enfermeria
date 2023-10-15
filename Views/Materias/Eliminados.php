@@ -68,9 +68,7 @@
             <thead class="thead-personality">
                 <tr>
                     <th>Nombre</th>
-                    <th>No. Cuenta</th>
-                    <th>Correo</th>
-                    <th>Grado</th>
+                    
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -78,10 +76,8 @@
                 <?php foreach ($data1 as $us) { ?>
                 <?php if($_SESSION['rol'] >= $us['rol']){ ?>
                     <tr>
-                        <td><?php echo $us['nombre']; ?></td>
-                        <td><?php echo $us['usuario']; ?></td>
-                        <td><?php echo $us['correo']; ?></td>
-                        <td><?php echo $us['grado'];?></td>
+                        <td><?php echo $us['materia']; ?></td>
+                        
                         <td>
                             <form action="<?php echo base_url() ?>Materias/reingresar?id=<?php echo $us['id']; ?>" method="post" class="d-inline confirmar">
                                 <button title="Reingresar" type="submit" class="btn btn-success mb-2"><i class="fas fa-user"></i></button>

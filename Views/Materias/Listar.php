@@ -24,7 +24,7 @@
         <div class="col-lg-8 mb-2">
             <?php if($_SESSION['rol'] >= 4){ ?> 
                 <button class="btn btn-success mb-2" type="button" data-toggle="modal" data-target="#nuevo_cliente"><i class="fas fa-plus-circle"></i> Nuevo</button>
-                <a href="<?php echo base_url(); ?>Materias/eliminados" class="btn btn-dark mb-2"><i class="fas fa-users-slash"></i> Inactivos</a>
+                <a href="<?php echo base_url(); ?>Materias/eliminados" class="btn btn-dark mb-2"><i class="fas fa-users-slash"></i> Inactivas</a>
             <?php } ?> 
         </div>
         <div class="col-lg-4">
@@ -32,7 +32,7 @@
                 $alert = $_GET['msg'];
                 if ($alert == "existe") { ?>
                     <div class="alert alert-warning" role="alert">
-                        <strong>El alumno ya existe.</strong>
+                        <strong>La materia ya existe.</strong>
                     </div>
                 <?php } else if ($alert == "error") { ?>
                     <div class="alert alert-danger" role="alert">
@@ -40,33 +40,11 @@
                     </div>
                 <?php } else if ($alert == "registrado") { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>Alumno registrado.</strong>
-                    </div>
-                <?php } else if ($alert == "rest") { ?>
-                    <div class="alert alert-success" role="alert">
-                        <strong>La contraseña del alumno se restableció.</strong>
-                    </div>
-                <?php } else if ($alert == "modificado") { ?>
-                    <div class="alert alert-success" role="alert">
-                        <strong>Alumno modificado.</strong>
-                    </div>
-                <?php } else if ($alert == "subido") { ?>
-                    <div class="alert alert-success" role="alert">
-                        <strong>Grado aumentado a todos los alumnos.</strong>
-                    </div>
-                <?php } else if ($alert == "cargado") { ?>
-                    <div class="alert alert-success" role="alert">
-                        <strong><?php echo $_GET['a'];?> alumnos cargados.</strong> <br>
-                    </div>
-                    <div class="alert alert-danger" role="alert">
-                        <strong><?php echo $_GET['e'];?> errores.</strong> <br>
-                    </div>
-                    <div class="alert alert-warning" role="alert">
-                        <strong><?php echo $_GET['x'];?> alumnos ya existen.</strong> <br>
-                    </div>
+                        <strong>Materia registrada.</strong>
+                    </div>                                                                                                        
                 <?php } else if ($alert == "inactivo") { ?>
                     <div class="alert alert-success" role="alert">
-                        <strong>El usuario fue inactivado.</strong>
+                        <strong>La materia fue inactivada.</strong>
                     </div>
                 <?php }
             } ?>
@@ -77,20 +55,16 @@
         <thead class="thead-personality">
             <tr>
                 <th>Nombre</th>
-                <th>No. Cuenta</th>
-                <th>Correo</th>
-                <th>Grado</th>
+                
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <?php foreach ($data1 as $us) { ?>
-            <?php if($_SESSION['rol'] >= $us['rol']){ ?>
+            <?php if($_SESSION['rol'] >= $us['rol']){ //poner aqui el numero del admin en lugar de $us['rol']?>
                 <tr>
-                    <td><?php echo $us['nombre']; ?></td>
-                    <td><?php echo $us['usuario']; ?></td>
-                    <td><?php echo $us['correo']; ?></td>
-                    <td><?php echo $us['grado'];?></td>
+                    <td><?php echo $us['materia']; ?></td>
+                    
                     <td>
                         <a title="Editar" href="<?php echo base_url() ?>Materias/editar?id=<?php echo $us['id']; ?>" class="btn btn-primary mb-2"><i class="fas fa-edit"></i></a>
                         <form action="<?php echo base_url() ?>Materias/eliminar?id=<?php echo $us['id']; ?>" method="post" class="d-inline elim">
@@ -117,24 +91,18 @@
                         <label for="nombre">Nombre</label>
                         <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre" required>
                     </div>
-                    <div class="form-group">
-                        <label for="nombre">Correo</label>
-                        <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo" required>
-                    </div>
-                    <div class="row">
+                    
+                    <!-- <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="usuario">No. Cuenta</label>
                                 <input id="usuario" class="form-control" type="number" min="10000000" max="99999999" name="usuario" placeholder="No. Cuenta" required>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <label for="grupo">Grupo</label>
-                                <input id="grupo" class="form-control" type="text" name="grupo" maxlength="1" placeholder="Grupo" required>
-                            </div>
-                        </div>
+                        </div> 
+                        
                     </div>
+                espacio para agregar el semestre en el que se imparte la materia (opcional)
+                -->
                 </div>
                 <div class="card-footer">
                     <button class="btn btn-success" type="submit"><i class="fas fa-save"></i> Registrar</button>

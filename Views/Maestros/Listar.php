@@ -119,9 +119,11 @@
                     </div>
                     <div class="form-group">
                         <label for="materia">Materia</label>
-                        <select class="form-control" name="materia" id="materia"><?php foreach($data2 as $materias){} ?>
+                        <select class="form-control" type="text" name="materia" id="materia">
                         <!--El foreach pasa los datos de la tabla materias a la variable $materias y despues muestra todas las materias-->
-                            <option value="<?php echo  $materias['materia']; ?>"  type="text" placeholder="materia" required><?php echo  $materias['materia']; ?>></option>
+                        <?php foreach($data2 as $materias){ ?>
+                            <option value="<?php echo  $materias['materia']; ?>"  type="text" placeholder="materia" required><?php echo  $materias['materia']; ?></option>
+                        <?php } ?>
                         </select>                        
                     </div>
                     <div class="row">

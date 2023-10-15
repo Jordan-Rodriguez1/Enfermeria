@@ -10,35 +10,29 @@ class Materias extends Controllers
         parent::__construct();
     }
 
-    //Vista de Alumnos
+    //Vista de Materias
     public function Listar()
     {
-        $data1 = $this->model->selectAlumnos();
+        $data1 = $this->model->selectMateria();
         $this->views->getView($this, "Listar", "", $data1);
         die();  
     }
 
-    //Añade un nuevo Alumno
+    //Añade una nueva Materia
     public function insertar()
     {
         $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $correo = $_POST['correo'];
-        $clave = $_POST['usuario']; //Por defecto se pone el no.cuenta
-        $grado = $_POST['grado'];
-        $grupo = $_POST['grupo'];
-        $hash = hash("SHA256", $clave);
-        $insert = $this->model->insertarAlumnos($nombre, $usuario, $hash, $correo, $grado, $grupo);
+        $insert = $this->model->insertarMateria($nombre);
         if ($insert == 'existe') {
-            $data1 = $this->model->editarAlumnoC($correo);
+            $data1 = $this->model->editarMateriaC($nombre);
             if ($data1['estado'] == 2) {
                 $asistencias = 0;
                 $faltas = 0;
                 $estado = 1;
                 $id = $data1['id'];
-                $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);
-                $cambio =$this->model->cambiarContra($hash, $id);
-                $eliminar = $this->model->estadoAlumnos($id, $estado);
+                $actualizar = $this->model->actualizarMaterias($nombre);
+                
+                $eliminar = $this->model->estadoMaterias($id, $estado);
                     if ($actualizar == 1) {
                         $alert = 'registrado';
                     } else {
@@ -52,71 +46,65 @@ class Materias extends Controllers
         } else {
             $alert = 'error';
         }
-        $data1 = $this->model->selectAlumnos(); 
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        $data1 = $this->model->selectMateria(); 
+        header("location: " . base_url() . "Materias/Listar?msg=$alert");
         die();   
     }
 
-    //Seleciona los datos de un Alumno
+    //Seleciona los datos de una Materia
     public function editar()
     {
         $id = $_GET['id'];
-        $data1 = $this->model->editarAlumnos($id);
-        $data2 = $this->model->configuracion();
+        $data1 = $this->model->editarMaterias($id);
+        
         if ($data1 == 0) {
             $this->Listar();
         } else {
-            $this->views->getView($this, "Editar","", $data1, $data2);
+            $this->views->getView($this, "Editar","", $data1);
         }
         die();  
     }
 
-    //Actualiza los datos de un Alumno
+    //Actualiza los datos de una Materia
     public function actualizar()
     {
         $id = $_POST['id'];
         $nombre = $_POST['nombre'];
-        $usuario = $_POST['usuario'];
-        $asistencias = $_POST['asistencias'];
-        $faltas = $_POST['faltas'];
-        $correo = $_POST['correo'];
-        $grado = $_POST['grado'];
-        $grupo = $_POST['grupo'];
-        $actualizar = $this->model->actualizarAlumnos($nombre, $usuario, $asistencias, $faltas, $id, $correo, $grado, $grupo);     
+        $actualizar = $this->model->actualizarMaterias($nombre, $id);     
             if ($actualizar == 1) {
                 $alert = 'modificado';
             } else {
                 $alert =  'error';
             }
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        header("location: " . base_url() . "Materias/Listar?msg=$alert");
         die();
     }
 
-    //Inactiva los datos de un Alumno
+    //Inactiva los datos de una Materia
     public function eliminar()
     {
         $id = $_GET['id'];
         $estado = 0;
-        $eliminar = $this->model->estadoAlumnos($id, $estado);
+        $eliminar = $this->model->estadoMaterias($id, $estado);
         $alert = 'inactivo';
-        $data1 = $this->model->selectAlumnos();
-        header("location: " . base_url() . "Alumnos/Listar?msg=$alert");
+        $data1 = $this->model->selectMateria();
+        header("location: " . base_url() . "Materias/Listar?msg=$alert");
         die();
     }
 
-    //elimina un usuario (Solo se cambia de estado para no alterar pdf de reportes)
+    //elimina una Materia (Solo se cambia de estado para no alterar pdf de reportes)
     public function eliminarper()
     {
         $id = $_GET['id'];
         $estado = 2;
-        $eliminar = $this->model->estadoAlumnos($id, $estado);
+        $eliminar = $this->model->estadoMaterias($id, $estado);
         $alert =  'eliminado';
-        $data1 = $this->model->selectAlumnos(); 
-        header("location: " . base_url() . "Alumnos/eliminados?msg=$alert");
+        $data1 = $this->model->selectMateria(); 
+        header("location: " . base_url() . "Materias/eliminados?msg=$alert");
         die();
     }
 
-    //Consulta los Alumno inactivos
+    //Consulta los Materia inactivas
     public function eliminados()
     {
         $data1 = $this->model->selectInactivos();
@@ -124,14 +112,14 @@ class Materias extends Controllers
         die();     
     }
 
-    //Reactiva los datos de un Usuario
+    //Reactiva los datos de una Materia
     public function reingresar()
     {
         $id = $_GET['id'];
         $estado = 1;
-        $eliminar = $this->model->estadoAlumnos($id, $estado);
-        $data1 = $this->model->selectAlumnos(); 
-        header('location: ' . base_url() . "Alumnos/eliminados?msg=$alert");
+        $eliminar = $this->model->estadoMaterias($id, $estado);
+        $data1 = $this->model->selectMateria(); 
+        header('location: ' . base_url() . "Materias/eliminados?msg=$alert");
         die();
     }
 

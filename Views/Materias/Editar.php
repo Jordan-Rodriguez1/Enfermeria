@@ -46,37 +46,16 @@
                             <div class="form-group">
                                 <label for="nombre">Nombre</label>
                                 <input id="id" type="hidden" name="id" value="<?php echo $data1['id']; ?>">
-                                <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre" value="<?php echo $data1['nombre']; ?>" required>
+                                <input id="nombre" class="form-control" type="text" name="nombre" placeholder="Nombre" value="<?php echo $data1['materia']; ?>" required>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                  <label for="nombre">Correo</label>
                                  <input id="correo" class="form-control" type="email" name="correo" placeholder="Correo" value="<?php echo $data1['correo']; ?>" required>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="usuario">No. Cuenta</label>
-                                        <input id="usuario" class="form-control" type="number" name="usuario" placeholder="No. Cuenta" min="10000000" max="99999999" value="<?php echo $data1['usuario']; ?>" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <label for="grupo">Grupo</label>
-                                        <input id="grupo" class="form-control" type="text" name="grupo" placeholder="Grupo" value="<?php echo $data1['grupo']; ?>" required>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input id="asistencias" class="form-control" type="hidden" name="asistencias" placeholder="Asistencias" value="<?php echo $data1['asistencias']; ?>" required>
-                                        <input id="faltas" class="form-control" type="hidden" name="faltas" placeholder="Faltas" value="<?php echo $data1['faltas']; ?>" required>
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->                                                                                        
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-success mb-2" type="submit"><i class="fas fa-save"></i> Modificar</button>
-                            <a href="<?php echo base_url(); ?>Materias/ListarH" class="btn btn-danger mb-2"><i class="fas fa-window-close"></i> Cancelar</a>
+                            <a href="<?php echo base_url(); ?>Materias/Listar" class="btn btn-danger mb-2"><i class="fas fa-window-close"></i> Cancelar</a>
                         </div>
                     </form>
                 </div>
